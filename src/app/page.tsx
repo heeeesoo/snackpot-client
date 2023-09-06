@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div>
+    <div className="text-SystemGray4">
       main5
     </div>
   )
