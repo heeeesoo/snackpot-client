@@ -9,6 +9,7 @@ const Header = () => {
                 alt="LogoSmall"
                 width={108}
                 height={24}
+                priority
             />
         </div>
     );

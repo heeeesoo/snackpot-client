@@ -15,6 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='bg-black w-screen flex justify-center'>
+      <head>
+          <link
+              rel="manifest"
+              href="/manifest.json"
+          />
+      </head>
       <body className='bg-grayScreen w-screen max-w-[500px] min-h-screen'>
         <header className='sticky top-0'>
           <Header />
