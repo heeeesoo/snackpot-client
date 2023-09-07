@@ -37,6 +37,9 @@ const config: Config = {
         SystemGray7_20: 'hsla(240, 100%, 99%, 0.2)',
         SystemHoverBlue: '#0101DF'
       },
+      width: {
+        'fix': '800px',
+      },
     },
   },
   plugins: [],
