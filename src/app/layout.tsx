@@ -2,6 +2,9 @@ import './globals.css'
 import type { Metadata } from 'next'
 import Header from '@/components/common/Header'
 import Footer from '@/components/common/Footer'
+// import { Homemade_Apple } from '@next/font/google';
+
+// const homemadeApple = Homemade_Apple({ subsets: ['latin'], weight: ['400'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'SnackPot',
@@ -14,14 +17,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className='bg-black w-screen flex justify-center'>
+    <html lang="en" className='bg-white w-screen flex justify-center'>
       <head>
           <link
               rel="manifest"
               href="/manifest.json"
           />
       </head>
-      <body className='bg-grayScreen w-screen max-w-[500px] min-h-screen'>
+      <body  className={`bg-grayScreen w-screen max-w-[500px] min-h-screen`}>
         <header className='sticky top-0'>
           <Header />
         </header>
