@@ -14,3 +14,5 @@ export const PersonActive = "/img/icons/footer/PersonActive.svg";
 export const Like = "/img/icons/common/Like.svg";
 export const LikeActive = "/img/icons/common/LikeActive.svg";
 export const Play = "/img/icons/common/Play.svg";
+
+export const RunningMan = "/img/icons/common/RunningMan.svg";
