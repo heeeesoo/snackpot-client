@@ -1,12 +1,15 @@
 import Image from "next/image"
 import { RunningMan } from "@/constant/icon"
-import SignIn from "@/components/auth/SignIn"
-import SignUp from "@/components/auth/SignUp"
+import BasicButton from "@/components/button/BasicButton"
+import BasicSecondayButton from "@/components/button/BasicSecondayButton"
+import Link from "next/link"
 
 export default function Home() {
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center h-[70vh]">
+    <div className="flex flex-col justify-around h-[90vh]"> 
+      <div className="h-[100px]">
+      </div>
+      <div className="flex flex-col justify-center items-center">
         <Image
           alt="runningman"
           src={RunningMan}
@@ -23,9 +26,14 @@ export default function Home() {
           평생 운동 습관 만들어요!
         </div>
       </div>
-      <div className="h-[20vh]">
-        <SignIn />
-        <SignUp />
+      <div className="h-[200px] flex flex-col items-center justify-center">
+        <Link href={'/signin'} className="w-full flex justify-center">
+          <BasicButton text="로그인" />
+        </Link>
+        <div className="py-[8px]"></div>
+        <Link href={'/signup'} className="w-full flex justify-center">
+          <BasicSecondayButton text="회원가입" />
+        </Link>
       </div>
     </div>
   )

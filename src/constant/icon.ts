@@ -16,3 +16,4 @@ export const LikeActive = "/img/icons/common/LikeActive.svg";
 export const Play = "/img/icons/common/Play.svg";
 
 export const RunningMan = "/img/icons/common/RunningMan.svg";
+export const ChevronLeft = "/img/icons/common/ChevronLeft.svg";

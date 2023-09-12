@@ -8,6 +8,8 @@ const Footer = () => {
     const pathname = usePathname();
     const pathnames = [
         '/',
+        '/signin',
+        '/signup',
     ];
 
     return (
