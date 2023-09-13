@@ -16,27 +16,31 @@ const SignUp = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            console.log('submit:',data.nickname)
-            console.log('time:',data.time)
-            // const apiUrl = `${searchParams}` === 'name=signup' ? `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/sign-up` : `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/login`;
+            const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL;
         
-            // const formDataToSend = {
-            //     nickname: data.nickname,
-            //     fcmToken: fcmToken
-            // };
+            const formDataToSend = {
+                nickname: data.nickname,
+                fcmToken: data.time
+            };
 
-            // console.log(formDataToSend)
+            console.log(formDataToSend)
         
-            // const response = await fetch(apiUrl, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         "Accept": "application/json",
-            //     },
-            //     body: JSON.stringify(formDataToSend),
-            // });
+            const response = await fetch(`${apiURL}/auth/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify(formDataToSend),
+            });
 
-            // console.log(response);
+            console.log(response);
+
+            if (!response.ok){
+                console.log('error')
+            } else {
+                console.log('ok')
+            }
 
             // if (!response.ok) {
             //     const errorResponseData = await response.json();

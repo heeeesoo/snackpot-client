@@ -1,7 +1,7 @@
 import ExerciseList from "@/components/exercise/ExerciseList"
 async function getData() {
     try {
-        const apiURL = process.env.NEXT_TEST_SERVER_URL
+        const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL
         const res = await fetch(`${apiURL}/exercises`, {
             method: 'GET',
             headers: {
