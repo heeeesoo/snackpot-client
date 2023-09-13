@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import BasicButton from '@/components/button/BasicButton';
 
 interface FormData {
-    nickname: string;
+    userName: string;
 }
 
 const SignIn = () => {
@@ -16,11 +16,35 @@ const SignIn = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            console.log('submit:',data.nickname)
+            const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL;
+        
+            const formDataToSend = {
+                userName: data.userName,
+            };
+
+            console.log(formDataToSend)
+        
+            const response = await fetch(`${apiURL}/auth/signin`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify(formDataToSend),
+            });
+
+            console.log(response);
+
+            if (!response.ok){
+                console.log('error')
+            } else {
+                console.log('ok')
+            }
+
             // const apiUrl = `${searchParams}` === 'name=signup' ? `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/sign-up` : `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/login`;
         
             // const formDataToSend = {
-            //     nickname: data.nickname,
+            //     userName: data.userName,
             //     fcmToken: fcmToken
             // };
 
@@ -51,7 +75,7 @@ const SignIn = () => {
             //     console.log('Server response:', responseData);
             //     setToken(responseData.result.data.accessToken);
             //     setMemberId(responseData.result.data.id);
-            //     setMemberName(data.nickname);
+            //     setMemberName(data.userName);
             //     login();
             //     router.replace('/');
             // }
@@ -66,7 +90,7 @@ const SignIn = () => {
     return (
         <div className="relative flex flex-col pt-[30px]">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center justify-between min-h-[80vh]">
-                <InputBox title="닉네임을 입력해주세요" label="nickname" name="nickname" register={register} error={errors.nickname?.message} maxLength={6} placeholder="닉네임 (최대 6자)" noSpecialChar={true}/>
+                <InputBox title="닉네임을 입력해주세요" label="userName" name="userName" register={register} error={errors.userName?.message} maxLength={6} placeholder="닉네임 (최대 6자)" noSpecialChar={true}/>
                 <BasicButton text="로그인하기"/>
             </form>
         </div>
