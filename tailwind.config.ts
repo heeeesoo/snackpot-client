@@ -40,6 +40,7 @@ const config: Config = {
       width: {
         'fix': '800px',
         'fixwidth': '90%',
+        'fixmargin': '5%'
       },
     },
   },
