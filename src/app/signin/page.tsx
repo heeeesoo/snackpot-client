@@ -2,12 +2,16 @@
 import InputBox from '@/components/input/InputBox';
 import { useForm } from 'react-hook-form';
 import BasicButton from '@/components/button/BasicButton';
+import UserStore from '@/store/UserStore';
+import { useRouter } from 'next/navigation';
 
 interface FormData {
     userName: string;
 }
 
 const SignIn = () => {
+    const {login} = UserStore();
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -36,9 +40,11 @@ const SignIn = () => {
             console.log(response);
 
             if (!response.ok){
-                console.log('error')
+                console.log('error');
             } else {
-                console.log('ok')
+                console.log('ok');
+                login();
+                router.replace('/group');
             }
 
             // const apiUrl = `${searchParams}` === 'name=signup' ? `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/sign-up` : `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/login`;

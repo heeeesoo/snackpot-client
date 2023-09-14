@@ -2,12 +2,17 @@
 import InputBox from '@/components/input/InputBox';
 import { useForm } from 'react-hook-form';
 import BasicButton from '@/components/button/BasicButton';
+import UserStore from '@/store/UserStore';
+import { useRouter } from 'next/navigation';
 
 interface FormData {
     userName: string;
     dailyGoalTime: number;
 }
+
 const SignUp = () => {
+    const {login} = UserStore();
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -37,9 +42,11 @@ const SignUp = () => {
             console.log(response);
 
             if (!response.ok){
-                console.log('error')
+                console.log('error');
             } else {
-                console.log('ok')
+                console.log('ok');
+                login();
+                router.replace('/group');
             }
 
             // if (!response.ok) {
@@ -71,8 +78,11 @@ const SignUp = () => {
     return (
         <div className="flex flex-col pt-[30px]">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center justify-between min-h-[80vh]">
-                <InputBox title="닉네임을 입력해주세요" label="userName" name="userName" register={register} error={errors.userName?.message} maxLength={6} placeholder="닉네임 (최대 6자)" noSpecialChar={true}/>
-                <InputBox title="하루 목표 운동 시간을 입력해주세요" label="time" name="time" register={register} error={errors.dailyGoalTime?.message} maxLength={6} placeholder="닉네임 (최대 6자)" integerOnly={true} unit='분'/>
+                <div className='w-full flex flex-col items-center'>
+                    <InputBox title="닉네임을 입력해주세요" label="userName" name="userName" register={register} error={errors.userName?.message} maxLength={6} placeholder="닉네임 (최대 6자)" noSpecialChar={true}/>
+                    <div className='py-5'/>
+                    <InputBox title="하루 목표 운동 시간을 입력해주세요" label="time" name="time" register={register} error={errors.dailyGoalTime?.message} maxLength={6} placeholder="닉네임 (최대 6자)" integerOnly={true} unit='분'/>
+                </div>
                 <BasicButton text="가입하기"/>
             </form>
         </div>

@@ -3,11 +3,13 @@ import { RunningMan } from "@/constant/icon"
 import BasicButton from "@/components/button/BasicButton"
 import BasicSecondayButton from "@/components/button/BasicSecondayButton"
 import Link from "next/link"
+import CheckUser from "@/components/auth/CheckUser"
 
 export default function Home() {
   return (
     <div className="flex flex-col justify-around h-[90vh]"> 
       <div className="h-[100px]">
+        <CheckUser />
       </div>
       <div className="flex flex-col justify-center items-center">
         <Image
