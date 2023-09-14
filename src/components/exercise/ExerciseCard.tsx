@@ -46,7 +46,7 @@ const ExerciseCard = ({
 
     return (
         <div onClick={handleClick} className="flex flex-col w-fixwidth h-[284px] bg-white rounded-[16px]">
-            <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px]`} style={{backgroundImage: `url(${thumbnail})`}}>
+            <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover`} style={{backgroundImage: `url(${thumbnail})`}}>
                 <button id="play" className="flex justify-center items-center rounded-full w-[44px] h-[44px] bg-SystemGray7_20">
                     <Image
                         src={Play}
