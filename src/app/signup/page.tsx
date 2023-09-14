@@ -81,7 +81,7 @@ const SignUp = () => {
                 <div className='w-full flex flex-col items-center'>
                     <InputBox title="닉네임을 입력해주세요" label="userName" name="userName" register={register} error={errors.userName?.message} maxLength={6} placeholder="닉네임 (최대 6자)" noSpecialChar={true}/>
                     <div className='py-5'/>
-                    <InputBox title="하루 목표 운동 시간을 입력해주세요" label="time" name="time" register={register} error={errors.dailyGoalTime?.message} maxLength={6} placeholder="닉네임 (최대 6자)" integerOnly={true} unit='분'/>
+                    <InputBox title="하루 목표 운동 시간을 입력해주세요" label="dailyGoalTime" name="dailyGoalTime" register={register} error={errors.dailyGoalTime?.message} maxLength={6} placeholder="0" integerOnly={true} unit='분'/>
                 </div>
                 <BasicButton text="가입하기"/>
             </form>
