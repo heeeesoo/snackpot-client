@@ -7,15 +7,15 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
     const pathname = usePathname();
     const pathnames = [
-        '/',
-        '/signin',
-        '/signup',
+        '/group',
+        '/exercise',
+        '/my',
     ];
 
     return (
         <div>
             {
-                pathnames.some(path => pathname == path) ?
+                !pathnames.some(path => pathname === path) ?
                     null
                     :
                     <div className="h-[70px] w-full bg-white flex flex-row justify-center">
