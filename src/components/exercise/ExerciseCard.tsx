@@ -46,10 +46,10 @@ const ExerciseCard = ({
 
     return (
         <div onClick={handleClick} className="flex flex-col w-fixwidth h-[284px] bg-white rounded-[16px]">
-            <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover w-[100%] relative`}>
-            {/* <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover`} style={{backgroundImage: `url(${thumbnail})`}}> */}
+            {/* <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover w-[100%] relative`}> */}
+            <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover`} style={{backgroundImage: `url(${thumbnail})`}}>
                 {/* <img src={`${thumbnail}`} width="100%" height="200px"/> */}
-                <Image
+                {/* <Image
                 src={thumbnail}
                 layout='fill'
                 alt="thumbnail"
@@ -59,7 +59,7 @@ const ExerciseCard = ({
                 loading="lazy"
                 placeholder="blur"
                 blurDataURL={thumbnail}
-                />
+                /> */}
                <button id="play" className="flex justify-center items-center rounded-full w-[44px] h-[44px] bg-SystemGray7_20 absolute top-[16px] right-[16px]">
                     <Image
                         src={Play}
