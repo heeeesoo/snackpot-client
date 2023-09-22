@@ -1,7 +1,7 @@
 import VideoCard from "@/components/exercise/VideoCard";
 import Image from "next/image";
 import Link from "next/link";
-import { Time, Calory, Level,ChevronRight } from "@/constant/icon";
+import { Time, Calory, Level,ChevronRight,Play } from "@/constant/icon";
 import ReviewList from "@/components/exercise/ReviewList";
 interface ExerciseDataType {
     thumbnail: string;
@@ -61,6 +61,16 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                 objectFit="cover"
                 objectPosition="center"
                 />
+                <div className="absolute rounded-[16px] inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                    <div className="bg-SystemGray7 bg-opacity-20 h-[56px] w-[56px] flex justify-center items-center rounded-full">
+                        <Image
+                        src={Play}
+                        width={24}
+                        height={24}
+                        alt="Play"
+                        />
+                    </div>
+                </div>
             </Link>
             <div className="w-fixwidth flex flex-col">
                 <div className="font-bold text-[20px] pt-[20px]">
