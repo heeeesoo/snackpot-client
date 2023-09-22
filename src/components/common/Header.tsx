@@ -13,10 +13,18 @@ const Header = () => {
         router.back()
     }
 
+    const handleClickLogo = () => {
+        router.push('/group')
+    }
+
     return (
         <div>
             
             {
+                pathname.includes('/execution')
+                ?
+                <div></div>
+                :
                 pathname === '/signup'
                 ?
                 <div className="h-[64px] font-bold bg-grayScreen flex flex-row items-center justify-between">
@@ -48,13 +56,15 @@ const Header = () => {
                 </div>
                 :
                 <div className="h-[64px] bg-grayScreen flex flex-row justify-center items-center">
-                    <Image 
-                        src={LogoSmall}
-                        alt="LogoSmall"
-                        width={108}
-                        height={24}
-                        priority
-                    />
+                    <div onClick={handleClickLogo}>
+                        <Image 
+                            src={LogoSmall}
+                            alt="LogoSmall"
+                            width={108}
+                            height={24}
+                            priority
+                        />
+                    </div>
                 </div>
             }
         </div>

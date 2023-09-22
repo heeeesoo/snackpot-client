@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Time, Calory, Level,ChevronRight,Play } from "@/constant/icon";
 import ReviewList from "@/components/exercise/ReviewList";
+import ExerciseStoreCard from "@/components/exercise/ExerciseStoreCard";
+
 interface ExerciseDataType {
     thumbnail: string;
     youtuberThumbnail: string;
@@ -52,6 +54,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
 
     return (
         <div className="flex flex-col items-center w-full">
+            <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={data.time} />
             <Link href={`/exercise/${params.exerciseId}/execution`} className="h-[250px] w-fixwidth relative z-0">
                 <Image
                 src={data.thumbnail}
