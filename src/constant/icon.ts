@@ -19,7 +19,13 @@ export const RunningMan = "/img/icons/common/RunningMan.svg";
 export const ChevronLeft = "/img/icons/common/ChevronLeft.svg";
 export const ChevronRight = "/img/icons/common/ChevronRight.svg";
 
+export const Cross = "/img/icons/common/Cross.svg";
+
 // exercise
 export const Calory = "/img/icons/exerciseInfo/Calory.svg";
 export const Level = "/img/icons/exerciseInfo/Level.svg";
 export const Time = "/img/icons/exerciseInfo/Time.svg";
+
+// finish
+export const ThumbsUp = "/img/icons/finish/ThumbsUp.png";
+export const ThumbsDown = "/img/icons/finish/ThumbsDown.png";

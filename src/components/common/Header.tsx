@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { LogoSmall } from "@/constant/icon";
+import { LogoSmall, Cross } from "@/constant/icon";
 import { usePathname } from "next/navigation";
 import { ChevronLeft } from "@/constant/icon";
 import { useRouter } from 'next/navigation';
@@ -13,13 +13,40 @@ const Header = () => {
         router.back()
     }
 
+    const handleClickCross = () => {
+        router.push('/exercise')
+    }
+
+    const handleClickLogo = () => {
+        router.push('/group')
+    }
+
     return (
         <div>
             
             {
+                pathname.includes('/execution')
+                ?
+                <div></div>
+                :
+                pathname.includes('/finish')
+                ?
+                <div className="h-[64px] mx-3 font-bold bg-grayScreen flex flex-row items-center justify-between">
+                    <div onClick={handleClickCross}>
+                    <Image
+                        src={Cross}
+                        alt="ChevronLeft"
+                        width={24}
+                        height={24}
+                    />
+                    </div>
+                    운동 완료
+                    <div className="w-[24px]" />
+                </div>
+                :
                 pathname === '/signup'
                 ?
-                <div className="h-[64px] font-bold bg-grayScreen flex flex-row items-center justify-between">
+                <div className="h-[64px] mx-3 font-bold bg-grayScreen flex flex-row items-center justify-between">
                     <div onClick={handleClickBack}>
                     <Image
                         src={ChevronLeft}
@@ -34,7 +61,7 @@ const Header = () => {
                 :
                 pathname === '/signin'
                 ?
-                <div className="h-[64px] font-bold bg-grayScreen flex flex-row items-center justify-between">
+                <div className="h-[64px] mx-3 font-bold bg-grayScreen flex flex-row items-center justify-between">
                     <div onClick={handleClickBack}>
                     <Image
                         src={ChevronLeft}
@@ -48,13 +75,15 @@ const Header = () => {
                 </div>
                 :
                 <div className="h-[64px] bg-grayScreen flex flex-row justify-center items-center">
-                    <Image 
-                        src={LogoSmall}
-                        alt="LogoSmall"
-                        width={108}
-                        height={24}
-                        priority
-                    />
+                    <div onClick={handleClickLogo}>
+                        <Image 
+                            src={LogoSmall}
+                            alt="LogoSmall"
+                            width={108}
+                            height={24}
+                            priority
+                        />
+                    </div>
                 </div>
             }
         </div>
