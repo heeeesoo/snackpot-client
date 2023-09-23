@@ -2,10 +2,12 @@
 import ExerciseStore from "@/store/ExerciseStore";
 import { useEffect, useState } from "react";
 import YouTube from 'react-youtube';
+import { useRouter } from "next/navigation";
 
 const Execution = ({ params }: { params: { exerciseId: number } }) => {
     const { videoId, calory, time } = ExerciseStore();
     const [remainingTime, setRemainingTime] = useState(time);
+    const router = useRouter();
 
     useEffect(() => {
         // 1초마다 remainingTime을 1초씩 감소시킵니다.
@@ -30,7 +32,8 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                         throw new Error('POST 요청 실패');
                     }
                     // POST 요청이 성공한 경우에 수행할 작업을 여기에 추가하세요.
-                    console.log('ok')
+                    console.log('ok');
+                    router.push(`/exercise/${params.exerciseId}/finish`);
                 })
                 .catch((error) => {
                     console.error('POST 요청 오류:', error);

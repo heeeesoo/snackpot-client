@@ -1,0 +1,76 @@
+'use client'
+import ExerciseStore from "@/store/ExerciseStore";
+import { Time, Calory, ThumbsDown, ThumbsUp } from "@/constant/icon";
+import Image from "next/image";
+import BasicButton from "@/components/button/BasicButton";
+
+const ExerciseFinish = () => {
+    const { videoId, calory, time } = ExerciseStore();
+    return (
+        <div className="flex flex-col items-center w-screen max-w-[500px]">
+            <div className="text-SystemGray3 bg-white h-[76px] w-fixwidth rounded-[16px] flex flex-row justify-center items-center">
+                <div className="flex flex-col justify-center items-center w-[45%]">
+                    <div className="flex flex-row text-[12px]">
+                        <Image
+                        src={Time}
+                        alt="Time"
+                        width={16}
+                        height={16}
+                        className="mx-[4px]"
+                        />
+                        시간
+                    </div>
+                    <div className="font-bold text-black">
+                        {time}
+                    </div>
+                </div>
+                <div className="h-[24px] w-[0.5px] bg-SystemGray3"/>
+                <div className="flex flex-col justify-center items-center w-[45%]">
+                    <div className="flex flex-row text-[12px] justify-center items-center">
+                        <Image
+                        src={Calory}
+                        alt="Calory"
+                        width={16}
+                        height={16}
+                        className="mx-[4px]"
+                        />
+                        열량
+                    </div>
+                    <div className="font-bold text-black">
+                        {calory} kcal
+                    </div>
+                </div>
+            </div>
+            <div className="font-bold text-[20px] pt-[40px]">
+                오늘 운동 어땠나요?
+            </div>
+            <div className="flex flex-row w-fixwidth justify-between items-center pt-[20px]">
+                <div className="w-[48%] flex justify-center items-center bg-white h-[170px] rounded-[16px]">
+                    <Image
+                    src={ThumbsDown}
+                    alt="ThumbsDown"
+                    height={88}
+                    width={88}
+                    />
+                </div>
+                <div className="w-[48%] flex justify-center items-center bg-white h-[170px] rounded-[16px]">
+                    <Image
+                    src={ThumbsUp}
+                    alt="ThumbsUp"
+                    height={88}
+                    width={88}
+                    />
+                </div>
+            </div>
+            <div className="font-bold text-[20px] pt-[40px] flex justify-center items-center text-center">
+                운동이 도움이 되었다면 <br />
+                리뷰를 작성해주세요
+            </div>
+            <input className="w-fixwidth h-[180px] my-[20px]" placeholder="리뷰를 통해 직업 효과가 있는지 공유해요!"/>
+            <BasicButton text="운동 완료"/>
+            <div className="my-[10px]"/>
+        </div>
+    );
+};
+
+export default ExerciseFinish;
