@@ -3,10 +3,21 @@ import ExerciseStore from "@/store/ExerciseStore";
 import { useEffect, useState } from "react";
 import YouTube from 'react-youtube';
 import { useRouter } from "next/navigation";
+import ProgressBar from "@/components/exercise/ProgressBar";
 
 const Execution = ({ params }: { params: { exerciseId: number } }) => {
     const { videoId, calory, time } = ExerciseStore();
     const [remainingTime, setRemainingTime] = useState(time);
+
+    // remainingTime을 분과 초로 나눕니다.
+    const minutes = Math.floor(remainingTime / 60);
+    const seconds = remainingTime % 60;
+
+    // 분과 초를 "00" 형식으로 변환합니다.
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    
     const router = useRouter();
 
     useEffect(() => {
@@ -45,10 +56,12 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
     }, [params.exerciseId, remainingTime]);
 
     return (
-        <div className="h-screen ">
-            <div className="text-2xl mt-4">Time Remaining: {remainingTime} seconds</div>
+        <div className="h-screen">
+            <div className="text-2xl text-[32px] text-center flex items-center font-bold justify-center w-[122px] h-[56px] text-white mt-4 mr-4 absolute bg-black opacity-80 rounded-[16px] top-0 right-0">
+                {formattedMinutes} : {formattedSeconds}
+            </div>
             <YouTube
-                className="h-[90vh]"
+                className="h-[100vh]"
                 videoId={videoId}
                 opts={{
                     width: "100%",
@@ -65,6 +78,9 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                 }}
                 onEnd={(e) => { e.target.stopVideo(0); }}
             />
+            <div className="w-[100%] absolute bottom-0">
+                <ProgressBar time={time}/>
+            </div>
         </div>
     );
 };
