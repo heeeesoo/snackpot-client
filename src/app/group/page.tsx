@@ -3,18 +3,22 @@ import { useCallback, useEffect, useState } from "react";
 import { getDataClient } from "@/utils/getDataClient";
 
 interface GroupType {
-
+    groupName: string;
+    groupId: number;
+    hostName: string;
+    startDate: string;
+    groupNumber: number;
 }
 
 const Group = () => {
-    const [groupMyList, setGroupMyList] = useState<any>();
+    const [groupMyList, setGroupMyList] = useState<GroupType[]>();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchMyGroupListData = async () => {
           try {
                 const result = await getDataClient('/groups');
-                console.log('mygrouplist:',result);
-                result && setGroupMyList(result);
+                console.log('mygrouplist:',result.groupList);
+                result && setGroupMyList(result.groupList);
                 setLoading(false);
             } catch (error) {
                 console.error('Error in fetchData:', error);
@@ -28,6 +32,15 @@ const Group = () => {
     return (
         <div>
             Group
+            {
+                groupMyList?.map((group : GroupType) => {
+                    return(
+                        <div key={group.groupNumber}>
+                            {group.groupName}
+                        </div>
+                    )
+                })
+            }
         </div>
     );
 };

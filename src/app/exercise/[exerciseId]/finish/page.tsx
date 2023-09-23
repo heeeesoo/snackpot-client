@@ -98,7 +98,7 @@ const ExerciseFinish = () => {
                 오늘 운동 어땠나요?
             </div>
             <div className="flex flex-row w-fixwidth justify-between items-center pt-[20px]">
-                <label htmlFor="thumbsUp" className={`w-[48%] flex justify-center items-center ${watchRatingType == 'good' ? 'bg-SystemBrand' : 'bg-white'} h-[170px] rounded-[16px]`}>
+                <label htmlFor="thumbsUp" className={`w-[48%] flex justify-center items-center ${watchRatingType != 'bad' ? 'bg-SystemBrand' : 'bg-white'} h-[170px] rounded-[16px]`}>
                     <input
                         type="radio"
                         id="thumbsUp"
@@ -113,7 +113,7 @@ const ExerciseFinish = () => {
                         width={88}
                     />
                 </label>
-                <label htmlFor="thumbsDown" className={`w-[48%] flex justify-center items-center ${watchRatingType == 'good' ? 'bg-white' : 'bg-SystemBrand'} h-[170px] rounded-[16px]`}>
+                <label htmlFor="thumbsDown" className={`w-[48%] flex justify-center items-center ${watchRatingType != 'bad' ? 'bg-white' : 'bg-SystemBrand'} h-[170px] rounded-[16px]`}>
                     <input
                         type="radio"
                         id="thumbsDown"
