@@ -47,6 +47,7 @@ const SignIn = () => {
                 router.replace('/group');
             }
 
+            
             // const apiUrl = `${searchParams}` === 'name=signup' ? `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/sign-up` : `${process.env.NEXT_PUBLIC_SERVER_URL}/mvp/auth/login`;
         
             // const formDataToSend = {
