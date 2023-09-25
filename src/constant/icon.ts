@@ -32,3 +32,4 @@ export const ThumbsDown = "/img/icons/finish/ThumbsDown.png";
 
 // group
 export const Crown = "/img/icons/group/Crown.svg";
+export const Plus = "/img/icons/group/Plus.svg";
