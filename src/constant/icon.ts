@@ -29,3 +29,6 @@ export const Time = "/img/icons/exerciseInfo/Time.svg";
 // finish
 export const ThumbsUp = "/img/icons/finish/ThumbsUp.png";
 export const ThumbsDown = "/img/icons/finish/ThumbsDown.png";
+
+// group
+export const Crown = "/img/icons/group/Crown.svg";
