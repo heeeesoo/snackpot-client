@@ -32,8 +32,12 @@ const Group = () => {
         fetchMyGroupListData();
     }, []);
 
-    const handleCreateRoute = () => {
-        router.push('/group/create')
+    const handleClickCreate = () => {
+        router.push('/group/create');
+    }
+
+    const handleClickGroup = (groupId : number) => {
+        router.push(`/group/${groupId}`);
     }
 
     if (loading) return (<div className="pt-[20px] mx-[20px]">loading</div>)
@@ -43,7 +47,7 @@ const Group = () => {
             {
                 groupMyList?.map((group : GroupType) => {
                     return(
-                        <div key={group.groupId} className="flex px-[20px] py-[20px] flex-col h-[112px] w-fixwidth bg-white mb-[12px] rounded-[16px]">
+                        <div key={group.groupId} onClick={()=>handleClickGroup(group.groupId)} className="flex px-[20px] py-[20px] flex-col h-[112px] w-fixwidth bg-white mb-[12px] rounded-[16px]">
                             <div className="flex flex-row items-stretch justify-between">
                                 <div className="font-bold flex flex-row items-center">
                                     {group.groupName}
@@ -92,7 +96,7 @@ const Group = () => {
                     )
                 })
             }
-            <div className="fixed bottom-[100px] rounded-full right-4" onClick={handleCreateRoute}>
+            <div className="fixed bottom-[100px] rounded-full right-4" onClick={handleClickCreate}>
                 <button className="bg-SystemBrand shadow-2xl hover:bg-blue-700 text-center flex items-center justify-center text-[40px] h-[56px] w-[56px] text-white font-bold rounded-full">
                     <Image
                     alt="plus"
