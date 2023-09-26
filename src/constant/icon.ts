@@ -33,3 +33,7 @@ export const ThumbsDown = "/img/icons/finish/ThumbsDown.png";
 // group
 export const Crown = "/img/icons/group/Crown.svg";
 export const Plus = "/img/icons/group/Plus.svg";
+export const Check = "/img/icons/group/Check.svg";
+export const Partial = "/img/icons/group/Partial.svg";
+export const Uncheck = "/img/icons/group/Uncheck.svg";
+export const Reminder = "/img/icons/group/Reminder.svg";
