@@ -205,7 +205,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                     }
                 </div>
             </div>
-            <BasicButton text="운동하러 가기"/>
+            <BasicButton onClick={() => router.push('/exercise')} text="운동하러 가기"/>
             <div className="py-4" />
         </div>
     );

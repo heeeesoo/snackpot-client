@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { RunningMan } from "@/constant/icon"
 import BasicButton from "@/components/button/BasicButton"
-import BasicSecondayButton from "@/components/button/BasicSecondayButton"
+import BasicSecondayButton2 from "@/components/button/BasicSecondayButton2"
 import Link from "next/link"
 import CheckUser from "@/components/auth/CheckUser"
 
@@ -33,8 +33,8 @@ export default function Home() {
           <BasicButton text="로그인" />
         </Link>
         <div className="py-[8px]"></div>
-        <Link href={'/signup'} className="w-full flex justify-center">
-          <BasicSecondayButton text="회원가입" />
+        <Link href={'/signup'} className="w-fixwidth flex justify-center">
+          <BasicSecondayButton2 text="회원가입" />
         </Link>
       </div>
     </div>
