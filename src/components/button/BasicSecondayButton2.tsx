@@ -11,7 +11,7 @@ const BasicSecondayButton2 = ({
     imgSrc
 }: BasicSecondayButtonProps) => {
     return (
-        <button onClick={onClick} className="h-[56px] flex items-center justify-center font-semibold w-full text-SystemBrand bg-SystemSecondaryBrand rounded-[16px]">
+        <button onClick={onClick} className="h-[56px] flex items-center font-bold justify-center font-semibold w-full text-SystemBrand bg-SystemSecondaryBrand rounded-[16px]">
             {imgSrc && (
                 <Image
                     src={imgSrc}

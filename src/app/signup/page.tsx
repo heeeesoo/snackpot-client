@@ -11,7 +11,7 @@ interface FormData {
 }
 
 const SignUp = () => {
-    const {login} = UserStore();
+    const {login , setUserName} = UserStore();
     const router = useRouter();
     const {
         register,
@@ -46,6 +46,7 @@ const SignUp = () => {
             } else {
                 console.log('ok');
                 login();
+                setUserName(data.userName);
                 router.replace('/group');
             }
 
