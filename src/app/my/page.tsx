@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { profile } from '@/constant/icon';
+import Skeleton from '@/components/common/Skeleton';
 
 interface myListType {
     userName: string;
@@ -48,7 +49,7 @@ const My = () => {
         fetchMyList();
     },[])
 
-    if (loading) return(<div>loading..</div>)
+    if (loading) return(<div className='pt-[20px] mx-[20px]'><Skeleton /></div>)
 
     return (
         <div className='flex flex-col items-center'>

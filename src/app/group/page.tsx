@@ -4,6 +4,8 @@ import { getDataClient } from "@/utils/getDataClient";
 import { Crown, Plus } from "@/constant/icon";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Skeleton from "@/components/common/Skeleton";
+import GroupSkeleton from "@/components/group/GroupSkeleton";
 
 interface GroupType {
     groupName: string;
@@ -40,7 +42,7 @@ const Group = () => {
         router.push(`/group/${groupId}`);
     }
 
-    if (loading) return (<div className="pt-[20px] mx-[20px]">loading</div>)
+    if (loading) return (<div className="pt-[20px] mx-[20px]"><GroupSkeleton/></div>)
 
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">

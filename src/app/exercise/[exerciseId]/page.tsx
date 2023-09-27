@@ -24,13 +24,13 @@ interface ExerciseDataType {
 async function getExerciseData(exerciseId : number) {
     try {
         const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL
-        const res = await fetch(`${apiURL}/exercises/${exerciseId}`, {
+        const res = await fetch(`${apiURL}/exercises2/${exerciseId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 "Accept": "application/json",
             },
-            cache: 'no-store'
+            // cache: 'no-store'
         });
 
         if (!res.ok) {
@@ -39,6 +39,7 @@ async function getExerciseData(exerciseId : number) {
         }
         
         const data = await res.json();
+        console.log('???------------------------------',data);
         return data;
 
     } catch (error) {

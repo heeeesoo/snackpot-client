@@ -7,6 +7,7 @@ import BasicSecondayButton from "@/components/button/BasicSecondayButton";
 import BasicButton from "@/components/button/BasicButton";
 import copy from 'copy-to-clipboard';
 import { useRouter } from "next/navigation";
+import Skeleton from "@/components/common/Skeleton";
 
 interface memberType {
     userName: string;
@@ -83,7 +84,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         fetchMyGroupListData();
     }, []);
 
-    if (loading1 && loading2 && loading3) return (<div className="pt-[20px] mx-[20px]">loading</div>)
+    if (loading1 && loading2 && loading3) return (<div className="pt-[20px] mx-[20px]"><Skeleton /></div>)
 
     return (
         <div className="flex flex-col items-center">
