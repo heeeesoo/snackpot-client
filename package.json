@@ -25,6 +25,7 @@
     "@types/react-dom": "^18.2.7",
     "eslint-config-next": "^13.4.19",
     "next": "^13.4.19",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-hook-form": "^7.46.1",
     "react-youtube": "^10.1.0",
     "zustand": "^4.4.1"
