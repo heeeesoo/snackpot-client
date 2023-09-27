@@ -9,6 +9,12 @@ const Header = () => {
     const pathname = usePathname();
     const router = useRouter();
 
+    function hasNumberAfterGroup(path:string) {
+        // '/group' 뒤에 숫자가 붙는지 확인하는 정규 표현식
+        const regex = /\/group\/\d+/;
+        return regex.test(path);
+    }
+
     const handleClickBack = () => {
         router.back()
     }
@@ -25,7 +31,7 @@ const Header = () => {
         <div>
             
             {
-                pathname.includes('/execution')
+                pathname.includes('/execution') || hasNumberAfterGroup(pathname)
                 ?
                 <div></div>
                 :

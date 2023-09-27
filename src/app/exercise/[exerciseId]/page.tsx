@@ -50,7 +50,7 @@ async function getExerciseData(exerciseId : number) {
 export default async function ExerciseId({ params }: { params: { exerciseId: number } }) {
     const data : ExerciseDataType= await getExerciseData(params.exerciseId);
     const levelList: { [key: string]: string } = {'easy':'초급', 'mid':'중급', 'hard':'고급'};
-    console.log(data)
+    console.log('exercise:',data)
 
     return (
         <div className="flex flex-col items-center w-full">

@@ -67,13 +67,15 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                     width: "100%",
                     height: "100%",
                     playerVars: {
-                        autoplay: 1,
+                        autoplay: true,
                         rel: 0,
                         modestbranding: 1,
                         controls: 0,
                         loop: 1,
                         playlist: videoId,
                         mute: 1,
+                        // start: 3,
+                        // end: 8
                     },
                 }}
                 onEnd={(e) => { e.target.stopVideo(0); }}

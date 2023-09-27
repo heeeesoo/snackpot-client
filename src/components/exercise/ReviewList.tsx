@@ -52,12 +52,12 @@ export default async function ReviewList({
             <div className="font-bold pb-[12px]">
                 리뷰
             </div>
-            <div className="flex flex-row overflow-auto w-screen max-w-[400px] h-auto no-scrollbar">
-                <section className="flex flex-row mr-fixmargin">
+            <div className="flex flex-row overflow-auto w-screen max-w-[485px] h-auto no-scrollbar">
+                <section className="flex flex-row ">
                     {
                         reveiwData.reviews.map((review : ReviewDataType, idx : number) => {
                             return (
-                                <button key={idx} className="text-left justify-between flex flex-col py-[20px] px-[20px] w-[240px] mr-[15px] bg-white rounded-[16px] h-[172px]">
+                                <button key={idx} className="text-left justify-between flex flex-col py-[20px] px-[20px] mr-[15px] w-[240px] bg-white rounded-[16px] h-[172px]">
                                     <div className="text-[14px] text-SystemGray1 font-normal">
                                         {review.content}
                                     </div>
