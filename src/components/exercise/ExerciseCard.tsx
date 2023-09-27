@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Like, LikeActive, Play } from "@/constant/icon";
 import { useRouter } from 'next/navigation'
+import { useState } from "react";
 
 interface exerciseType {
     thumbnail: string;
@@ -30,11 +31,17 @@ const ExerciseCard = ({
     const levelList: { [key: string]: string } = {'easy':'초급', 'mid':'중급', 'hard':'고급'};
     const router = useRouter();
     const LikedImageLink = isLiked ? LikeActive : Like;
+    const [like, setLike] = useState(isLiked);
+
+    const handleLikeClick = () => {
+        setLike(prev => !prev)
+    }
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.target as HTMLInputElement;
         if (target.id === 'like' || target.alt === 'like'){
-            console.log('like')
+            console.log('like');
+            setLike(prev => !prev);
         }
         else if (target.id === 'play' || target.alt === 'play'){
             router.push(`/exercise/${exerciseId}/execution`)
@@ -68,7 +75,7 @@ const ExerciseCard = ({
                         height={20}
                     />
                 </button>
-                <button id='like' className={`absolute flex justify-center items-center rounded-full w-[44px] h-[44px] ${isLiked ? 'bg-SystemBrand' : 'bg-white'}`}>
+                <button id='like' className={`absolute flex justify-center items-center rounded-full w-[44px] h-[44px] ${like ? 'bg-SystemBrand' : 'bg-white'}`}>
                     <Image
                         src={LikedImageLink}
                         alt="like"
