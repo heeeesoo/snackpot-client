@@ -6,6 +6,7 @@ import Image from "next/image";
 import BasicSecondayButton from "@/components/button/BasicSecondayButton";
 import BasicButton from "@/components/button/BasicButton";
 import copy from 'copy-to-clipboard';
+import { useRouter } from "next/navigation";
 
 interface memberType {
     userName: string;
@@ -27,6 +28,7 @@ interface staticsType {
 }
 
 const GroupId = ({ params }: { params: { groupId: number } }) => {
+    const router = useRouter();
     const [absenteesList , setAbsenteesList] = useState<string[]>();
     const [membersList , setMembersList] = useState<memberType[]>();
     const [statistics , setStatistics] = useState<statisticsType[]>();
@@ -91,6 +93,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 src={ChevronLeft}
                 height={24}
                 width={24}
+                onClick={()=>router.back()}
                 />
                 <button onClick={()=>handleInvitation(`${params.groupId}`)}  className="font-semibold text-[14px] text-SystemBrand">초대하기</button>
             </div>
