@@ -6,6 +6,8 @@ import Image from "next/image";
 import BasicSecondayButton from "@/components/button/BasicSecondayButton";
 import BasicButton from "@/components/button/BasicButton";
 import copy from 'copy-to-clipboard';
+import { useRouter } from "next/navigation";
+import Skeleton from "@/components/common/Skeleton";
 
 interface memberType {
     userName: string;
@@ -27,6 +29,7 @@ interface staticsType {
 }
 
 const GroupId = ({ params }: { params: { groupId: number } }) => {
+    const router = useRouter();
     const [absenteesList , setAbsenteesList] = useState<string[]>();
     const [membersList , setMembersList] = useState<memberType[]>();
     const [statistics , setStatistics] = useState<statisticsType[]>();
@@ -81,7 +84,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         fetchMyGroupListData();
     }, []);
 
-    if (loading1 && loading2 && loading3) return (<div className="pt-[20px] mx-[20px]">loading</div>)
+    if (loading1 && loading2 && loading3) return (<div className="pt-[20px] mx-[20px]"><Skeleton /></div>)
 
     return (
         <div className="flex flex-col items-center">
@@ -91,6 +94,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 src={ChevronLeft}
                 height={24}
                 width={24}
+                onClick={()=>router.back()}
                 />
                 <button onClick={()=>handleInvitation(`${params.groupId}`)}  className="font-semibold text-[14px] text-SystemBrand">초대하기</button>
             </div>
@@ -202,7 +206,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                     }
                 </div>
             </div>
-            <BasicButton text="운동하러 가기"/>
+            <BasicButton onClick={() => router.push('/exercise')} text="운동하러 가기"/>
             <div className="py-4" />
         </div>
     );
