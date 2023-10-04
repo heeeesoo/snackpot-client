@@ -9,11 +9,15 @@ import copy from 'copy-to-clipboard';
 import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
 
+interface absenteesType {
+    name: string;
+    profileImage: string|null;
+}
 interface memberType {
     userName: string;
     userId: number;
     checkList: string[];
-    consecutiveDays: number;
+    successNum: number;
 }
 
 interface statisticsType {
@@ -30,7 +34,7 @@ interface staticsType {
 
 const GroupId = ({ params }: { params: { groupId: number } }) => {
     const router = useRouter();
-    const [absenteesList , setAbsenteesList] = useState<string[]>();
+    const [absenteesList , setAbsenteesList] = useState<absenteesType[]>();
     const [membersList , setMembersList] = useState<memberType[]>();
     const [statistics , setStatistics] = useState<statisticsType[]>();
     const daysOfWeek = ['월','화','수','목','금','토','일'];
@@ -63,18 +67,21 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 const resultAbsentee = await getDataClient(`/groups/${params.groupId}/absentees`);
                 setLoading1(false) 
                 if (resultAbsentee) {
-                    setAbsenteesList(resultAbsentee.usernames);
+                    console.log(resultAbsentee);
+                    setAbsenteesList(resultAbsentee.result.data.absentees);
                 }
 
-                const resultMember = await getDataClient(`/groups/${params.groupId}/members`);
+                const resultMember = await getDataClient(`/groups/${params.groupId}/checklist`);
                 setLoading2(false) 
                 if (resultMember) {
-                    setMembersList(resultMember.memberList);
+                    console.log(resultMember);
+                    setMembersList(resultMember.result.data);
                 }
 
                 const resultStatistics = await getDataClient(`/groups/${params.groupId}/statistics`);
                 setLoading3(false) 
                 if (resultStatistics) {
+                    console.log(resultStatistics);
                     setStatistics(resultStatistics.result.data);
                 }
             } catch (error) {
@@ -108,10 +115,10 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
                 <div className="flex flex-row items-center  h-[40px] rounded-[16px] mx-[5%]">
                     {
-                        !loading1 && absenteesList?.map((absentee : string, idx:number) => {
+                        !loading1 && absenteesList?.map((absentee : absenteesType, idx:number) => {
                             return(
                                 <div key={idx} className="mx-[6px] w-[80px] h-[40px] bg-SystemSecondaryBrand flex items-center justify-center text-gray-500 rounded-[16px]">
-                                    {absentee}
+                                    {absentee.name}
                                 </div>
                             )
                         })
@@ -125,7 +132,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                             <div key={idx} className={`bg-white flex flex-col justify-between mb-[12px] rounded-[16px] px-[20px] py-[20px] ${idx == 0 ? ' h-[150px]' : 'h-[202px]'}`} style={{ display: idx < visibleMembers ? 'block' : 'none' }}>
                                 <div className="flex justify-between flex-row items-stretch">
                                     <div className="font-bold text-[16px]">{member.userName}</div>
-                                    <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.consecutiveDays}</div> / 7</div>
+                                    <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.successNum}</div> / 7</div>
                                 </div>
                                 <div className="flex justify-between items-stretch">
                                     {

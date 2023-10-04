@@ -7,14 +7,6 @@ import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
 import GroupSkeleton from "@/components/group/GroupSkeleton";
 
-// interface GroupType {
-//     groupName: string;
-//     groupId: number;
-//     hostName: string;
-//     startDate: string;
-//     groupNumber: number;
-//     memberProfileImageList: any[];
-// }
 
 interface GroupType {
     groupId: number;
