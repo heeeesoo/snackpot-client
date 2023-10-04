@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import BasicButton from '@/components/button/BasicButton';
 import InputBox from '@/components/input/InputBox';
 import { useRouter } from 'next/navigation';
+import TokenStore from '@/store/TokenStore';
 
 interface FormData {
     groupName: string;
@@ -18,10 +19,10 @@ const Create = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL;
+            const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
         
             const formDataToSend = {
-                userName: data.groupName,
+                groupName: data.groupName,
             };
 
             console.log(formDataToSend)
@@ -31,6 +32,7 @@ const Create = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
                 },
                 body: JSON.stringify(formDataToSend),
             });

@@ -7,25 +7,44 @@ import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
 import GroupSkeleton from "@/components/group/GroupSkeleton";
 
+// interface GroupType {
+//     groupName: string;
+//     groupId: number;
+//     hostName: string;
+//     startDate: string;
+//     groupNumber: number;
+//     memberProfileImageList: any[];
+// }
+
 interface GroupType {
-    groupName: string;
     groupId: number;
-    hostName: string;
+    groupName: string;
     startDate: string;
+    hostName: string;
     groupNumber: number;
-    memberProfileImageList: string[];
+    memberProfileImageList: any[];
 }
 
 const Group = () => {
     const [groupMyList, setGroupMyList] = useState<GroupType[]>();
+    // const [groupMyList, setGroupMyList] = useState<GroupType[]>();
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     useEffect(() => {
         const fetchMyGroupListData = async () => {
           try {
-                const result = await getDataClient('/groups');
-                console.log('mygrouplist:',result.content);
-                result && setGroupMyList(result.content);
+                const responseData = await getDataClient('/groups?&size=5');
+                console.log(responseData)
+                console.log('mygrouplist:',responseData.result.data.content);
+                console.log('mygrouplist[0]:',responseData.result.data.content[0]);
+                setGroupMyList(responseData.result.data.content);
+
+                // setGroupMyList(responseData.result.data.content);
+                // if (responseData !== null) {
+                //     setGroupMyList(responseData.result.data.content);
+                // }
+                  
+                // responseData.result.data.content && setGroupMyList(responseData.result.data.content);
                 setLoading(false);
             } catch (error) {
                 console.error('Error in fetchData:', error);
@@ -69,9 +88,9 @@ const Group = () => {
                                 {group.startDate} ~
                             </div>
                             <div className="text-[12px] flex items-center flex-row mt-[8px] text-SystemGray3">
-                                <div className="flex flex-row mr-[8px] ml-[8px]">
+                                {/* <div className="flex flex-row mr-[8px] ml-[8px]">
                                 {
-                                    group.memberProfileImageList.map((image:string, idx:number) => {
+                                    group.memberProfileImageList!==null && group.memberProfileImageList.map((image:string, idx:number) => {
                                         return(
                                             <div key={idx} className="w-[24px] h-[24px] relative ml-[-8px]">
                                                 {
@@ -91,7 +110,7 @@ const Group = () => {
                                         )
                                     })
                                 }
-                                </div>
+                                </div> */}
                                 {group.groupNumber}명
                             </div>
                         </div>

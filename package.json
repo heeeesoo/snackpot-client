@@ -24,6 +24,7 @@
     "@next/font": "^13.4.19",
     "@types/react-dom": "^18.2.7",
     "eslint-config-next": "^13.4.19",
+    "firebase": "^8.10.0",
     "next": "^13.4.19",
     "react-copy-to-clipboard": "^5.1.0",
     "react-hook-form": "^7.46.1",
