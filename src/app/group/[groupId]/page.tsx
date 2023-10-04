@@ -37,6 +37,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     const [absenteesList , setAbsenteesList] = useState<absenteesType[]>();
     const [membersList , setMembersList] = useState<memberType[]>();
     const [statistics , setStatistics] = useState<statisticsType[]>();
+    const [groupCode, setGroupCode] = useState<string>('');
     const daysOfWeek = ['월','화','수','목','금','토','일'];
     const today = new Date();
     const [loading1, setLoading1] = useState(true);
@@ -46,8 +47,8 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     const [visibleMembers, setVisibleMembers] = useState<number>(1);
 
     const handleInvitation = (inviteCode:string) => {
-        copy(inviteCode);
-        alert('초대코드가 복사되었습니다.')
+        copy(`http://localhost:3000/invitation/?groupCode=${inviteCode}`);
+        alert('초대코드가 복사되었습니다. 초대하고 싶은 멤버에게 공유하세요!')
     }
 
     const handleToggleClick = () => {
@@ -69,6 +70,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 if (resultAbsentee) {
                     console.log(resultAbsentee);
                     setAbsenteesList(resultAbsentee.result.data.absentees);
+                    setGroupCode(resultAbsentee.result.data.groupCode);
                 }
 
                 const resultMember = await getDataClient(`/groups/${params.groupId}/checklist`);
@@ -103,7 +105,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 width={24}
                 onClick={()=>router.back()}
                 />
-                <button onClick={()=>handleInvitation(`${params.groupId}`)}  className="font-semibold text-[14px] text-SystemBrand">초대하기</button>
+                <button onClick={()=>handleInvitation(`${groupCode}`)}  className="font-semibold text-[14px] text-SystemBrand">초대하기</button>
             </div>
             <div className="pb-[80px]" />
             <div className="flex w-fixwidth justify-between font-bold text-[18px] pb-[8px]">
