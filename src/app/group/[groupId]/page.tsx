@@ -46,6 +46,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     const [loading3, setLoading3] = useState(true);
     const [checkToggle, setCheckToggle] = useState<boolean>(false);
     const [visibleMembers, setVisibleMembers] = useState<number>(1);
+    const [visibleStatistics, setVisibleStatistics] = useState<number>(0);
 
     const handleInvitation = (inviteCode:string) => {
         copy(`http://localhost:3000/invitation/?groupCode=${inviteCode}`);
@@ -233,25 +234,40 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 :
                 <div className="text-SystemGray3 text-[14px]" onClick={handleToggleClick}>더보기</div>
             }
-            <div className="w-fixwidth font-bold text-[18px] pt-[20px]">
+            <div className="w-fixwidth flex flex-col font-bold text-[18px] pt-[20px]">
                 운동 시간 비교
+                <div className="flex flex-row justify-around bg-white mt-[12px] h-[40px] rounded-[20px]">
+                {
+                    daysOfWeek.map((day:string,idx:number)=>{
+                        return(
+                            <div key={idx} className={`flex w-[32px] text-[12px] h-[32px] rounded-full justify-center items-center flex-row ${idx===visibleStatistics ? 'bg-SystemBrand text-white' : 'text-SystemGray4'}`}onClick={()=>setVisibleStatistics(idx)}>
+                                {day}
+                            </div>
+                        )
+                    })
+                }
+                </div>
             </div>
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
-                <div className="flex flex-row items-center h-[277px] rounded-[16px] mx-[5%]">
+                <div className="flex flex-row h-[150px] rounded-[16px] mx-[5%]">
                     {
-                        !loading3 && statistics?.map((info : statisticsType, idx: number) => {
+                        !loading3 && statistics?.[visibleStatistics].statics.map((info : staticsType, idx: number) => {
                             return(
-                                <div key={idx} className="w-[100px]">
-                                    {/* {info.date} */}
-                                    차트
+                                <div key={idx} className="flex flex-col text-SystemGray3 justify-end items-center w-[70px]">
+                                    <div className={`w-[24px] h-[${100-info.time/100 * 100}px]`}></div>
+                                    <div className="text-[12px]">{info.time}분</div>
+                                    <div className={`w-[24px] h-[${info.time/100 * 100}px] rounded-t-lg bg-SystemGray3`}></div>
+                                    <div className="text-[12px] pt-[3px]">{info.name}</div>
                                 </div>
                             )
                         })
                     }
                 </div>
             </div>
-            <BasicButton onClick={() => router.push('/exercise')} text="운동하러 가기"/>
-            <div className="py-4" />
+            <div className="py-[50px]"/>
+            <div className="fixed bottom-0 left-0 right-0 p-4 text-center">
+                <BasicButton onClick={() => router.push('/exercise')} text="운동하러 가기"/>
+            </div>
         </div>
     );
 };
