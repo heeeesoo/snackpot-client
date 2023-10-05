@@ -8,6 +8,7 @@ import firebase from "firebase/app";
 import "firebase/messaging";
 import { useState, useEffect } from 'react';
 import TokenStore from '@/store/TokenStore';
+import { useSearchParams } from 'next/navigation'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCj8cmzn94XS6HfqVXvMnmRvSH66LcrblQ",
@@ -48,6 +49,8 @@ const SignIn = () => {
         getMessageToken();
     }, []);
 
+    const searchParams = useSearchParams();
+    const groupCode = searchParams.get('groupCode');
     const {login, setUserName} = UserStore();
     const {accessToken, setToken} = TokenStore();
     const router = useRouter();
@@ -89,7 +92,11 @@ const SignIn = () => {
                 login();
                 setUserName(data.userName);
                 setToken(responseData.result.data.accessToken);
-                router.replace('/group');
+                if(groupCode){
+                    router.replace(`/invitation?groupCode=${groupCode}`)
+                }else {
+                    router.replace('/group');
+                }
             }
 
             
