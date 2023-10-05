@@ -8,6 +8,7 @@ import firebase from "firebase/app";
 import "firebase/messaging";
 import { useState, useEffect } from 'react';
 import TokenStore from '@/store/TokenStore';
+import GroupCodeStore from '@/store/GroupCodeStore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCj8cmzn94XS6HfqVXvMnmRvSH66LcrblQ",
@@ -52,6 +53,7 @@ const SignUp = () => {
 
     const {login , setUserName} = UserStore();
     const {accessToken, setToken} = TokenStore();
+    const {groupCode} = GroupCodeStore();
     const router = useRouter();
     const {
         register,
@@ -92,28 +94,13 @@ const SignUp = () => {
                 login();
                 setToken(responseData.result.data.accessToken);
                 setUserName(data.userName);
-                router.replace('/group');
+                if(groupCode !== ""){
+                    router.replace(`/invitation?groupCode=${groupCode}`);
+                }else{
+                    router.replace('/group');
+                }
             }
 
-            // if (!response.ok) {
-            //     const errorResponseData = await response.json();
-            //     if (errorResponseData.code === -2100){
-            //         alert('알림을 허용해주세요.')
-            //     } else {
-            //         alert(errorResponseData.result.message);
-            //     }
-            //     // throw new Error(`${error}`)
-            //     return;
-            // } else {
-            //     const responseData = await response.json();
-            //     console.log('Server response:', responseData);
-            //     setToken(responseData.result.data.accessToken);
-            //     setMemberId(responseData.result.data.id);
-            //     setMemberName(data.userName);
-            //     login();
-            //     router.replace('/');
-            // }
-        
 
         } catch (error) {
             console.error('Error while submitting form data:', error);
