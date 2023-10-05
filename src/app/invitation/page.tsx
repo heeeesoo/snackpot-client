@@ -36,6 +36,7 @@ const Invitation = () => {
                 } else {
                     console.log('okinvite');
                     alert('그룹 가입이 완료되었습니다.');
+                    setGroupCode('');
                     router.push('/group');
                 }
 
