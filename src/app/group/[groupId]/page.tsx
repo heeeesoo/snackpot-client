@@ -8,6 +8,7 @@ import BasicButton from "@/components/button/BasicButton";
 import copy from 'copy-to-clipboard';
 import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
+import TokenStore from "@/store/TokenStore";
 
 interface absenteesType {
     name: string;
@@ -58,8 +59,33 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         }
     };
 
-    const handleReminderClick = () => {
-        alert()
+    const handleReminderClick = async (toUserId : number) => {
+        try {
+            const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
+            const formDataToSend = {
+                groupId: params.groupId,
+                toUserId: toUserId
+            };
+            const response = await fetch(`${apiURL}/notification`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
+                },
+                body: JSON.stringify(formDataToSend),
+            });
+            const responseData = await response.json();
+            if (!response.ok){
+                console.log('error');
+                alert(responseData.result.message);
+            } else {
+                console.log('okreminder');
+                alert('콕 찌르기 성공!');
+            }
+        } catch (error) {
+            alert(error)
+        }
     }
 
     useEffect(() => {
@@ -115,12 +141,21 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 </div>
             </div>
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
-                <div className="flex flex-row items-center  h-[40px] rounded-[16px] mx-[5%]">
+                <div className="flex flex-row items-center h-[40px] rounded-[16px] mx-[5%]">
                     {
                         !loading1 && absenteesList?.map((absentee : absenteesType, idx:number) => {
                             return(
-                                <div key={idx} className="mx-[6px] w-[80px] h-[40px] bg-SystemSecondaryBrand flex items-center justify-center text-gray-500 rounded-[16px]">
+                                <div key={idx} className="flex-col justify-around mx-[6px] w-[100px] h-[40px] bg-white flex items-center text-gray-500 rounded-[16px]">
                                     {absentee.name}
+                                    {/* <button onClick={()=>handleReminderClick(idx)} className="h-[30px] w-[80px] rounded-[16px] flex items-center font-semibold text-[12px] text-SystemBrand justify-center  bg-SystemSecondaryBrand">
+                                        <Image
+                                        src={Reminder}
+                                        alt="Reminder"
+                                        width={16}
+                                        height={16}
+                                        />
+                                        콕 찌르기
+                                    </button> */}
                                 </div>
                             )
                         })
@@ -183,7 +218,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                                 {
                                     idx !== 0 
                                     ?
-                                    <BasicSecondayButton text="콕 찌르기" imgSrc={Reminder}/>
+                                    <BasicSecondayButton onClick={()=>handleReminderClick(member.userId)} text="콕 찌르기" imgSrc={Reminder}/>
                                     :
                                     <div></div>
                                 }
