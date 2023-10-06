@@ -254,9 +254,9 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                         !loading3 && statistics?.[visibleStatistics].statics.map((info : staticsType, idx: number) => {
                             return(
                                 <div key={idx} className="flex flex-col text-SystemGray3 justify-end items-center w-[70px]">
-                                    <div className={`w-[24px] h-[${100-info.time/100 * 100}px]`}></div>
-                                    <div className="text-[12px]">{info.time}분</div>
-                                    <div className={`w-[24px] h-[${info.time/100 * 100}px] rounded-t-lg bg-SystemGray3`}></div>
+                                    <div className={`w-[24px] h-[${100-Math.floor(info.time/60)}px]`}></div>
+                                    <div className="text-[12px]">{Math.floor(info.time/60)}분</div>
+                                    <div className={`w-[24px] h-[${Math.floor(info.time/60)}px] rounded-t-lg bg-SystemGray3`}></div>
                                     <div className="text-[12px] pt-[3px]">{info.name}</div>
                                 </div>
                             )

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import YouTube from 'react-youtube';
 import { useRouter } from "next/navigation";
 import ProgressBar from "@/components/exercise/ProgressBar";
+import TokenStore from "@/store/TokenStore";
 
 const Execution = ({ params }: { params: { exerciseId: number } }) => {
     const { videoId, calory, time } = ExerciseStore();
@@ -31,10 +32,12 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
             clearInterval(intervalId);
 
             // 시간이 0 이하로 떨어졌을 때 POST 요청을 보냅니다.
-            fetch(`${process.env.NEXT_PUBLIC_TEST_SERVER_URL}/exercise/finish`, {
+            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/exercises/finish`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
                 },
                 body: JSON.stringify({ exerciseId: params.exerciseId }),
             })

@@ -51,7 +51,7 @@ const SignUp = () => {
         getMessageToken();
     }, []);
 
-    const {login , setUserName} = UserStore();
+    const {login , setUserName, setUserId} = UserStore();
     const {accessToken, setToken} = TokenStore();
     const {groupCode} = GroupCodeStore();
     const router = useRouter();
@@ -94,6 +94,7 @@ const SignUp = () => {
                 login();
                 setToken(responseData.result.data.accessToken);
                 setUserName(data.userName);
+                setUserId(responseData.result.data.memberId);
                 if(groupCode !== ""){
                     router.replace(`/invitation?groupCode=${groupCode}`);
                 }else{

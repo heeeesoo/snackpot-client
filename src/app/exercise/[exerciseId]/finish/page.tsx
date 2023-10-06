@@ -6,13 +6,14 @@ import BasicButton from "@/components/button/BasicButton";
 import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import TokenStore from "@/store/TokenStore";
 
 interface FormData {
     ratingType: string;
     reviewContent: number;
 }
 
-const ExerciseFinish = () => {
+const ExerciseFinish = ({ params }: { params: { exerciseId: number } }) => {
     const { videoId, calory, time } = ExerciseStore();
     const router = useRouter();
     const {
@@ -26,20 +27,22 @@ const ExerciseFinish = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL;
+            const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
         
             const formDataToSend = {
+                exerciseId: params.exerciseId,
                 ratingType: data.ratingType,
                 reviewContent: data.reviewContent
             };
 
             console.log(formDataToSend)
         
-            const response = await fetch(`${apiURL}/auth/signup`, {
+            const response = await fetch(`${apiURL}/reviews`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
                 },
                 body: JSON.stringify(formDataToSend),
             });
@@ -98,11 +101,11 @@ const ExerciseFinish = () => {
                 오늘 운동 어땠나요?
             </div>
             <div className="flex flex-row w-fixwidth justify-between items-center pt-[20px]">
-                <label htmlFor="thumbsUp" className={`w-[48%] flex justify-center items-center ${watchRatingType != 'bad' ? 'bg-SystemBrand' : 'bg-white'} h-[170px] rounded-[16px]`}>
+                <label htmlFor="thumbsUp" className={`w-[48%] flex justify-center items-center ${watchRatingType != 'BAD' ? 'bg-SystemBrand' : 'bg-white'} h-[170px] rounded-[16px]`}>
                     <input
                         type="radio"
                         id="thumbsUp"
-                        value="good"
+                        value="GOOD"
                         {...register("ratingType")}
                         style={{ display: "none" }} // 라디오 버튼을 숨깁니다.
                     />
@@ -113,11 +116,11 @@ const ExerciseFinish = () => {
                         width={88}
                     />
                 </label>
-                <label htmlFor="thumbsDown" className={`w-[48%] flex justify-center items-center ${watchRatingType != 'bad' ? 'bg-white' : 'bg-SystemBrand'} h-[170px] rounded-[16px]`}>
+                <label htmlFor="thumbsDown" className={`w-[48%] flex justify-center items-center ${watchRatingType != 'BAD' ? 'bg-white' : 'bg-SystemBrand'} h-[170px] rounded-[16px]`}>
                     <input
                         type="radio"
                         id="thumbsDown"
-                        value="bad"
+                        value="BAD"
                         {...register("ratingType")}
                         style={{ display: "none" }} // 라디오 버튼을 숨깁니다.
                     />

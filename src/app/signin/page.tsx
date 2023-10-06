@@ -51,7 +51,7 @@ const SignIn = () => {
     }, []);
 
     const searchParams = useSearchParams();
-    const {login, setUserName} = UserStore();
+    const {login, setUserName, setUserId} = UserStore();
     const {accessToken, setToken} = TokenStore();
     const {groupCode} = GroupCodeStore();
     const router = useRouter();
@@ -93,6 +93,8 @@ const SignIn = () => {
                 login();
                 setUserName(data.userName);
                 setToken(responseData.result.data.accessToken);
+                setUserId(responseData.result.data.memberId);
+                console.log(responseData.result.data.id)
                 if(groupCode !== ""){
                     router.replace(`/invitation?groupCode=${groupCode}`)
                 }else {
