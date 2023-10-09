@@ -17,7 +17,7 @@ interface ExerciseDataType {
     timeSpent: number;
     bodyPart: string;
     level: string;
-    calory: number;
+    calories: number;
     like: boolean;
 }
 
@@ -57,7 +57,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
     return (
         <div className="flex flex-col items-center w-full">
             {/* <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={data.timeSpent} /> */}
-            <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={30} />
+            <ExerciseStoreCard videoId={data.videoId} calory={data.calories} time={30} />
             <Link href={`/exercise/${params.exerciseId}/execution`} className="h-[250px] w-fixwidth relative z-0">
                 <Image
                 src={data.thumbnail}
@@ -143,7 +143,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                         alt="Calory"
                         />
                         <span className="text-SystemGray2 text-[12px] pt-[8px]">
-                            {data.calory}kcal
+                            {data.calories}kcal
                         </span>
                     </div>
                 </div>

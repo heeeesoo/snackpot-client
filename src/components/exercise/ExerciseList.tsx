@@ -4,10 +4,10 @@ interface exerciseType {
     thumbnail: string;
     title: string;
     youtuberName: string;
-    time: number;
+    timeSpent: number;
     bodyPart: string; 
     level: string;
-    calory: number;
+    calories: number;
     isLiked: boolean;
     exerciseId: number;
 }
@@ -29,10 +29,10 @@ const ExerciseList = ({
                                 thumbnail={exercise.thumbnail}
                                 title={exercise.title}
                                 youtuberName={exercise.youtuberName}
-                                time={exercise.time}
+                                time={exercise.timeSpent}
                                 bodyPart={exercise.bodyPart}
                                 level={exercise.level}
-                                calory={exercise.calory}
+                                calory={exercise.calories}
                                 isLiked={exercise.isLiked}
                                 exerciseId={exercise.exerciseId}
                             />
