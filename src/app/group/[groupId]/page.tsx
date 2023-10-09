@@ -9,6 +9,7 @@ import copy from 'copy-to-clipboard';
 import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
 import TokenStore from "@/store/TokenStore";
+import UserStore from "@/store/UserStore";
 
 interface absenteesType {
     name: string;
@@ -45,18 +46,19 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     const [loading2, setLoading2] = useState(true);
     const [loading3, setLoading3] = useState(true);
     const [checkToggle, setCheckToggle] = useState<boolean>(false);
-    const [visibleMembers, setVisibleMembers] = useState<number>(1);
+    const [visibleMembers, setVisibleMembers] = useState<boolean>(false);
     const [visibleStatistics, setVisibleStatistics] = useState<number>(0);
+    const {userid} = UserStore();
 
     const handleInvitation = (inviteCode:string) => {
-        copy(`http://localhost:3000/invitation/?groupCode=${inviteCode}`);
+        copy(`https://snackpot-client.vercel.app/invitation/?groupCode=${inviteCode}`);
         alert('초대코드가 복사되었습니다. 초대하고 싶은 멤버에게 공유하세요!')
     }
 
     const handleToggleClick = () => {
         if (membersList) {
             setCheckToggle(!checkToggle);
-            setVisibleMembers(checkToggle ? 1 : membersList.length);
+            setVisibleMembers(checkToggle ? false : true);
         }
     };
 
@@ -167,7 +169,64 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 {
                     !loading2 && membersList?.map((member: memberType, idx: number) => {
                         return(
-                            <div key={idx} className={`bg-white flex flex-col justify-between mb-[12px] rounded-[16px] px-[20px] py-[20px] ${idx == 0 ? ' h-[150px]' : 'h-[202px]'}`} style={{ display: idx < visibleMembers ? 'block' : 'none' }}>
+                            <div key={idx} className={`bg-white flex flex-col justify-between mb-[12px] rounded-[16px] px-[20px] py-[20px] h-[150px]`} style={{ display: member.userId==userid ? 'block' : 'none' }}>
+                                <div className="flex justify-between flex-row items-stretch">
+                                    <div className="font-bold text-[16px]">{member.userName}</div>
+                                    <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.successNum}</div> / 7</div>
+                                </div>
+                                <div className="flex justify-between items-stretch">
+                                    {
+                                        member.checkList.map((check:string, idx:number) => {
+                                            return(
+                                                <div key={idx} className={`w-full ${idx === today.getDay()-1 ? 'border border-SystemGray6' : ''} h-[70px] rounded-[16px] justify-center flex flex-col items-center`}>
+                                                    <div className="text-SystemGray4 mb-[8px] text-[12px]">
+                                                        {daysOfWeek[idx]}
+                                                    </div>
+                                                    {
+                                                        check === 'CHECK' ?
+                                                        <div className="rounded-full flex items-center justify-center bg-SystemBrand w-[32px] h-[32px]">
+                                                            <Image
+                                                            src={Check}
+                                                            alt="Check"
+                                                            width={16}
+                                                            height={16}
+                                                            />
+                                                        </div>
+                                                        :
+                                                        check === 'UNCHECK' ?
+                                                        <div className="rounded-full flex items-center justify-center bg-white w-[32px] h-[32px]">
+                                                            <Image
+                                                            src={Uncheck}
+                                                            alt="Check"
+                                                            width={16}
+                                                            height={16}
+                                                            />
+                                                        </div>
+                                                        :
+                                                        <div className="rounded-full flex items-center justify-center bg-SystemSecondaryBrand w-[32px] h-[32px]">
+                                                            <Image
+                                                            src={Partial}
+                                                            alt="Check"
+                                                            width={16}
+                                                            height={16}
+                                                            />
+                                                        </div>
+                                                    }
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            <div className="w-fixwidth pt-[20px]">
+                {
+                    !loading2 && membersList?.map((member: memberType, idx: number) => {
+                        return(
+                            <div key={idx} className={`bg-white flex flex-col justify-between mb-[12px] rounded-[16px] px-[20px] py-[20px] h-[202px]`} style={{ display: member.userId!=userid && visibleMembers ? 'block' : 'none' }}>
                                 <div className="flex justify-between flex-row items-stretch">
                                     <div className="font-bold text-[16px]">{member.userName}</div>
                                     <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.successNum}</div> / 7</div>
@@ -216,13 +275,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                                     }
                                 </div>
                                 <div className="py-2" />
-                                {
-                                    idx !== 0 
-                                    ?
-                                    <BasicSecondayButton onClick={()=>handleReminderClick(member.userId)} text="콕 찌르기" imgSrc={Reminder}/>
-                                    :
-                                    <div></div>
-                                }
+                                <BasicSecondayButton onClick={()=>handleReminderClick(member.userId)} text="콕 찌르기" imgSrc={Reminder}/>
                             </div>
                         )
                     })

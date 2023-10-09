@@ -72,7 +72,7 @@ const Group = () => {
                     />
                     <div className="pt-[20px]"/>
                     <div className="font-bold text-[24px] flex-col justify-center text-center">
-                        <div className="flex"><div className="text-SystemBrand">현재 {totalNum}명이</div> &nbsp; 그룹을 만들어 </div>
+                        <div className="flex"><div className="text-SystemBrand">현재 {totalNum}명이 &nbsp;</div> 그룹을 만들어 </div>
                         <div>매일 건강해지고 있어요!</div>
                     </div>
                     <div className="pt-[12px]"/>
