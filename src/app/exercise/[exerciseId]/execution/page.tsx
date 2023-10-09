@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import YouTube from 'react-youtube';
 import { useRouter } from "next/navigation";
 import ProgressBar from "@/components/exercise/ProgressBar";
+import TokenStore from "@/store/TokenStore";
 
 const Execution = ({ params }: { params: { exerciseId: number } }) => {
     const { videoId, calory, time } = ExerciseStore();
@@ -31,24 +32,26 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
             clearInterval(intervalId);
 
             // 시간이 0 이하로 떨어졌을 때 POST 요청을 보냅니다.
-            fetch(`${process.env.NEXT_PUBLIC_TEST_SERVER_URL}/exercise/finish`, {
+            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/exercises/finish`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
                 },
                 body: JSON.stringify({ exerciseId: params.exerciseId }),
             })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('POST 요청 실패');
-                    }
-                    // POST 요청이 성공한 경우에 수행할 작업을 여기에 추가하세요.
-                    console.log('ok');
-                    router.push(`/exercise/${params.exerciseId}/finish`);
-                })
-                .catch((error) => {
-                    console.error('POST 요청 오류:', error);
-                });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('POST 요청 실패');
+                }
+                // POST 요청이 성공한 경우에 수행할 작업을 여기에 추가하세요.
+                console.log('ok');
+                router.push(`/exercise/${params.exerciseId}/finish`);
+            })
+            .catch((error) => {
+                console.error('POST 요청 오류:', error);
+            });
         }
 
         // 컴포넌트가 언마운트되거나 다시 렌더링될 때 clearInterval로 interval을 정리합니다.

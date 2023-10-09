@@ -85,39 +85,39 @@ const My = () => {
                         60%  
                     </div>
                 </div>
-                <div className='pt-[16px]'/>
+            <div className='pt-[16px]'/>
                 <div className='flex items-stretch justify-between flex-row'>
                     {
-                        mylist?.weeklyGoalTime.map((goaltime: number, idx: number)=>{
-                            return(
-                                <div key={idx} className='flex w-[40px] items-center justify-between flex-col'>
-                                    <div className='text-SystemGray4 text-[12px]'>
-                                        {dayOfWeek[idx]}
-                                    </div>
-                                    <div className='pt-[8px]'/>
-                                    <div>
-                                        {/* {goaltime} */}
-                                        <div>
-                                            <div style={{ width: '28px', height: '28px' }}>
-                                            <svg viewBox="0 0 200 200">
-                                                <circle cx="100" cy="100" r="90" fill="none" stroke="#EBF2FE" strokeWidth="20" />
-                                                <circle
-                                                cx="100"
-                                                cy="100"
-                                                r="90"
-                                                fill="none"
-                                                stroke="#3A81F7"
-                                                strokeWidth="20"
-                                                strokeDasharray={`${2 * Math.PI * 90 * Number(goaltime/mylist.dailyGoalTime)} ${2 * Math.PI * 90 * Number(1-goaltime/mylist.dailyGoalTime)}`}
-                                                strokeDashoffset={2 * Math.PI * 90 * 0.25}
-                                                />
-                                            </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })
+                        // mylist?.weeklyGoalTime.map((goaltime: number, idx: number)=>{
+                        //     return(
+                        //         <div key={idx} className='flex w-[40px] items-center justify-between flex-col'>
+                        //             <div className='text-SystemGray4 text-[12px]'>
+                        //                 {dayOfWeek[idx]}
+                        //             </div>
+                        //             <div className='pt-[8px]'/>
+                        //             <div>
+                        //                 {/* {goaltime} */}
+                        //                 <div>
+                        //                     <div style={{ width: '28px', height: '28px' }}>
+                        //                     <svg viewBox="0 0 200 200">
+                        //                         <circle cx="100" cy="100" r="90" fill="none" stroke="#EBF2FE" strokeWidth="20" />
+                        //                         <circle
+                        //                         cx="100"
+                        //                         cy="100"
+                        //                         r="90"
+                        //                         fill="none"
+                        //                         stroke="#3A81F7"
+                        //                         strokeWidth="20"
+                        //                         strokeDasharray={`${2 * Math.PI * 90 * Number(goaltime/mylist.dailyGoalTime)} ${2 * Math.PI * 90 * Number(1-goaltime/mylist.dailyGoalTime)}`}
+                        //                         strokeDashoffset={2 * Math.PI * 90 * 0.25}
+                        //                         />
+                        //                     </svg>
+                        //                     </div>
+                        //                 </div>
+                        //             </div>
+                        //         </div>
+                        //     )
+                        // })
                     }
                 </div>
             </div>

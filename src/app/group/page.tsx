@@ -1,31 +1,46 @@
 'use client'
 import { useCallback, useEffect, useState } from "react";
 import { getDataClient } from "@/utils/getDataClient";
-import { Crown, Plus } from "@/constant/icon";
+import { Crown, Plus, Create } from "@/constant/icon";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
 import GroupSkeleton from "@/components/group/GroupSkeleton";
+import BasicSecondayButton from "@/components/button/BasicSecondayButton";
+import BasicSecondayButton2 from "@/components/button/BasicSecondayButton2";
+
 
 interface GroupType {
-    groupName: string;
     groupId: number;
-    hostName: string;
+    groupName: string;
     startDate: string;
+    hostName: string;
     groupNumber: number;
-    memberProfileImageList: string[];
+    memberProfileImageList: any[];
 }
 
 const Group = () => {
     const [groupMyList, setGroupMyList] = useState<GroupType[]>();
+    const [totalNum, setTotalNum] = useState<number>(100);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     useEffect(() => {
         const fetchMyGroupListData = async () => {
           try {
-                const result = await getDataClient('/groups');
-                console.log('mygrouplist:',result.content);
-                result && setGroupMyList(result.content);
+                const responseData = await getDataClient('/groups?&size=5');
+                const responseDataTotalNum = await getDataClient('/members/total-num');
+                console.log(responseData)
+                console.log('mygrouplist:',responseData.result.data.content);
+                console.log('mygrouplist[0]:',responseData.result.data.content[0]);
+                setGroupMyList(responseData.result.data.content);
+                setTotalNum(responseDataTotalNum.result.data.totalNum)
+
+                // setGroupMyList(responseData.result.data.content);
+                // if (responseData !== null) {
+                //     setGroupMyList(responseData.result.data.content);
+                // }
+                  
+                // responseData.result.data.content && setGroupMyList(responseData.result.data.content);
                 setLoading(false);
             } catch (error) {
                 console.error('Error in fetchData:', error);
@@ -46,6 +61,29 @@ const Group = () => {
 
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">
+            {
+                groupMyList?.length==0 &&
+                <div className=" w-fixwidth h-[80vh] flex flex-col justify-center items-center">
+                    <Image
+                    src={Create}
+                    alt="Create"
+                    width={120}
+                    height={120}
+                    />
+                    <div className="pt-[20px]"/>
+                    <div className="font-bold text-[24px] flex-col justify-center text-center">
+                        <div className="flex"><div className="text-SystemBrand">현재 {totalNum}명이</div> &nbsp; 그룹을 만들어 </div>
+                        <div>매일 건강해지고 있어요!</div>
+                    </div>
+                    <div className="pt-[12px]"/>
+                    <div className="text-center text-[14px] text-SystemGray3">
+                        유튜브 영상만 보고 운동을 잘 하지 않았다면? <br/>
+                        지금 당장 그룹을 만들어 습관을 만들어요!
+                    </div>
+                    <div className="pt-[36px]"/>
+                    <BasicSecondayButton2 text="그룹 만들러가기" onClick={()=>router.push('/group/create')} />
+                </div>
+            }
             {
                 groupMyList?.map((group : GroupType) => {
                     return(
@@ -69,9 +107,9 @@ const Group = () => {
                                 {group.startDate} ~
                             </div>
                             <div className="text-[12px] flex items-center flex-row mt-[8px] text-SystemGray3">
-                                <div className="flex flex-row mr-[8px] ml-[8px]">
+                                {/* <div className="flex flex-row mr-[8px] ml-[8px]">
                                 {
-                                    group.memberProfileImageList.map((image:string, idx:number) => {
+                                    group.memberProfileImageList!==null && group.memberProfileImageList.map((image:string, idx:number) => {
                                         return(
                                             <div key={idx} className="w-[24px] h-[24px] relative ml-[-8px]">
                                                 {
@@ -91,7 +129,7 @@ const Group = () => {
                                         )
                                     })
                                 }
-                                </div>
+                                </div> */}
                                 {group.groupNumber}명
                             </div>
                         </div>

@@ -14,17 +14,17 @@ interface ExerciseDataType {
     youtuberName: string;
     youtuberChannelId: string;
     youtuberDescription: string;
-    time: number;
+    timeSpent: number;
     bodyPart: string;
     level: string;
-    calory: number;
+    calories: number;
     like: boolean;
 }
 
 async function getExerciseData(exerciseId : number) {
     try {
-        const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL
-        const res = await fetch(`${apiURL}/exercises2/${exerciseId}`, {
+        const apiURL = process.env.NEXT_PUBLIC_SERVER_URL
+        const res = await fetch(`${apiURL}/exercises/${exerciseId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,13 +49,15 @@ async function getExerciseData(exerciseId : number) {
 }
 
 export default async function ExerciseId({ params }: { params: { exerciseId: number } }) {
-    const data : ExerciseDataType= await getExerciseData(params.exerciseId);
+    const responseData = await getExerciseData(params.exerciseId);
+    const data : ExerciseDataType= responseData.result.data
     const levelList: { [key: string]: string } = {'easy':'초급', 'mid':'중급', 'hard':'고급'};
     console.log('exercise:',data)
 
     return (
         <div className="flex flex-col items-center w-full">
-            <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={data.time} />
+            {/* <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={data.timeSpent} /> */}
+            <ExerciseStoreCard videoId={data.videoId} calory={data.calories} time={30} />
             <Link href={`/exercise/${params.exerciseId}/execution`} className="h-[250px] w-fixwidth relative z-0">
                 <Image
                 src={data.thumbnail}
@@ -114,11 +116,11 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                         />
                         <span className="text-SystemGray2 text-[12px] pt-[8px]">
                         {
-                            data.time >= 60 ? 
-                            data.time % 60 ==0?
-                            `${Math.floor(data.time/60)}분` :
-                            `${Math.floor(data.time/60)}분 ${data.time%60}초`:
-                            `${data.time%60}초`
+                            data.timeSpent >= 60 ? 
+                            data.timeSpent % 60 ==0?
+                            `${Math.floor(data.timeSpent/60)}분` :
+                            `${Math.floor(data.timeSpent/60)}분 ${data.timeSpent%60}초`:
+                            `${data.timeSpent%60}초`
                         }
                         </span>
                     </div>
@@ -141,7 +143,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                         alt="Calory"
                         />
                         <span className="text-SystemGray2 text-[12px] pt-[8px]">
-                            {data.calory}kcal
+                            {data.calories}kcal
                         </span>
                     </div>
                 </div>
@@ -161,7 +163,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                         {data.bodyPart}
                     </span>
                 </div>
-                <ReviewList exerciseId={params.exerciseId} />
+                {/* <ReviewList exerciseId={params.exerciseId} /> */}
                 <div className="py-[20px]"/>
             </div>
         </div>

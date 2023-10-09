@@ -1,8 +1,7 @@
 async function getReveiwData(exerciseId : number) {
     try {
-        const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL
-        console.log(`${apiURL}/exercises/${exerciseId}/reviews`)
-        const res = await fetch(`${apiURL}/exercises/${exerciseId}/reviews`, {
+        const apiURL = process.env.NEXT_PUBLIC_SERVER_URL
+        const res = await fetch(`${apiURL}/reviews/exercises/${exerciseId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
