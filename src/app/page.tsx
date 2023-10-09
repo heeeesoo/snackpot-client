@@ -21,7 +21,7 @@ export default function Home() {
         />
         <div className="font-bold text-[24px] text-center pb-[12px]">
           항상 운동 결심 <br />
-          작심 3일 이었다면?
+          작심삼일이었다면?
         </div>
         <div className="text-SystemGray3 text-[14px] text-center font-normal">
           그룹으로 묶어 운동하는 snackpot과 함께 <br />

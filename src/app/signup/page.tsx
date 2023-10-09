@@ -4,6 +4,22 @@ import { useForm } from 'react-hook-form';
 import BasicButton from '@/components/button/BasicButton';
 import UserStore from '@/store/UserStore';
 import { useRouter } from 'next/navigation';
+import firebase from "firebase/app";
+import "firebase/messaging";
+import { useState, useEffect } from 'react';
+import TokenStore from '@/store/TokenStore';
+import GroupCodeStore from '@/store/GroupCodeStore';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCj8cmzn94XS6HfqVXvMnmRvSH66LcrblQ",
+    authDomain: "snackpot-2aff6.firebaseapp.com",
+    projectId: "snackpot-2aff6",
+    storageBucket: "snackpot-2aff6.appspot.com",
+    messagingSenderId: "772201837506",
+    appId: "1:772201837506:web:b594806bf50b8f72e89c5b",
+    measurementId: "G-RBMVKFLVBN"
+};
+
 
 interface FormData {
     userName: string;
@@ -11,7 +27,33 @@ interface FormData {
 }
 
 const SignUp = () => {
-    const {login , setUserName} = UserStore();
+    // fcm token
+    const [fcmToken, setFcmToken] = useState<string>('')
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    
+    const getToken = async() => {
+        const messaging = firebase.messaging();
+        const token = await messaging.getToken({
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    });
+
+        return token;
+    }
+    
+    useEffect(() => {
+        async function getMessageToken() {
+            const token = await getToken();
+            console.log('fcm token:',token);
+            setFcmToken(token);
+        }
+        getMessageToken();
+    }, []);
+
+    const {login , setUserName, setUserId} = UserStore();
+    const {accessToken, setToken} = TokenStore();
+    const {groupCode} = GroupCodeStore();
     const router = useRouter();
     const {
         register,
@@ -21,11 +63,12 @@ const SignUp = () => {
 
     const onSubmit = async (data: FormData) => {
         try {
-            const apiURL = process.env.NEXT_PUBLIC_TEST_SERVER_URL;
+            const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
         
             const formDataToSend = {
-                userName: data.userName,
-                dailyGoalTime: data.dailyGoalTime
+                name: data.userName,
+                dailyGoalTime: Number(data.dailyGoalTime),
+                fcmToken: fcmToken
             };
 
             console.log(formDataToSend)
@@ -39,36 +82,26 @@ const SignUp = () => {
                 body: JSON.stringify(formDataToSend),
             });
 
+            const responseData = await response.json();
             console.log(response);
+            console.log(responseData);
 
             if (!response.ok){
                 console.log('error');
+                alert(responseData.result.message);
             } else {
                 console.log('ok');
                 login();
+                setToken(responseData.result.data.accessToken);
                 setUserName(data.userName);
-                router.replace('/group');
+                setUserId(responseData.result.data.memberId);
+                if(groupCode !== ""){
+                    router.replace(`/invitation?groupCode=${groupCode}`);
+                }else{
+                    router.replace('/group');
+                }
             }
 
-            // if (!response.ok) {
-            //     const errorResponseData = await response.json();
-            //     if (errorResponseData.code === -2100){
-            //         alert('알림을 허용해주세요.')
-            //     } else {
-            //         alert(errorResponseData.result.message);
-            //     }
-            //     // throw new Error(`${error}`)
-            //     return;
-            // } else {
-            //     const responseData = await response.json();
-            //     console.log('Server response:', responseData);
-            //     setToken(responseData.result.data.accessToken);
-            //     setMemberId(responseData.result.data.id);
-            //     setMemberName(data.userName);
-            //     login();
-            //     router.replace('/');
-            // }
-        
 
         } catch (error) {
             console.error('Error while submitting form data:', error);

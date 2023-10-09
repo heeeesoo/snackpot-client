@@ -8,12 +8,17 @@ import BasicButton from "@/components/button/BasicButton";
 import copy from 'copy-to-clipboard';
 import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
+import TokenStore from "@/store/TokenStore";
 
+interface absenteesType {
+    name: string;
+    profileImage: string|null;
+}
 interface memberType {
     userName: string;
     userId: number;
     checkList: string[];
-    consecutiveDays: number;
+    successNum: number;
 }
 
 interface statisticsType {
@@ -30,9 +35,10 @@ interface staticsType {
 
 const GroupId = ({ params }: { params: { groupId: number } }) => {
     const router = useRouter();
-    const [absenteesList , setAbsenteesList] = useState<string[]>();
+    const [absenteesList , setAbsenteesList] = useState<absenteesType[]>();
     const [membersList , setMembersList] = useState<memberType[]>();
     const [statistics , setStatistics] = useState<statisticsType[]>();
+    const [groupCode, setGroupCode] = useState<string>('');
     const daysOfWeek = ['월','화','수','목','금','토','일'];
     const today = new Date();
     const [loading1, setLoading1] = useState(true);
@@ -40,10 +46,11 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     const [loading3, setLoading3] = useState(true);
     const [checkToggle, setCheckToggle] = useState<boolean>(false);
     const [visibleMembers, setVisibleMembers] = useState<number>(1);
+    const [visibleStatistics, setVisibleStatistics] = useState<number>(0);
 
     const handleInvitation = (inviteCode:string) => {
-        copy(inviteCode);
-        alert('초대코드가 복사되었습니다.')
+        copy(`http://localhost:3000/invitation/?groupCode=${inviteCode}`);
+        alert('초대코드가 복사되었습니다. 초대하고 싶은 멤버에게 공유하세요!')
     }
 
     const handleToggleClick = () => {
@@ -53,8 +60,33 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         }
     };
 
-    const handleReminderClick = () => {
-        alert()
+    const handleReminderClick = async (toUserId : number) => {
+        try {
+            const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
+            const formDataToSend = {
+                groupId: params.groupId,
+                toUserId: toUserId
+            };
+            const response = await fetch(`${apiURL}/notification`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
+                },
+                body: JSON.stringify(formDataToSend),
+            });
+            const responseData = await response.json();
+            if (!response.ok){
+                console.log('error');
+                alert(responseData.result.message);
+            } else {
+                console.log('okreminder');
+                alert('콕 찌르기 성공!');
+            }
+        } catch (error) {
+            alert(error)
+        }
     }
 
     useEffect(() => {
@@ -63,18 +95,22 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 const resultAbsentee = await getDataClient(`/groups/${params.groupId}/absentees`);
                 setLoading1(false) 
                 if (resultAbsentee) {
-                    setAbsenteesList(resultAbsentee.usernames);
+                    console.log(resultAbsentee);
+                    setAbsenteesList(resultAbsentee.result.data.absentees);
+                    setGroupCode(resultAbsentee.result.data.groupCode);
                 }
 
-                const resultMember = await getDataClient(`/groups/${params.groupId}/members`);
+                const resultMember = await getDataClient(`/groups/${params.groupId}/checklist`);
                 setLoading2(false) 
                 if (resultMember) {
-                    setMembersList(resultMember.memberList);
+                    console.log(resultMember);
+                    setMembersList(resultMember.result.data);
                 }
 
                 const resultStatistics = await getDataClient(`/groups/${params.groupId}/statistics`);
                 setLoading3(false) 
                 if (resultStatistics) {
+                    console.log(resultStatistics);
                     setStatistics(resultStatistics.result.data);
                 }
             } catch (error) {
@@ -96,7 +132,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 width={24}
                 onClick={()=>router.back()}
                 />
-                <button onClick={()=>handleInvitation(`${params.groupId}`)}  className="font-semibold text-[14px] text-SystemBrand">초대하기</button>
+                <button onClick={()=>handleInvitation(`${groupCode}`)}  className="font-semibold text-[14px] text-SystemBrand">초대하기</button>
             </div>
             <div className="pb-[80px]" />
             <div className="flex w-fixwidth justify-between font-bold text-[18px] pb-[8px]">
@@ -106,12 +142,21 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 </div>
             </div>
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
-                <div className="flex flex-row items-center  h-[40px] rounded-[16px] mx-[5%]">
+                <div className="flex flex-row items-center h-[40px] rounded-[16px] mx-[5%]">
                     {
-                        !loading1 && absenteesList?.map((absentee : string, idx:number) => {
+                        !loading1 && absenteesList?.map((absentee : absenteesType, idx:number) => {
                             return(
-                                <div key={idx} className="mx-[6px] w-[80px] h-[40px] bg-SystemSecondaryBrand flex items-center justify-center text-gray-500 rounded-[16px]">
-                                    {absentee}
+                                <div key={idx} className="flex-col justify-around mx-[6px] w-[100px] h-[40px] bg-white flex items-center text-gray-500 rounded-[16px]">
+                                    {absentee.name}
+                                    {/* <button onClick={()=>handleReminderClick(idx)} className="h-[30px] w-[80px] rounded-[16px] flex items-center font-semibold text-[12px] text-SystemBrand justify-center  bg-SystemSecondaryBrand">
+                                        <Image
+                                        src={Reminder}
+                                        alt="Reminder"
+                                        width={16}
+                                        height={16}
+                                        />
+                                        콕 찌르기
+                                    </button> */}
                                 </div>
                             )
                         })
@@ -125,7 +170,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                             <div key={idx} className={`bg-white flex flex-col justify-between mb-[12px] rounded-[16px] px-[20px] py-[20px] ${idx == 0 ? ' h-[150px]' : 'h-[202px]'}`} style={{ display: idx < visibleMembers ? 'block' : 'none' }}>
                                 <div className="flex justify-between flex-row items-stretch">
                                     <div className="font-bold text-[16px]">{member.userName}</div>
-                                    <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.consecutiveDays}</div> / 7</div>
+                                    <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.successNum}</div> / 7</div>
                                 </div>
                                 <div className="flex justify-between items-stretch">
                                     {
@@ -174,7 +219,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                                 {
                                     idx !== 0 
                                     ?
-                                    <BasicSecondayButton text="콕 찌르기" imgSrc={Reminder}/>
+                                    <BasicSecondayButton onClick={()=>handleReminderClick(member.userId)} text="콕 찌르기" imgSrc={Reminder}/>
                                     :
                                     <div></div>
                                 }
@@ -189,25 +234,43 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 :
                 <div className="text-SystemGray3 text-[14px]" onClick={handleToggleClick}>더보기</div>
             }
-            <div className="w-fixwidth font-bold text-[18px] pt-[20px]">
+            <div className="w-fixwidth flex flex-col font-bold text-[18px] pt-[20px]">
                 운동 시간 비교
+                <div className="flex flex-row justify-around bg-white mt-[12px] h-[40px] rounded-[20px]">
+                {
+                    daysOfWeek.map((day:string,idx:number)=>{
+                        return(
+                            <div key={idx} className={`flex w-[32px] text-[12px] h-[32px] rounded-full justify-center items-center flex-row ${idx===visibleStatistics ? 'bg-SystemBrand text-white' : 'text-SystemGray4'}`}onClick={()=>setVisibleStatistics(idx)}>
+                                {day}
+                            </div>
+                        )
+                    })
+                }
+                </div>
             </div>
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
-                <div className="flex flex-row items-center h-[277px] rounded-[16px] mx-[5%]">
+                <div className="flex flex-row h-[150px] rounded-[16px] mx-[5%]">
                     {
-                        !loading3 && statistics?.map((info : statisticsType, idx: number) => {
+                        !loading3 && statistics?.[visibleStatistics].statics.map((info : staticsType, idx: number) => {
                             return(
-                                <div key={idx} className="w-[100px]">
-                                    {/* {info.date} */}
-                                    차트
+                                <div key={idx} className="flex flex-col text-SystemGray3 justify-end items-center w-[70px]">
+                                    <div className={`w-[24px] h-[${100-26}px]`}></div>
+                                    {/* <div className={`w-[24px] h-[${100-Math.floor(info.time/60)}px]`}></div> */}
+                                    {/* <div className="text-[12px]">{26}분</div> */}
+                                    <div className="text-[12px]">{Math.floor(info.time/60)}분</div>
+                                    {/* <div className={`w-[24px] h-[${Math.floor(info.time/60)}px] rounded-t-lg bg-SystemGray3`}></div> */}
+                                    <div className={`w-[24px] h-[26px] rounded-t-lg bg-SystemGray3`}></div>
+                                    <div className="text-[12px] pt-[3px]">{info.name}</div>
                                 </div>
                             )
                         })
                     }
                 </div>
             </div>
-            <BasicButton onClick={() => router.push('/exercise')} text="운동하러 가기"/>
-            <div className="py-4" />
+            <div className="py-[50px]"/>
+            <div className="fixed bottom-0 left-0 right-0 p-4 text-center">
+                <BasicButton onClick={() => router.push('/exercise')} text="운동하러 가기"/>
+            </div>
         </div>
     );
 };
