@@ -93,7 +93,7 @@ const SignIn = () => {
                 login();
                 setUserName(data.userName);
                 setToken(responseData.result.data.accessToken);
-                setUserId(responseData.result.data.memberId);
+                setUserId(responseData.result.data.id);
                 console.log(responseData.result.data.id)
                 if(groupCode !== ""){
                     router.replace(`/invitation?groupCode=${groupCode}`)

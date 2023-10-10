@@ -6,7 +6,7 @@ import ReviewList from "@/components/exercise/ReviewList";
 import ExerciseStoreCard from "@/components/exercise/ExerciseStoreCard";
 
 interface ExerciseDataType {
-    thumbnail: string;
+    thumbnail: string | null;
     youtuberThumbnail: string;
     effect: string;
     videoId: string;
@@ -59,14 +59,17 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
             {/* <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={data.timeSpent} /> */}
             <ExerciseStoreCard videoId={data.videoId} calory={data.calories} time={30} />
             <Link href={`/exercise/${params.exerciseId}/execution`} className="h-[250px] w-fixwidth relative z-0">
-                <Image
-                src={data.thumbnail}
-                layout='fill'
-                alt="thumbnail"
-                className="rounded-[16px]"
-                objectFit="cover"
-                objectPosition="center"
-                />
+                {
+                    data.thumbnail &&
+                    <Image
+                    src={data.thumbnail}
+                    layout='fill'
+                    alt="thumbnail"
+                    className="rounded-[16px]"
+                    objectFit="cover"
+                    objectPosition="center"
+                    />
+                }
                 <div className="absolute rounded-[16px] inset-0 flex items-center justify-center bg-black bg-opacity-30">
                     <div className="bg-SystemGray7 bg-opacity-20 h-[56px] w-[56px] flex justify-center items-center rounded-full">
                         <Image

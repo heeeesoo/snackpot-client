@@ -39,7 +39,7 @@ const My = () => {
     useEffect(()=>{
         const fetchMyList = async () => {
             try{
-                const resultMyList = await getDataClient(`/my`);
+                const resultMyList = await getDataClient(`/members/my`);
                 setLoading(false);
                 resultMyList && setMyList(resultMyList);
             }catch (error){

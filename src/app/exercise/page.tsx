@@ -2,7 +2,7 @@ import ExerciseList from "@/components/exercise/ExerciseList"
 async function getData() {
     try {
         const apiURL = process.env.NEXT_PUBLIC_SERVER_URL
-        const res = await fetch(`${apiURL}/exercises?cursorId=0&bodyPartTypes=&like=true&level=EASY&timeSpent=0&size=5`, {
+        const res = await fetch(`${apiURL}/exercises?cursorId=0&size=10`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

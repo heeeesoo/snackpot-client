@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
 import TokenStore from "@/store/TokenStore";
 import UserStore from "@/store/UserStore";
+import GroupChart from "@/components/group/GroupChart";
 
 interface absenteesType {
     name: string;
@@ -123,6 +124,8 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     }, []);
 
     if (loading1 && loading2 && loading3) return (<div className="pt-[20px] mx-[20px]"><Skeleton /></div>)
+
+    console.log(statistics?.[visibleStatistics].statics)
 
     return (
         <div className="flex flex-col items-center">
@@ -302,7 +305,8 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 </div>
             </div>
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
-                <div className="flex flex-row h-[150px] rounded-[16px] mx-[5%]">
+                <div className="flex flex-row h-[300px] rounded-[16px] mx-[5%]">
+                <GroupChart dataGroup={statistics?.[visibleStatistics].statics} />
                     {
                         !loading3 && statistics?.[visibleStatistics].statics.map((info : staticsType, idx: number) => {
                             return(

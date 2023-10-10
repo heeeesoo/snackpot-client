@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation'
 import { useState } from "react";
 
 interface exerciseType {
-    thumbnail: string;
+    thumbnail: string | null;
     title: string;
     youtuberName: string;
     time: number;
-    bodyPart: string; 
+    bodyPartTypes?: string[]; 
     level: string;
     calory: number;
     isLiked: boolean;
@@ -22,7 +22,7 @@ const ExerciseCard = ({
     title,
     youtuberName,
     time,
-    bodyPart,
+    bodyPartTypes,
     level,
     calory,
     isLiked,
@@ -56,7 +56,7 @@ const ExerciseCard = ({
             <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover w-[100%] relative`}>
             {/* <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover`} style={{backgroundImage: `url(${thumbnail})`}}> */}
                 {/* <img src={`${thumbnail}`} width="100%" height="200px"/> */}
-                <Image
+                {thumbnail && <Image
                 src={thumbnail}
                 layout='fill'
                 alt="thumbnail"
@@ -66,7 +66,7 @@ const ExerciseCard = ({
                 loading="lazy"
                 placeholder="blur"
                 blurDataURL={thumbnail}
-                />
+                />}
                <button id="play" className="flex justify-center items-center rounded-full w-[44px] h-[44px] bg-SystemGray7_20 absolute top-[16px] right-[16px]">
                     <Image
                         src={Play}
@@ -84,7 +84,7 @@ const ExerciseCard = ({
                     />
                 </button>
             </div>
-            <div className="h-[104px] ml-[16px] mt-[16px]">
+            <div className="h-[104px] mx-[16px] mt-[16px]">
                 <div className="font-semibold mb-[4px] text-[16px]">
                     {title}
                 </div>
@@ -102,7 +102,7 @@ const ExerciseCard = ({
                         }
                     </div>
                     <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
-                        {bodyPart}
+                        {/* {bodyPartTypes} */}
                     </div>
                     <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
                         {levelList[level]}

@@ -29,6 +29,7 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-hook-form": "^7.46.1",
     "react-youtube": "^10.1.0",
+    "recharts": "^2.8.0",
     "zustand": "^4.4.1"
   }
 }
