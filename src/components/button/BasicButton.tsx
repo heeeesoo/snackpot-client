@@ -8,7 +8,7 @@ const BasicButton = ({
     onClick
 } : BasicButtonProps) => {
     return (
-        <button onClick={onClick} className="h-[56px] font-bold text-white text-[16px] w-fixwidth bg-SystemBrand rounded-[16px]">
+        <button onClick={onClick} className="h-[56px] font-bold text-white text-[16px] w-full bg-SystemBrand rounded-[16px]">
             {text}
         </button> 
     );

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Like, LikeActive, Play } from "@/constant/icon";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
+import TokenStore from "@/store/TokenStore";
+import UserStore from "@/store/UserStore";
 
 interface exerciseType {
     thumbnail: string | null;
@@ -32,16 +34,68 @@ const ExerciseCard = ({
     const router = useRouter();
     const LikedImageLink = isLiked ? LikeActive : Like;
     const [like, setLike] = useState(isLiked);
+    const {isLoggedIn} = UserStore();
 
     const handleLikeClick = () => {
         setLike(prev => !prev)
     }
 
+    const handleFetchLike = async (exerciseId: number) => {
+        try {
+            console.log('fetch like')
+            const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
+            const response = await fetch(`${apiURL}/exercises/${exerciseId}/likes`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
+                },
+            });
+            console.log(response);
+
+            if (!response.ok){
+                console.log('error');
+            } else {
+                console.log('ok fetch like');
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleDeleteLike = async (exerciseId: number) => {
+        try {
+            console.log('fetch like')
+            const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
+            const response = await fetch(`${apiURL}/exercises/${exerciseId}/likes`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                    'Authorization': TokenStore.getState().accessToken
+                },
+            });
+            console.log(response);
+
+            if (!response.ok){
+                console.log('error');
+            } else {
+                console.log('ok fetch like');
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+ 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.target as HTMLInputElement;
         if (target.id === 'like' || target.alt === 'like'){
             console.log('like');
             setLike(prev => !prev);
+            isLoggedIn && ( !like ? handleFetchLike(exerciseId) : handleDeleteLike(exerciseId))
         }
         else if (target.id === 'play' || target.alt === 'play'){
             router.push(`/exercise/${exerciseId}/execution`)

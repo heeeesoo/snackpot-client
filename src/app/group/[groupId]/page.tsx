@@ -292,7 +292,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
             }
             <div className="w-fixwidth flex flex-col font-bold text-[18px] pt-[20px]">
                 운동 시간 비교
-                <div className="flex flex-row justify-around bg-white mt-[12px] h-[40px] rounded-[20px]">
+                <div className="flex flex-row justify-around items-center bg-white mt-[12px] h-[40px] rounded-[20px]">
                 {
                     daysOfWeek.map((day:string,idx:number)=>{
                         return(
@@ -306,21 +306,23 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
             </div>
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
                 <div className="flex flex-row h-[300px] rounded-[16px] mx-[5%]">
-                <GroupChart dataGroup={statistics?.[visibleStatistics].statics} />
+                    <div className="pt-[20px]">
+                        {!loading3 && <GroupChart dataGroup={statistics?.[visibleStatistics].statics} />}
+                    </div>
                     {
-                        !loading3 && statistics?.[visibleStatistics].statics.map((info : staticsType, idx: number) => {
-                            return(
-                                <div key={idx} className="flex flex-col text-SystemGray3 justify-end items-center w-[70px]">
-                                    <div className={`w-[24px] h-[${100-26}px]`}></div>
-                                    {/* <div className={`w-[24px] h-[${100-Math.floor(info.time/60)}px]`}></div> */}
-                                    {/* <div className="text-[12px]">{26}분</div> */}
-                                    <div className="text-[12px]">{Math.floor(info.time/60)}분</div>
-                                    {/* <div className={`w-[24px] h-[${Math.floor(info.time/60)}px] rounded-t-lg bg-SystemGray3`}></div> */}
-                                    <div className={`w-[24px] h-[26px] rounded-t-lg bg-SystemGray3`}></div>
-                                    <div className="text-[12px] pt-[3px]">{info.name}</div>
-                                </div>
-                            )
-                        })
+                        // !loading3 && statistics?.[visibleStatistics].statics.map((info : staticsType, idx: number) => {
+                        //     return(
+                        //         <div key={idx} className="flex flex-col text-SystemGray3 justify-end items-center w-[70px]">
+                        //             <div className={`w-[24px] h-[${100-26}px]`}></div>
+                        //             {/* <div className={`w-[24px] h-[${100-Math.floor(info.time/60)}px]`}></div> */}
+                        //             {/* <div className="text-[12px]">{26}분</div> */}
+                        //             <div className="text-[12px]">{Math.floor(info.time/60)}분</div>
+                        //             {/* <div className={`w-[24px] h-[${Math.floor(info.time/60)}px] rounded-t-lg bg-SystemGray3`}></div> */}
+                        //             <div className={`w-[24px] h-[26px] rounded-t-lg bg-SystemGray3`}></div>
+                        //             <div className="text-[12px] pt-[3px]">{info.name}</div>
+                        //         </div>
+                        //     )
+                        // })
                     }
                 </div>
             </div>

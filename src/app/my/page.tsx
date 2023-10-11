@@ -10,9 +10,15 @@ import Skeleton from '@/components/common/Skeleton';
 
 interface myListType {
     userName: string;
-    userId: number;
+    // userId: number;
     dailyGoalTime: number;
     weeklyGoalTime: number[];
+    profileImg: null| string;
+}
+
+interface weeklyGoaltimeType {
+    day: string;
+    time: null | number;
 }
 
 const My = () => {
@@ -27,7 +33,7 @@ const My = () => {
         const remainingSeconds = seconds % 60; // 초 단위의 나머지 부분
     
         // return `${minutes}분 ${remainingSeconds}초`;
-        return `${minutes}분`;
+        return `${seconds}분`;
     }
 
     useEffect(() => {
@@ -41,7 +47,8 @@ const My = () => {
             try{
                 const resultMyList = await getDataClient(`/members/my`);
                 setLoading(false);
-                resultMyList && setMyList(resultMyList);
+                console.log('mylist:',resultMyList)
+                resultMyList && setMyList(resultMyList.result.data);
             }catch (error){
                 console.log('error:', error);
             }
@@ -88,36 +95,35 @@ const My = () => {
             <div className='pt-[16px]'/>
                 <div className='flex items-stretch justify-between flex-row'>
                     {
-                        // mylist?.weeklyGoalTime.map((goaltime: number, idx: number)=>{
-                        //     return(
-                        //         <div key={idx} className='flex w-[40px] items-center justify-between flex-col'>
-                        //             <div className='text-SystemGray4 text-[12px]'>
-                        //                 {dayOfWeek[idx]}
-                        //             </div>
-                        //             <div className='pt-[8px]'/>
-                        //             <div>
-                        //                 {/* {goaltime} */}
-                        //                 <div>
-                        //                     <div style={{ width: '28px', height: '28px' }}>
-                        //                     <svg viewBox="0 0 200 200">
-                        //                         <circle cx="100" cy="100" r="90" fill="none" stroke="#EBF2FE" strokeWidth="20" />
-                        //                         <circle
-                        //                         cx="100"
-                        //                         cy="100"
-                        //                         r="90"
-                        //                         fill="none"
-                        //                         stroke="#3A81F7"
-                        //                         strokeWidth="20"
-                        //                         strokeDasharray={`${2 * Math.PI * 90 * Number(goaltime/mylist.dailyGoalTime)} ${2 * Math.PI * 90 * Number(1-goaltime/mylist.dailyGoalTime)}`}
-                        //                         strokeDashoffset={2 * Math.PI * 90 * 0.25}
-                        //                         />
-                        //                     </svg>
-                        //                     </div>
-                        //                 </div>
-                        //             </div>
-                        //         </div>
-                        //     )
-                        // })
+                        mylist?.weeklyGoalTime.map((goaltime: any, idx: number)=>{
+                            return(
+                                <div key={idx} className='flex w-[40px] items-center justify-between flex-col'>
+                                    <div className='text-SystemGray4 text-[12px]'>
+                                    </div>
+                                    <div className='pt-[8px]'/>
+                                    <div>
+                                        <div>
+                                            <div style={{ width: '28px', height: '28px' }}>
+                                            <svg viewBox="0 0 200 200">
+                                                <circle cx="100" cy="100" r="90" fill="none" stroke="#EBF2FE" strokeWidth="20" />
+                                                <circle
+                                                cx="100"
+                                                cy="100"
+                                                r="90"
+                                                fill="none"
+                                                stroke="#3A81F7"
+                                                strokeWidth="20"
+                                                // strokeDasharray={`${2 * Math.PI * 90 * Number(0.63)} ${2 * Math.PI * 90 * Number(0.37)}`}
+                                                strokeDasharray={`${2 * Math.PI * 90 * Number(goaltime.time/(mylist.dailyGoalTime*60))} ${2 * Math.PI * 90 * Number(1-(goaltime.time/mylist.dailyGoalTime*60))}`}
+                                                strokeDashoffset={2 * Math.PI * 90 * 0.25}
+                                                />
+                                            </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
                     }
                 </div>
             </div>

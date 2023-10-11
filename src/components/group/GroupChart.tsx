@@ -15,16 +15,17 @@ const GroupChart = ({
     dataGroup
 }:any) => {
     console.log('chart:',dataGroup)
+    console.log('chart:',dataGroup.length)
 
     return (
-        <div className='w-[100vw]'>
-            <BarChart width={300} height={250} data={dataGroup}>
+        <div className='w-[100vw] '>
+            <BarChart width={100 * dataGroup.length + 50} height={250} data={dataGroup}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 {/* <Legend /> */}
-                <Bar dataKey="time" fill="#3A81F7" />
+                <Bar dataKey="time" fill="#CCCCDC" />
             </BarChart>
         </div>
     );

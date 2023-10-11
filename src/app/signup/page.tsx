@@ -117,7 +117,9 @@ const SignUp = () => {
                     <div className='py-5'/>
                     <InputBox title="하루 목표 운동 시간을 입력해주세요" label="dailyGoalTime" name="dailyGoalTime" register={register} error={errors.dailyGoalTime?.message} maxLength={6} placeholder="0" integerOnly={true} unit='분'/>
                 </div>
-                <BasicButton text="가입하기"/>
+                <div className='w-fixwidth'>
+                    <BasicButton text="가입하기"/>
+                </div>
             </form>
         </div>
     );

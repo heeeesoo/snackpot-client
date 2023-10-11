@@ -153,7 +153,9 @@ const SignIn = () => {
         <div className="relative flex flex-col pt-[30px]">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center justify-between min-h-[80vh]">
                 <InputBox title="닉네임을 입력해주세요" label="userName" name="userName" register={register} error={errors.userName?.message} maxLength={6} placeholder="닉네임 (최대 6자)" noSpecialChar={true}/>
-                <BasicButton text="로그인하기"/>
+                <div className='w-fixwidth'>
+                    <BasicButton text="로그인하기"/>
+                </div>
             </form>
         </div>
     );

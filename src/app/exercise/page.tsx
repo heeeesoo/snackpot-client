@@ -1,4 +1,5 @@
 import ExerciseList from "@/components/exercise/ExerciseList"
+import ExerciseListClient from "@/components/exercise/ExerciseListClient";
 async function getData() {
     try {
         const apiURL = process.env.NEXT_PUBLIC_SERVER_URL
@@ -36,7 +37,8 @@ export default async function Exercise() {
    
     return (
         <div className="w-screen max-w-[500px]">
-            <ExerciseList exerciseList={responseData.result.data.content} />
+            {/* <ExerciseList exerciseList={responseData.result.data.content} /> */}
+            <ExerciseListClient />
         </div>
     )
 }

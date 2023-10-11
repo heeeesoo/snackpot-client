@@ -25,6 +25,8 @@ export const Cross = "/img/icons/common/Cross.svg";
 export const Calory = "/img/icons/exerciseInfo/Calory.svg";
 export const Level = "/img/icons/exerciseInfo/Level.svg";
 export const Time = "/img/icons/exerciseInfo/Time.svg";
+export const LikeGray = "/img/icons/exerciseInfo/LikeGray.svg";
+export const LikeBlue = "/img/icons/exerciseInfo/LikeBlue.svg";
 
 // finish
 export const ThumbsUp = "/img/icons/finish/ThumbsUp.png";
