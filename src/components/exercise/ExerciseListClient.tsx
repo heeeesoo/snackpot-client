@@ -4,8 +4,10 @@ import { getDataClient } from "@/utils/getDataClient";
 import { useEffect, useState } from "react";
 import UserStore from "@/store/UserStore";
 import Skeleton from '@/components/common/Skeleton';
-import { LikeGray, LikeBlue } from "@/constant/icon";
+import { LikeGray, LikeBlue, Down } from "@/constant/icon";
 import Image from "next/image";
+import TokenStore from "@/store/TokenStore";
+import CategoryDropDown from "../common/CategoryDropDown";
 
 interface exerciseType {
     thumbnail: string;
@@ -23,47 +25,112 @@ interface exerciseListType {
 }
 
 const ExerciseListClient = () => {
+    const bodyPartList2: { [key: string]: string } = {'FULL_BODY':'전신', 'UPPER_BODY':'상체', 'LOWER_BODY':'하체', 'CORE':'코어', 'ARMS':'팔', 'LEGS':'다리', 'BACK':'등', 'CHEST':'가슴', 'SHOULDERS':'어깨'};
+    const bodyPartList: { [key: string]: string } = {'전신':'FULL_BODY', '상체':'UPPER_BODY', '하체':'LOWER_BODY', '코어':'CORE', '팔':'ARMS', '다리':'LEGS', '등':'BACK', '가슴':'CHEST', '어깨':'SHOULDERS'};
     const [exerciseUserList, setexerciseUserList] = useState<any>();
     const [loading, setLoading] = useState(true);
     const {isLoggedIn} = UserStore();
+    const [likeFilter, setLikeFilter] = useState<boolean>(false);
+    const [bodyPartFilter, setBodyPartFilter] = useState<string>('');
+    const [bodyPartToggle, setBodyPartToggle] = useState<boolean>(false);
+    const onBodyPartToggle = () => setBodyPartToggle(!bodyPartToggle);
+
+    const fetchexerciseUserList = async (like:boolean,bodyPartTypes:string,size:number,level:string,timeSpent:number) => {
+        try{
+            let apiURL:string = `/exercises?size=${size}`;
+            if(like === true){
+                apiURL+=`&like=true`
+            }
+            if(bodyPartTypes !== 'all'){
+                // apiURL+=`&bodyPartTypes=${bodyPartList[bodyPartTypes]}`
+            }
+            console.log(apiURL)
+            const resultexerciseUserList = await getDataClient(apiURL);
+            setLoading(false);
+            resultexerciseUserList && setexerciseUserList(resultexerciseUserList.result.data.content);
+            console.log('login exercise list1:',resultexerciseUserList.result.data.content)
+            console.log('login exercise list2:',exerciseUserList)
+        }catch (error){
+            console.log('error:', error);
+        }
+    }
 
     useEffect(()=>{
-        const fetchexerciseUserList = async () => {
-            try{
-                const resultexerciseUserList = await getDataClient(`/exercises?cursorId=0&like=true&level=EASY&timeSpent=0&size=5`);
-                setLoading(false);
-                resultexerciseUserList && setexerciseUserList(resultexerciseUserList.result.data.content);
-                console.log('login exercise list1:',resultexerciseUserList.result.data.content)
-                console.log('login exercise list2:',exerciseUserList)
-            }catch (error){
-                console.log('error:', error);
-            }
-        }
-        fetchexerciseUserList();
+        fetchexerciseUserList(false,'all',10,'level',10);
     },[])
+
+    useEffect(()=>{
+        if(likeFilter){
+            console.log('likeFilter:',likeFilter)
+            fetchexerciseUserList(true,bodyPartFilter,10,'level',10)
+        }else{
+            fetchexerciseUserList(false,bodyPartFilter,10,'level',10)
+        }
+    },[bodyPartFilter, likeFilter])
 
     if (loading) return(<div className='pt-[20px] mx-[20px]'><Skeleton /></div>)
 
     return (
         <div className="flex flex-col items-center">
             <div className="flex w-fixwidth">
-                <div className="">
+                <div className={`${likeFilter ? 'bg-SystemSecondaryBrand' : 'bg-white'} flex rounded-[12px] items-center justify-center w-[44px] h-[44px]`} onClick={()=>setLikeFilter(prev=>!prev)}>
                     <Image 
-                    src={LikeBlue}
+                    src={`${likeFilter ? LikeBlue : LikeGray}`}
                     width={20}
                     height={20}
                     alt="LikeBlue"
                     />
                 </div>
-                <div className="">
-                    운동 부위
+                <div className="mx-[4px]" />
+                <div
+                className="  text-SystemGray3 w-[100px] h-[44px] rounded-[12px] bg-white relative z-10"
+                onClick={onBodyPartToggle}
+                >
+                    <div className="flex justify-center items-center h-[44px]">
+                        {bodyPartFilter==='' ? '운동부위' : `${bodyPartFilter}운동`}
+                        <div className="px-[3px]"/>
+                        <Image
+                        src={Down}
+                        alt="Down"
+                        width={20}
+                        height={20}
+                        />
+                    </div>
+                <div
+                    className={`dropdown-menu ${
+                    bodyPartToggle ? "block" : "hidden"
+                    } absolute mt-[10px] py-2 bg-white border w-[100px] border-gray-300 rounded-md shadow-lg`}
+                >
+                    <button
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={()=>setBodyPartFilter('')}
+                    >
+                    전체
+                    </button>
+                    <button
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={()=>setBodyPartFilter('전신')}
+                    >
+                    전신
+                    </button>
+                    <button
+                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                    onClick={()=>setBodyPartFilter('코어')}
+                    >
+                    코어
+                    </button>
                 </div>
+                </div>
+                
+                {/* <CategoryDropDown /> */}
+
                 <div className="">
-                    시간
+                    {/* 시간 */}
                 </div>
             </div>
+            <div className="pb-[18px]" />
             {
-                exerciseUserList.map((exercise: exerciseType, idx:number) => {
+                exerciseUserList?.map((exercise: exerciseType, idx:number) => {
                     return(
                         <div key={idx} className="w-full flex justify-center py-[6px]">
                             <ExerciseCard 
@@ -71,11 +138,12 @@ const ExerciseListClient = () => {
                                 title={exercise.title}
                                 youtuberName={exercise.youtuberName}
                                 time={exercise.timeSpent}
-                                // bodyPartTypes={exercise.bodyPartTypes}
+                                bodyPartTypes={exercise.bodyPartTypes}
                                 level={exercise.level}
                                 calory={exercise.calories}
                                 isLiked={exercise.isLiked}
                                 exerciseId={exercise.exerciseId}
+                                likeFilter={likeFilter}
                             />
                         </div>
                     )

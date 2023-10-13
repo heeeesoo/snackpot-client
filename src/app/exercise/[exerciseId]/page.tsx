@@ -7,7 +7,7 @@ import ExerciseStoreCard from "@/components/exercise/ExerciseStoreCard";
 
 interface ExerciseDataType {
     thumbnail: string | null;
-    youtuberThumbnail: string;
+    youtuberProfileImg: string;
     effect: string;
     videoId: string;
     title: string;
@@ -19,6 +19,7 @@ interface ExerciseDataType {
     level: string;
     calories: number;
     like: boolean;
+    bodyPartTypes: string[];
 }
 
 async function getExerciseData(exerciseId : number) {
@@ -51,7 +52,8 @@ async function getExerciseData(exerciseId : number) {
 export default async function ExerciseId({ params }: { params: { exerciseId: number } }) {
     const responseData = await getExerciseData(params.exerciseId);
     const data : ExerciseDataType= responseData.result.data
-    const levelList: { [key: string]: string } = {'easy':'초급', 'mid':'중급', 'hard':'고급'};
+    const levelList: { [key: string]: string } = {'EASY':'초급', 'MID':'중급', 'HARD':'고급'};
+    const bodyPartList: { [key: string]: string } = {'FULL_BODY':'전신', 'UPPER_BODY':'상체', 'LOWER_BODY':'하체', 'CORE':'코어', 'ARMS':'팔', 'LEGS':'다리', 'BACK':'등', 'CHEST':'가슴', 'SHOULDERS':'어깨'};
     console.log('exercise:',data)
 
     return (
@@ -89,7 +91,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                     <div className="flex">
                         <div className="w-[40px] h-[40px] relative">
                             <Image
-                            src={data.youtuberThumbnail}
+                            src={data.youtuberProfileImg}
                             alt="youtuberThumbnail"
                             className="rounded-full"
                             layout='fill'
@@ -163,10 +165,16 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                         운동 부위
                     </span>
                     <span className="text-SystemGray3">
-                        {data.bodyPart}
+                        {data.bodyPartTypes.map((value, idx) => {
+                            return(
+                                <div key={idx}>
+                                    {bodyPartList[value]}
+                                </div>
+                            )
+                        })}
                     </span>
                 </div>
-                {/* <ReviewList exerciseId={params.exerciseId} /> */}
+                <ReviewList exerciseId={params.exerciseId} />
                 <div className="py-[20px]"/>
             </div>
         </div>

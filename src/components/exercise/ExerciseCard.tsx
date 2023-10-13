@@ -3,9 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Like, LikeActive, Play } from "@/constant/icon";
 import { useRouter } from 'next/navigation'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TokenStore from "@/store/TokenStore";
 import UserStore from "@/store/UserStore";
+import { setConstantValue } from "typescript";
 
 interface exerciseType {
     thumbnail: string | null;
@@ -17,6 +18,8 @@ interface exerciseType {
     calory: number;
     isLiked: boolean;
     exerciseId: number;
+    likeFilter?: boolean;
+    // youtuberProfileImg: string;
 }
 
 const ExerciseCard = ({
@@ -28,21 +31,31 @@ const ExerciseCard = ({
     level,
     calory,
     isLiked,
-    exerciseId
+    exerciseId,
+    likeFilter
+    // youtuberProfileImg
 } : exerciseType) => {
-    const levelList: { [key: string]: string } = {'easy':'초급', 'mid':'중급', 'hard':'고급'};
+    const levelList: { [key: string]: string } = {'EASY':'초급', 'MID':'중급', 'HARD':'고급'};
+    const bodyPartList: { [key: string]: string } = {'FULL_BODY':'전신', 'UPPER_BODY':'상체', 'LOWER_BODY':'하체', 'CORE':'코어', 'ARMS':'팔', 'LEGS':'다리', 'BACK':'등', 'CHEST':'가슴', 'SHOULDERS':'어깨'};
     const router = useRouter();
     const LikedImageLink = isLiked ? LikeActive : Like;
     const [like, setLike] = useState(isLiked);
     const {isLoggedIn} = UserStore();
+    console.log('exerciseId',exerciseId,'isLiked:',isLiked,'like:',like);
 
     const handleLikeClick = () => {
         setLike(prev => !prev)
     }
 
+    useEffect(()=>{
+        setLike(isLiked);
+        console.log('exercisecard')
+        console.log(isLiked, like)
+    },[])
+
     const handleFetchLike = async (exerciseId: number) => {
         try {
-            console.log('fetch like')
+            console.log('fetch like ADD')
             const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
             const response = await fetch(`${apiURL}/exercises/${exerciseId}/likes`, {
                 method: 'POST',
@@ -67,7 +80,7 @@ const ExerciseCard = ({
 
     const handleDeleteLike = async (exerciseId: number) => {
         try {
-            console.log('fetch like')
+            console.log('fetch like DELETE')
             const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
             const response = await fetch(`${apiURL}/exercises/${exerciseId}/likes`, {
                 method: 'DELETE',
@@ -82,7 +95,7 @@ const ExerciseCard = ({
             if (!response.ok){
                 console.log('error');
             } else {
-                console.log('ok fetch like');
+                console.log('ok fetch delete');
             }
 
         } catch (error) {
@@ -121,14 +134,14 @@ const ExerciseCard = ({
                 placeholder="blur"
                 blurDataURL={thumbnail}
                 />}
-               <button id="play" className="flex justify-center items-center rounded-full w-[44px] h-[44px] bg-SystemGray7_20 absolute top-[16px] right-[16px]">
+               {/* <button id="play" className="flex justify-center items-center rounded-full w-[44px] h-[44px] bg-SystemGray7_20 absolute top-[16px] right-[16px]">
                     <Image
                         src={Play}
                         alt="play"
                         width={20}
                         height={20}
                     />
-                </button>
+                </button> */}
                 <button id='like' className={`absolute flex justify-center items-center rounded-full w-[44px] h-[44px] ${like ? 'bg-SystemBrand' : 'bg-white'}`}>
                     <Image
                         src={LikedImageLink}
@@ -155,8 +168,14 @@ const ExerciseCard = ({
                                 `${time%60}초`
                         }
                     </div>
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
-                        {/* {bodyPartTypes} */}
+                    <div className="flex" >
+                        {bodyPartTypes?.map((value:string, idx:number)=>{
+                            return(
+                                <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]" key={idx}>
+                                    {bodyPartList[value]}
+                                </div>
+                            )
+                        })}
                     </div>
                     <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
                         {levelList[level]}

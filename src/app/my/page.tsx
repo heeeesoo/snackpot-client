@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { profile } from '@/constant/icon';
 import Skeleton from '@/components/common/Skeleton';
+import TokenStore from '@/store/TokenStore';
 
 interface myListType {
     userName: string;
@@ -23,6 +24,7 @@ interface weeklyGoaltimeType {
 
 const My = () => {
     const {logout, isLoggedIn, username} = UserStore();
+    const {setToken} = TokenStore();
     const [mylist, setMyList] = useState<myListType>();
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -34,6 +36,12 @@ const My = () => {
     
         // return `${minutes}분 ${remainingSeconds}초`;
         return `${seconds}분`;
+    }
+
+    const logoutAccount = () => {
+        logout();
+        setToken('');
+
     }
 
     useEffect(() => {
@@ -129,7 +137,7 @@ const My = () => {
             </div>
             <div className='pt-[20px]'/>
             <div className='w-fixwidth'>
-                <BasicSecondayButton2 text='로그아웃' onClick={logout}/>
+                <BasicSecondayButton2 text='로그아웃' onClick={logoutAccount}/>
             </div>
         </div>
     );

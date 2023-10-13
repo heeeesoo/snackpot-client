@@ -55,8 +55,8 @@ const Invitation = () => {
     },[isLoggedIn])
 
     return (
-        <div>
-            {groupCode}
+        <div className='flex items-center justify-center'>
+            그룹 가입 진행중입니다
         </div>
     );
 };

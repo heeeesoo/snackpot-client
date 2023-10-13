@@ -142,7 +142,9 @@ const ExerciseFinish = ({ params }: { params: { exerciseId: number } }) => {
                 {...register("reviewContent")}
                 style={{ wordWrap: 'break-word' }}
             />
-            <BasicButton text="운동 완료"/>
+            <div className="w-fixwidth">
+                <BasicButton text="운동 완료"/>
+            </div>
             <div className="my-[10px]"/>
         </form>
     );
