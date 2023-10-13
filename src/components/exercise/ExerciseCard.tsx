@@ -41,7 +41,7 @@ const ExerciseCard = ({
     const LikedImageLink = isLiked ? LikeActive : Like;
     const [like, setLike] = useState(isLiked);
     const {isLoggedIn} = UserStore();
-    console.log('exerciseId',exerciseId,'isLiked:',isLiked,'like:',like);
+    // console.log('exerciseId',exerciseId,'isLiked:',isLiked,'like:',like);
 
     const handleLikeClick = () => {
         setLike(prev => !prev)
@@ -49,8 +49,8 @@ const ExerciseCard = ({
 
     useEffect(()=>{
         setLike(isLiked);
-        console.log('exercisecard')
-        console.log(isLiked, like)
+        // console.log('exercisecard')
+        // console.log(isLiked, like)
     },[])
 
     const handleFetchLike = async (exerciseId: number) => {

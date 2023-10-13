@@ -164,11 +164,12 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                     <span className="font-bold pb-[8px]">
                         운동 부위
                     </span>
-                    <span className="text-SystemGray3">
+                    <span className="text-SystemGray3 flex">
                         {data.bodyPartTypes.map((value, idx) => {
                             return(
                                 <div key={idx}>
                                     {bodyPartList[value]}
+                                    &nbsp; 
                                 </div>
                             )
                         })}

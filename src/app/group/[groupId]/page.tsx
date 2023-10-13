@@ -149,6 +149,12 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
             <div className="flex flex-row overflow-auto w-screen max-w-[500px] h-auto no-scrollbar">
                 <div className="flex flex-row items-center h-[40px] rounded-[16px] mx-[5%]">
                     {
+                        (!loading1 && absenteesList?.length==0) &&
+                        <div className="flex w-full text-center items-center justify-center text-SystemGray3">
+                            모든 회원이 오늘 운동을 완료했어요!
+                        </div>
+                    }
+                    {
                         !loading1 && absenteesList?.map((absentee : absenteesType, idx:number) => {
                             return(
                                 <div key={idx} className="flex-col justify-around mx-[6px] w-[100px] h-[40px] bg-white flex items-center text-gray-500 rounded-[16px]">

@@ -25,13 +25,13 @@ interface exerciseListType {
 }
 
 const ExerciseListClient = () => {
-    const bodyPartList2: { [key: string]: string } = {'FULL_BODY':'전신', 'UPPER_BODY':'상체', 'LOWER_BODY':'하체', 'CORE':'코어', 'ARMS':'팔', 'LEGS':'다리', 'BACK':'등', 'CHEST':'가슴', 'SHOULDERS':'어깨'};
-    const bodyPartList: { [key: string]: string } = {'전신':'FULL_BODY', '상체':'UPPER_BODY', '하체':'LOWER_BODY', '코어':'CORE', '팔':'ARMS', '다리':'LEGS', '등':'BACK', '가슴':'CHEST', '어깨':'SHOULDERS'};
+    const bodyPartList: { [key: string]: string } = {'전체':'ALL', '전신':'FULL_BODY', '상체':'UPPER_BODY', '하체':'LOWER_BODY', '코어':'CORE', '팔':'ARMS', '다리':'LEGS', '등':'BACK', '가슴':'CHEST', '어깨':'SHOULDERS'};
+    const keysBodyPart = Object.keys(bodyPartList);
     const [exerciseUserList, setexerciseUserList] = useState<any>();
     const [loading, setLoading] = useState(true);
     const {isLoggedIn} = UserStore();
     const [likeFilter, setLikeFilter] = useState<boolean>(false);
-    const [bodyPartFilter, setBodyPartFilter] = useState<string>('');
+    const [bodyPartFilter, setBodyPartFilter] = useState<string>('전체');
     const [bodyPartToggle, setBodyPartToggle] = useState<boolean>(false);
     const onBodyPartToggle = () => setBodyPartToggle(!bodyPartToggle);
 
@@ -41,8 +41,9 @@ const ExerciseListClient = () => {
             if(like === true){
                 apiURL+=`&like=true`
             }
-            if(bodyPartTypes !== 'all'){
-                // apiURL+=`&bodyPartTypes=${bodyPartList[bodyPartTypes]}`
+            if(bodyPartTypes !== '전체'){
+                console.log(bodyPartList[bodyPartTypes])
+                apiURL+=`&bodyPartTypes=${bodyPartList[bodyPartTypes]}`
             }
             console.log(apiURL)
             const resultexerciseUserList = await getDataClient(apiURL);
@@ -56,7 +57,7 @@ const ExerciseListClient = () => {
     }
 
     useEffect(()=>{
-        fetchexerciseUserList(false,'all',10,'level',10);
+        fetchexerciseUserList(false,'전체',10,'level',10);
     },[])
 
     useEffect(()=>{
@@ -86,8 +87,10 @@ const ExerciseListClient = () => {
                 className="  text-SystemGray3 w-[100px] h-[44px] rounded-[12px] bg-white relative z-10"
                 onClick={onBodyPartToggle}
                 >
-                    <div className="flex justify-center items-center h-[44px]">
-                        {bodyPartFilter==='' ? '운동부위' : `${bodyPartFilter}운동`}
+                    <div className={`flex justify-center items-center h-[44px] rounded-[12px] ${bodyPartFilter!=='전체' && 'bg-SystemSecondaryBrand'}`}>
+                        <div className={`${bodyPartFilter!=='전체' && 'text-SystemBrand'}`}>
+                            {bodyPartFilter==='전체' ? '운동 부위' : `${bodyPartFilter} 운동`}
+                        </div>
                         <div className="px-[3px]"/>
                         <Image
                         src={Down}
@@ -101,24 +104,19 @@ const ExerciseListClient = () => {
                     bodyPartToggle ? "block" : "hidden"
                     } absolute mt-[10px] py-2 bg-white border w-[100px] border-gray-300 rounded-md shadow-lg`}
                 >
-                    <button
-                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={()=>setBodyPartFilter('')}
-                    >
-                    전체
-                    </button>
-                    <button
-                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={()=>setBodyPartFilter('전신')}
-                    >
-                    전신
-                    </button>
-                    <button
-                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                    onClick={()=>setBodyPartFilter('코어')}
-                    >
-                    코어
-                    </button>
+                    {
+                        keysBodyPart.map((value: string, idx) => {
+                            return(
+                                <button
+                                className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                                onClick={()=>setBodyPartFilter(value)}
+                                key={idx}
+                                >
+                                    {value}
+                                </button>
+                            )
+                        })
+                    }
                 </div>
                 </div>
                 
