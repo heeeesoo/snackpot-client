@@ -11,6 +11,7 @@ export const getDataClient = async (url : string) => {
                 "Accept": "application/json",
                 'Authorization': TokenStore.getState().accessToken
             },
+            cache: 'no-store'
         });
       const data = await response.json();
       return data;
