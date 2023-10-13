@@ -5,7 +5,7 @@ const withPWA = require("next-pwa");
 const config = {
     // ...원래 next config 파일
     images: {
-        domains: ['kormedi.com','*','i.pinimg.com','i.ytimg.com'],
+        domains: ['kormedi.com','*','i.pinimg.com','i.ytimg.com','yt3.googleusercontent.com'],
         formats: ['image/avif', 'image/webp'],
     },
 }

@@ -25,7 +25,7 @@ export default function RootLayout({
           />
       </head>
       <body  className={`bg-grayScreen w-screen max-w-[500px] min-h-screen`}>
-        <header className='sticky top-0 z-10'>
+        <header className='sticky top-0 z-20'>
           <Header />
         </header>
         <main className='w-screen max-w-[500px] min-h-[90vh] m-auto overflow-y-scroll no-scrollbar'>

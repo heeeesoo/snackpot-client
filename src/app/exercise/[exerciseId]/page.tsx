@@ -6,8 +6,8 @@ import ReviewList from "@/components/exercise/ReviewList";
 import ExerciseStoreCard from "@/components/exercise/ExerciseStoreCard";
 
 interface ExerciseDataType {
-    thumbnail: string;
-    youtuberThumbnail: string;
+    thumbnail: string | null;
+    youtuberProfileImg: string;
     effect: string;
     videoId: string;
     title: string;
@@ -19,6 +19,7 @@ interface ExerciseDataType {
     level: string;
     calories: number;
     like: boolean;
+    bodyPartTypes: string[];
 }
 
 async function getExerciseData(exerciseId : number) {
@@ -51,7 +52,8 @@ async function getExerciseData(exerciseId : number) {
 export default async function ExerciseId({ params }: { params: { exerciseId: number } }) {
     const responseData = await getExerciseData(params.exerciseId);
     const data : ExerciseDataType= responseData.result.data
-    const levelList: { [key: string]: string } = {'easy':'초급', 'mid':'중급', 'hard':'고급'};
+    const levelList: { [key: string]: string } = {'EASY':'초급', 'MID':'중급', 'HARD':'고급'};
+    const bodyPartList: { [key: string]: string } = {'FULL_BODY':'전신', 'UPPER_BODY':'상체', 'LOWER_BODY':'하체', 'CORE':'코어', 'ARMS':'팔', 'LEGS':'다리', 'BACK':'등', 'CHEST':'가슴', 'SHOULDERS':'어깨'};
     console.log('exercise:',data)
 
     return (
@@ -59,14 +61,17 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
             {/* <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={data.timeSpent} /> */}
             <ExerciseStoreCard videoId={data.videoId} calory={data.calories} time={30} />
             <Link href={`/exercise/${params.exerciseId}/execution`} className="h-[250px] w-fixwidth relative z-0">
-                <Image
-                src={data.thumbnail}
-                layout='fill'
-                alt="thumbnail"
-                className="rounded-[16px]"
-                objectFit="cover"
-                objectPosition="center"
-                />
+                {
+                    data.thumbnail &&
+                    <Image
+                    src={data.thumbnail}
+                    layout='fill'
+                    alt="thumbnail"
+                    className="rounded-[16px]"
+                    objectFit="cover"
+                    objectPosition="center"
+                    />
+                }
                 <div className="absolute rounded-[16px] inset-0 flex items-center justify-center bg-black bg-opacity-30">
                     <div className="bg-SystemGray7 bg-opacity-20 h-[56px] w-[56px] flex justify-center items-center rounded-full">
                         <Image
@@ -86,7 +91,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                     <div className="flex">
                         <div className="w-[40px] h-[40px] relative">
                             <Image
-                            src={data.youtuberThumbnail}
+                            src={data.youtuberProfileImg}
                             alt="youtuberThumbnail"
                             className="rounded-full"
                             layout='fill'
@@ -159,11 +164,18 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                     <span className="font-bold pb-[8px]">
                         운동 부위
                     </span>
-                    <span className="text-SystemGray3">
-                        {data.bodyPart}
+                    <span className="text-SystemGray3 flex">
+                        {data.bodyPartTypes.map((value, idx) => {
+                            return(
+                                <div key={idx}>
+                                    {bodyPartList[value]}
+                                    &nbsp; 
+                                </div>
+                            )
+                        })}
                     </span>
                 </div>
-                {/* <ReviewList exerciseId={params.exerciseId} /> */}
+                <ReviewList exerciseId={params.exerciseId} />
                 <div className="py-[20px]"/>
             </div>
         </div>

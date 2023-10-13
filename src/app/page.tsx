@@ -29,7 +29,7 @@ export default function Home() {
         </div>
       </div>
       <div className="h-[200px] flex flex-col items-center justify-center">
-        <Link href={'/signin'} className="w-full flex justify-center">
+        <Link href={'/signin'} className="w-fixwidth flex justify-center">
           <BasicButton text="로그인" />
         </Link>
         <div className="py-[8px]"></div>
