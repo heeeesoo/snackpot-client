@@ -94,10 +94,11 @@ const My = () => {
             <div className='h-[128px] bg-white px-[20px] py-[20px] w-fixwidth rounded-[16px]'>
                 <div className='flex justify-between'>
                     <div className='font-bold'>
-                        최근 일주일간 목표 달성량   
+                        이번주 목표 달성 횟수
                     </div>
                     <div className='font-bold text-SystemBrand'>
-                        60%  
+                        {/* 60%   */}
+                        3회
                     </div>
                 </div>
             <div className='pt-[16px]'/>
@@ -107,6 +108,7 @@ const My = () => {
                             return(
                                 <div key={idx} className='flex w-[40px] items-center justify-between flex-col'>
                                     <div className='text-SystemGray4 text-[12px]'>
+                                        {dayOfWeek[idx]}
                                     </div>
                                     <div className='pt-[8px]'/>
                                     <div>
