@@ -157,6 +157,7 @@ const ExerciseCard = ({
                 </div>
                     <div className="font-normal text-SystemGray3 text-[12px] mb-[12px]">
                     {youtuberName}
+                    exerciseId : {exerciseId}
                 </div>
                 <div className="text-SystemBrand flex flex-row text-[12px]">
                     <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">

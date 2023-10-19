@@ -13,7 +13,7 @@ interface myListType {
     userName: string;
     // userId: number;
     dailyGoalTime: number;
-    weeklyGoalTime: number[];
+    weeklyGoalTime: weeklyGoaltimeType[];
     profileImg: null| string;
 }
 
@@ -26,14 +26,16 @@ const My = () => {
     const {logout, isLoggedIn, username} = UserStore();
     const {setToken} = TokenStore();
     const [mylist, setMyList] = useState<myListType>();
+    const [nullTimeCount, setNullTimeCount] = useState<number>(0);
     const [loading, setLoading] = useState(true);
+    const [countLoading, setCountLoading] = useState(false);
     const router = useRouter();
     const dayOfWeek = ['월','화','수','목','금','토','일']
 
     const secondsToMinutes = (seconds : number) => {
         const minutes = Math.floor(seconds / 60); // 정수 부분을 분으로 계산
         const remainingSeconds = seconds % 60; // 초 단위의 나머지 부분
-    
+
         // return `${minutes}분 ${remainingSeconds}초`;
         return `${seconds}분`;
     }
@@ -57,6 +59,14 @@ const My = () => {
                 setLoading(false);
                 console.log('mylist:',resultMyList)
                 resultMyList && setMyList(resultMyList.result.data);
+                console.log('mylist2:',resultMyList.result.data);
+                let nullCount = 0
+                for(let i =0 ; i<resultMyList.result.data.weeklyGoalTime.length; i++){
+                    if(resultMyList.result.data.weeklyGoalTime[i].time == null){
+                        nullCount += 1
+                    }
+                }
+                setNullTimeCount(7 - nullCount)
             }catch (error){
                 console.log('error:', error);
             }
@@ -98,7 +108,12 @@ const My = () => {
                     </div>
                     <div className='font-bold text-SystemBrand'>
                         {/* 60%   */}
-                        3회
+                        {countLoading && (
+                            <>
+                                {nullTimeCount}회
+                            </>
+                        )}
+                        {nullTimeCount}회
                     </div>
                 </div>
             <div className='pt-[16px]'/>

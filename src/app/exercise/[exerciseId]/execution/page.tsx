@@ -76,7 +76,7 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                         controls: 0,
                         loop: 1,
                         playlist: videoId,
-                        mute: 1,
+                        // mute: 1,
                         // start: 3,
                         // end: 8
                     },
