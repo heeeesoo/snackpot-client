@@ -43,6 +43,7 @@ const SignUp = () => {
     }
     
     useEffect(() => {
+        alert('token!')
         async function getMessageToken() {
             const token = await getToken();
             console.log('fcm token:',token);
