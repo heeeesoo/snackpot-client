@@ -27,7 +27,7 @@ const Group = () => {
     useEffect(() => {
         const fetchMyGroupListData = async () => {
           try {
-                const responseData = await getDataClient('/groups?&size=5');
+                const responseData = await getDataClient('/groups?&size=30');
                 const responseDataTotalNum = await getDataClient('/members/total-num');
                 console.log(responseData)
                 console.log('mygrouplist:',responseData.result.data.content);
