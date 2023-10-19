@@ -22,6 +22,8 @@ interface exerciseType {
     // youtuberProfileImg: string;
 }
 
+const MAX_TITLE_LENGTH = 80;
+
 const ExerciseCard = ({
     thumbnail,
     title,
@@ -42,6 +44,10 @@ const ExerciseCard = ({
     const [like, setLike] = useState(isLiked);
     const {isLoggedIn} = UserStore();
     // console.log('exerciseId',exerciseId,'isLiked:',isLiked,'like:',like);
+
+    const truncatedTitle = title.length > MAX_TITLE_LENGTH
+    ? `${title.substring(0, MAX_TITLE_LENGTH)}...`
+    : title;
 
     const handleLikeClick = () => {
         setLike(prev => !prev)
@@ -119,7 +125,7 @@ const ExerciseCard = ({
     }
 
     return (
-        <div onClick={handleClick} className="flex flex-col w-fixwidth h-[330px] bg-white rounded-[16px]">
+        <div onClick={handleClick} className="flex flex-col w-fixwidth h-[320px] bg-white rounded-[16px]">
             <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover w-[100%] relative`}>
             {/* <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover`} style={{backgroundImage: `url(${thumbnail})`}}> */}
                 {/* <img src={`${thumbnail}`} width="100%" height="200px"/> */}
@@ -153,14 +159,13 @@ const ExerciseCard = ({
             </div>
             <div className="h-[104px] mx-[16px] mt-[16px]">
                 <div className="font-semibold mb-[4px] text-[16px]">
-                    {title}
+                    {truncatedTitle}
                 </div>
                     <div className="font-normal text-SystemGray3 text-[12px] mb-[12px]">
                     {youtuberName}
-                    exerciseId : {exerciseId}
                 </div>
-                <div className="text-SystemBrand flex flex-row text-[12px]">
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
+                <div className="text-SystemBrand flex flex-row text-[12px] overflow-x-auto flex-wrap">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[80px] px-[12px] mr-[8px] mb-[5px]">
                         {
                             time >= 60 ? 
                                 time % 60 ==0?
@@ -172,16 +177,16 @@ const ExerciseCard = ({
                     <div className="flex" >
                         {bodyPartTypes?.map((value:string, idx:number)=>{
                             return(
-                                <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]" key={idx}>
+                                <div className="bg-SystemSecondaryBrand text-center rounded-[12px] w-[50px] px-[12px] mr-[8px] mb-[5px]" key={idx}>
                                     {bodyPartList[value]}
                                 </div>
                             )
                         })}
                     </div>
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[50px] px-[12px] mr-[8px] ">
                         {levelList[level]}
                     </div>
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[80px] px-[12px] mr-[8px]">
                         {calory}kcal
                     </div>
                 </div>
