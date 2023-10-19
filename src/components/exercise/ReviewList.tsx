@@ -70,7 +70,7 @@ export default function ReviewList({
     return (
         <div className="">
             <div className="font-bold pb-[12px]">
-                리뷰
+                Snackpot 유저 리뷰
             </div>
             <div className="flex flex-row overflow-auto w-[90vw] max-w-[485px] h-auto no-scrollbar">
                 <section className="flex flex-row ">
