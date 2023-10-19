@@ -10,6 +10,7 @@ const Footer = () => {
         '/group',
         '/exercise',
         '/my',
+        '/test'
     ];
 
     return (

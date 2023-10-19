@@ -35,7 +35,7 @@ const ExerciseCard = ({
     likeFilter
     // youtuberProfileImg
 } : exerciseType) => {
-    const levelList: { [key: string]: string } = {'EASY':'초급', 'MID':'중급', 'HARD':'고급'};
+    const levelList: { [key: string]: string } = {'EASY':'초급', "MEDIUM":'중급', 'HARD':'고급'};
     const bodyPartList: { [key: string]: string } = {'FULL_BODY':'전신', 'UPPER_BODY':'상체', 'LOWER_BODY':'하체', 'CORE':'코어', 'ARMS':'팔', 'LEGS':'다리', 'BACK':'등', 'CHEST':'가슴', 'SHOULDERS':'어깨'};
     const router = useRouter();
     const LikedImageLink = isLiked ? LikeActive : Like;
@@ -157,6 +157,7 @@ const ExerciseCard = ({
                 </div>
                     <div className="font-normal text-SystemGray3 text-[12px] mb-[12px]">
                     {youtuberName}
+                    exerciseId : {exerciseId}
                 </div>
                 <div className="text-SystemBrand flex flex-row text-[12px]">
                     <div className="bg-SystemSecondaryBrand rounded-[12px] w-auto px-[12px] mr-[8px]">
