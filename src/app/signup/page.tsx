@@ -86,6 +86,9 @@ const SignUp = () => {
             console.log(response);
             console.log(responseData);
 
+            const msg = `test : ${fcmToken}`
+            alert(msg)
+
             if (!response.ok){
                 console.log('error');
                 const errorMsg = `${responseData.result.message} 'fcmToken' ${fcmToken}`
