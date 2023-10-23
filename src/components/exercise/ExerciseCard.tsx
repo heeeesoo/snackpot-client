@@ -40,8 +40,8 @@ const ExerciseCard = ({
     const levelList: { [key: string]: string } = {'EASY':'초급', "MEDIUM":'중급', 'HARD':'고급'};
     const bodyPartList: { [key: string]: string } = {'FULL_BODY':'전신', 'UPPER_BODY':'상체', 'LOWER_BODY':'하체', 'CORE':'코어', 'ARMS':'팔', 'LEGS':'다리', 'BACK':'등', 'CHEST':'가슴', 'SHOULDERS':'어깨'};
     const router = useRouter();
-    const LikedImageLink = isLiked ? LikeActive : Like;
     const [like, setLike] = useState(isLiked);
+    const LikedImageLink = like ? LikeActive : Like;
     const {isLoggedIn} = UserStore();
     // console.log('exerciseId',exerciseId,'isLiked:',isLiked,'like:',like);
 
