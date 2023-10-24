@@ -11,6 +11,18 @@ import Skeleton from "@/components/common/Skeleton";
 import TokenStore from "@/store/TokenStore";
 import UserStore from "@/store/UserStore";
 import GroupChart from "@/components/group/GroupChart";
+import firebase from "firebase/app";
+import "firebase/messaging";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCj8cmzn94XS6HfqVXvMnmRvSH66LcrblQ",
+    authDomain: "snackpot-2aff6.firebaseapp.com",
+    projectId: "snackpot-2aff6",
+    storageBucket: "snackpot-2aff6.appspot.com",
+    messagingSenderId: "772201837506",
+    appId: "1:772201837506:web:b594806bf50b8f72e89c5b",
+    measurementId: "G-RBMVKFLVBN"
+};
 
 interface absenteesType {
     name: string;
@@ -36,6 +48,28 @@ interface staticsType {
 }
 
 const GroupId = ({ params }: { params: { groupId: number } }) => {
+    // fcm token
+    const [fcmToken, setFcmToken] = useState<string>('')
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    
+    const getToken = async() => {
+        const messaging = firebase.messaging();
+        const token = await messaging.getToken({
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    });
+
+        return token;
+    }
+
+    const getMessageToken = async() => {
+        const token = await getToken();
+        setFcmToken(token);
+        const msg = `gettoken : ${token}`
+        alert(msg)
+    }
+
     const router = useRouter();
     const [absenteesList , setAbsenteesList] = useState<absenteesType[]>();
     const [membersList , setMembersList] = useState<memberType[]>();
@@ -63,8 +97,37 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         }
     };
 
-    const handleReminderClick = async (toUserId : number) => {
+    const submitFCMToken = async () => {
         try {
+            getMessageToken();
+            // const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
+            // const formDataToSend = {
+            //     fcmToken: fcmToken
+            // };
+            // const response = await fetch(`${apiURL}/notification`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         "Accept": "application/json",
+            //         'Authorization': TokenStore.getState().accessToken
+            //     },
+            //     body: JSON.stringify(formDataToSend),
+            // });
+            // const responseData = await response.json();
+            // if (!response.ok){
+            //     console.log('error');
+            //     alert(responseData.result.message);
+            // } else {
+            //     console.log('token submit ok')
+            // }
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    const handleReminderClick = async (toUserId : number) => {        
+        try {
+            submitFCMToken();
             const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
             const formDataToSend = {
                 groupId: params.groupId,
