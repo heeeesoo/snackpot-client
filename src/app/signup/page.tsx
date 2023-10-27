@@ -28,31 +28,31 @@ interface FormData {
 
 const SignUp = () => {
     // fcm token
-    const [fcmToken, setFcmToken] = useState<string>('')
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    // const [fcmToken, setFcmToken] = useState<string>('')
+    // if (!firebase.apps.length) {
+    //     firebase.initializeApp(firebaseConfig);
+    // }
     
-    const getToken = async() => {
-        const messaging = firebase.messaging();
-        const token = await messaging.getToken({
-        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-    });
+    // const getToken = async() => {
+    //     const messaging = firebase.messaging();
+    //     const token = await messaging.getToken({
+    //     vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    // });
 
-        return token;
-    }
+    //     return token;
+    // }
     
-    useEffect(() => {
-        alert('token!')
-        async function getMessageToken() {
-            const token = await getToken();
-            console.log('fcm token:',token);
-            setFcmToken(token);
-            const msg = `gettoken:${token}`
-            alert(msg)
-        }
-        getMessageToken();
-    }, []);
+    // useEffect(() => {
+    //     alert('token!')
+    //     async function getMessageToken() {
+    //         const token = await getToken();
+    //         console.log('fcm token:',token);
+    //         setFcmToken(token);
+    //         const msg = `gettoken:${token}`
+    //         alert(msg)
+    //     }
+    //     getMessageToken();
+    // }, []);
 
     const {login , setUserName, setUserId} = UserStore();
     const {accessToken, setToken} = TokenStore();
@@ -71,7 +71,7 @@ const SignUp = () => {
             const formDataToSend = {
                 name: data.userName,
                 dailyGoalTime: Number(data.dailyGoalTime),
-                fcmToken: fcmToken
+                // fcmToken: fcmToken
             };
 
             console.log(formDataToSend)
@@ -91,9 +91,9 @@ const SignUp = () => {
 
 
             if (!response.ok){
-                console.log('error');
-                const errorMsg = `${responseData.result.message} 'fcmToken' ${fcmToken}`
-                alert(errorMsg);
+                alert(responseData.result.message);
+                // const errorMsg = `${responseData.result.message} 'fcmToken' ${fcmToken}`
+                // alert(errorMsg);
             } else {
                 console.log('ok');
                 login();
