@@ -28,6 +28,11 @@ const ExerciseListClient: NextPage = () => {
     const [bodyPartFilter, setBodyPartFilter] = useState<string>('전체');
     const [bodyPartToggle, setBodyPartToggle] = useState<boolean>(false);
     const onBodyPartToggle = () => setBodyPartToggle(!bodyPartToggle);
+    const timeSpentList: { [key: string]: number } = {'전체' : 10000000, '20분 이하' : 1200, '15분 이하' : 900, '10분 이하' : 600, '5분 이하' : 300}
+    const keysTimeSpentPart = Object.keys(timeSpentList);
+    const [timeSpentFilter, setTimeSpentFilter] = useState<string>('전체');
+    const [timeSpentToggle, setTimeSpentToggle] = useState<boolean>(false);
+    const onTimeSpentToggle = () => setTimeSpentToggle(!timeSpentToggle)
     const [exerciseUserList, setExerciseUserList] = useState<exerciseType[]>([]);
     const likeFilterNum = useRef<number>(0);
     const [likeFilter, setLikeFilter] = useState<boolean>(false);
@@ -44,6 +49,7 @@ const ExerciseListClient: NextPage = () => {
                 console.log(bodyPartList[bodyPartTypes])
                 apiURL+=`&bodyPartTypes=${bodyPartList[bodyPartTypes]}`
             }
+            apiURL+=`&timeSpent=${timeSpent}`
             console.log(apiURL, bodyPartFilter);
             const resultexerciseUserList = await getDataClient(apiURL);
             const updatedExerciseUserList = resultexerciseUserList?.result.data.content || [];
@@ -60,25 +66,26 @@ const ExerciseListClient: NextPage = () => {
 
 
     useEffect(()=>{
-        fetchexerciseUserList(false,bodyPartFilter,80,'level',10, true);
+        fetchexerciseUserList(false,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], true);
     },[])
 
     useEffect(() => {
         console.log('!!!!!!!!:',likeFilter);
         if(likeFilter){
             console.log('YES')
-            fetchexerciseUserList(true,bodyPartFilter,80,'level',10, true);
+            fetchexerciseUserList(true,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], true);
         }
     },[likeFilter])
 
     useEffect(()=>{
+        console.log(timeSpentList[timeSpentFilter])
         if(likeFilter){
             console.log('likeFilter:',likeFilter)
-            fetchexerciseUserList(true,bodyPartFilter,80,'level',10, false)
+            fetchexerciseUserList(true,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], false)
         }else{
-            fetchexerciseUserList(false,bodyPartFilter,80,'level',10, false)
+            fetchexerciseUserList(false,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], false)
         }
-    },[bodyPartFilter, likeFilter])
+    },[bodyPartFilter, likeFilter, timeSpentFilter])
     
 
     const handleLikeFilter = () => {
@@ -117,29 +124,65 @@ const ExerciseListClient: NextPage = () => {
                         height={20}
                         />
                     </div>
-                <div
-                    className={`dropdown-menu ${
-                    bodyPartToggle ? "block" : "hidden"
-                    } absolute mt-[10px] py-2 bg-white border w-[100px] border-gray-100 rounded-md shadow-lg`}
-                >
-                    {
-                        keysBodyPart.map((value: string, idx) => {
-                            return(
-                                <button
-                                className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                                onClick={()=>setBodyPartFilter(value)}
-                                key={idx}
-                                >
-                                    {value}
-                                </button>
-                            )
-                        })
-                    }
+                    <div
+                        className={`dropdown-menu ${
+                        bodyPartToggle ? "block" : "hidden"
+                        } absolute mt-[10px] py-2 bg-white border w-[100px] border-gray-100 rounded-md shadow-lg`}
+                    >
+                        {
+                            keysBodyPart.map((value: string, idx) => {
+                                return(
+                                    <button
+                                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                                    onClick={()=>setBodyPartFilter(value)}
+                                    key={idx}
+                                    >
+                                        {value}
+                                    </button>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
+
+                <div className="ml-[5px]" />
+                <div
+                className="  text-SystemGray3 w-[100px] h-[44px] rounded-[12px] bg-white relative z-10"
+                onClick={onTimeSpentToggle}
+                >
+                    <div className={`flex justify-center items-center h-[44px] rounded-[12px] ${timeSpentFilter!=='전체' && 'bg-SystemSecondaryBrand'}`}>
+                        <div className={`${timeSpentFilter!=='전체' && 'text-SystemBrand'}`}>
+                            {timeSpentFilter==='전체' ? '시간' : `${timeSpentFilter}`}
+                        </div>
+                        <div className="px-[3px]"/>
+                        <Image
+                        src={Down}
+                        alt="Down"
+                        width={20}
+                        height={20}
+                        />
+                    </div>
+                    <div
+                        className={`dropdown-menu ${
+                        timeSpentToggle ? "block" : "hidden"
+                        } absolute mt-[10px] py-2 bg-white border w-[100px] border-gray-100 rounded-md shadow-lg`}
+                    >
+                        {
+                            keysTimeSpentPart.map((value: string, idx) => {
+                                return(
+                                    <button
+                                    className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                                    onClick={()=>setTimeSpentFilter(value)}
+                                    key={idx}
+                                    >
+                                        {value}
+                                    </button>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
                 
-                {/* <CategoryDropDown /> */}
-
                 <div className="">
                     {/* 시간 */}
                 </div>
