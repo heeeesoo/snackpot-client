@@ -125,14 +125,23 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         }
     }
 
+    useEffect(() => {
+        async function getMessageToken() {
+            const token = await getToken();
+            setFcmToken(token);
+        }
+        getMessageToken();
+    }, []);
+
     const handleReminderClick = async (toUserId : number) => {        
         try {
-            submitFCMToken();
             const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
             const formDataToSend = {
                 groupId: params.groupId,
-                toUserId: toUserId
+                toUserId: toUserId,
+                fcmToken: fcmToken
             };
+            console.log('formDataToSend:', formDataToSend)
             const response = await fetch(`${apiURL}/notification`, {
                 method: 'POST',
                 headers: {
@@ -143,9 +152,14 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 body: JSON.stringify(formDataToSend),
             });
             const responseData = await response.json();
+            console.log(responseData)
             if (!response.ok){
                 console.log('error');
-                alert(responseData.result.message);
+                if(responseData.code == -1400){
+                    alert('상대방이 알림 허용을 하지 않았습니다!')
+                }else{
+                    alert(responseData.result.message);
+                }
             } else {
                 console.log('okreminder');
                 alert('콕 찌르기 성공!');

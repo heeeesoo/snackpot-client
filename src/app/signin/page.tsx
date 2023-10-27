@@ -27,28 +27,28 @@ interface FormData {
 
 const SignIn = () => {
     // fcm token
-    const [fcmToken, setFcmToken] = useState<string>('')
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    // const [fcmToken, setFcmToken] = useState<string>('')
+    // if (!firebase.apps.length) {
+    //     firebase.initializeApp(firebaseConfig);
+    // }
     
-    const getToken = async() => {
-        const messaging = firebase.messaging();
-        const token = await messaging.getToken({
-        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-    });
+    // const getToken = async() => {
+    //     const messaging = firebase.messaging();
+    //     const token = await messaging.getToken({
+    //     vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+    // });
 
-        return token;
-    }
+    //     return token;
+    // }
     
-    useEffect(() => {
-        async function getMessageToken() {
-            const token = await getToken();
-            console.log('fcm token:',token);
-            setFcmToken(token);
-        }
-        getMessageToken();
-    }, []);
+    // useEffect(() => {
+    //     async function getMessageToken() {
+    //         const token = await getToken();
+    //         console.log('fcm token:',token);
+    //         setFcmToken(token);
+    //     }
+    //     getMessageToken();
+    // }, []);
 
     const searchParams = useSearchParams();
     const {login, setUserName, setUserId} = UserStore();
@@ -67,7 +67,7 @@ const SignIn = () => {
         
             const formDataToSend = {
                 name: data.userName,
-                fcmToken: fcmToken
+                // fcmToken: fcmToken
             };
 
             console.log(formDataToSend)

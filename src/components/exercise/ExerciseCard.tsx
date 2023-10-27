@@ -13,7 +13,7 @@ interface exerciseType {
     title: string;
     youtuberName: string;
     time: number;
-    bodyPartTypes?: string[]; 
+    bodyPartTypes: string[]; 
     level: string;
     calory: number;
     isLiked: boolean;
@@ -22,7 +22,7 @@ interface exerciseType {
     // youtuberProfileImg: string;
 }
 
-const MAX_TITLE_LENGTH = 80;
+const MAX_TITLE_LENGTH = 50;
 
 const ExerciseCard = ({
     thumbnail,
@@ -125,8 +125,8 @@ const ExerciseCard = ({
     }
 
     return (
-        <div onClick={handleClick} className="flex flex-col w-fixwidth h-[380px] bg-white rounded-[16px]">
-            <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover w-[100%] relative`}>
+        <div onClick={handleClick} className={`flex flex-col w-fixwidth ${bodyPartTypes.length >= 2 ? 'h-[370px]' : 'h-[330px]'} bg-white rounded-[16px]`}>
+            <div className={`h-[190px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover w-[100%] relative`}>
             {/* <div className={`h-[180px] font-[16px] bg-no-repeat rounded-t-[16px] flex flex-row justify-between px-[16px] py-[16px] bg-center bg-cover`} style={{backgroundImage: `url(${thumbnail})`}}> */}
                 {/* <img src={`${thumbnail}`} width="100%" height="200px"/> */}
                 {thumbnail && <Image
@@ -183,10 +183,10 @@ const ExerciseCard = ({
                             )
                         })}
                     </div>
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[50px] px-[12px] mr-[8px] ">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[50px] px-[12px] mr-[8px] mb-[5px]">
                         {levelList[level]}
                     </div>
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[80px] px-[12px] mr-[8px]">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[80px] px-[12px] mr-[8px] mb-[5px]">
                         {calory}kcal
                     </div>
                 </div>

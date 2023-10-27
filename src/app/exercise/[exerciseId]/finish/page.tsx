@@ -77,7 +77,13 @@ const ExerciseFinish = ({ params }: { params: { exerciseId: number } }) => {
                         시간
                     </div>
                     <div className="font-bold text-black">
-                        {time}
+                        {
+                            time >= 60 ? 
+                                time % 60 ==0?
+                                    `${Math.floor(time/60)}분` :
+                                    `${Math.floor(time/60)}분 ${time%60}초`:
+                                `${time%60}초`
+                        }
                     </div>
                 </div>
                 <div className="h-[24px] w-[0.5px] bg-SystemGray3"/>

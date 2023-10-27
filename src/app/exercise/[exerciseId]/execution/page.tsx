@@ -71,9 +71,9 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                     height: "100%",
                     playerVars: {
                         autoplay: true,
-                        rel: 0,
-                        modestbranding: 1,
-                        controls: 0,
+                        // rel: 0,
+                        // modestbranding: 1,
+                        // controls: 0,
                         loop: 1,
                         playlist: videoId,
                         // mute: 1,

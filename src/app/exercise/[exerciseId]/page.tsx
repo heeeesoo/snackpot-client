@@ -59,7 +59,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
     return (
         <div className="flex flex-col items-center w-full">
             {/* <ExerciseStoreCard videoId={data.videoId} calory={data.calory} time={data.timeSpent} /> */}
-            <ExerciseStoreCard videoId={data.videoId} calory={data.calories} time={30} />
+            <ExerciseStoreCard videoId={data.videoId} calory={data.calories} time={data.timeSpent} />
             <Link href={`/exercise/${params.exerciseId}/execution`} className="h-[250px] w-fixwidth relative z-0">
                 {
                     data.thumbnail &&
@@ -88,28 +88,32 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                     {data.title}
                 </div>
                 <div className="flex justify-between py-[40px]">
-                    <div className="flex">
-                        <div className="w-[40px] h-[40px] relative">
-                            <Image
-                            src={data.youtuberProfileImg}
-                            alt="youtuberThumbnail"
-                            className="rounded-full"
-                            layout='fill'
-                            objectFit="cover"
-                            objectPosition="center"
-                            />
-                        </div>
-                        <div className="flex flex-col pl-[12px]">
+                    <div className="">
+                        <div className="flex flex-row items-center">
+                            <div className="w-[40px] h-[40px] relative">
+                                <Image
+                                    src={data.youtuberProfileImg}
+                                    alt="youtuberThumbnail"
+                                    className="rounded-full"
+                                    layout="fill"
+                                    objectFit="cover"
+                                    objectPosition="center"
+                                    />
+                            </div>
+                            <div className="pl-[12px]"/>
                             <span className="text-[14px] pb-[4px]">{data.youtuberName}</span>
+                        </div>
+                        <div className="pt-[10px]"/>
+                        <div className="flex flex-col">
                             <span className="text-[12px] text-SystemGray3">{data.youtuberDescription}</span>
                         </div>
                     </div>
-                    <Image
+                    {/* <Image
                     src={ChevronRight}
                     alt="ChevronRight"
                     width={20}
                     height={20}
-                    />
+                    /> */}
                 </div>
                 <div className="py-[20px] h-[80px] rounded-[16px] flex bg-white items-center flex-row justify-around">
                     <div className="flex flex-col items-center">
