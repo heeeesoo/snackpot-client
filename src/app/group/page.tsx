@@ -8,7 +8,8 @@ import Skeleton from "@/components/common/Skeleton";
 import GroupSkeleton from "@/components/group/GroupSkeleton";
 import BasicSecondayButton from "@/components/button/BasicSecondayButton";
 import BasicSecondayButton2 from "@/components/button/BasicSecondayButton2";
-
+import UserStore from "@/store/UserStore";
+import { deleteDataClient } from "@/utils/deleteDataClient";
 
 interface GroupType {
     groupId: number;
@@ -24,6 +25,7 @@ const Group = () => {
     const [totalNum, setTotalNum] = useState<number>(100);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const {username} = UserStore();
     useEffect(() => {
         const fetchMyGroupListData = async () => {
           try {
@@ -53,8 +55,24 @@ const Group = () => {
         router.push('/group/create');
     }
 
-    const handleClickGroup = (groupId : number) => {
-        router.push(`/group/${groupId}`);
+    const handleClickGroup = async (groupId : number, e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLInputElement;
+        if (target.id === 'delete' || target.alt === 'delete'){
+            console.log('delete');
+            try {
+                const responseData = await deleteDataClient(`/groups/${groupId}`)
+                console.log('delete:',responseData)
+                if(responseData.success === true){
+                    alert('그룹이 삭제되었습니다.');
+                    location.reload();
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        else {
+            router.push(`/group/${groupId}`);
+        }
     }
 
     if (loading) return (<div className="pt-[20px] mx-[20px]"><GroupSkeleton/></div>)
@@ -87,7 +105,7 @@ const Group = () => {
             {
                 groupMyList?.map((group : GroupType) => {
                     return(
-                        <div key={group.groupId} onClick={()=>handleClickGroup(group.groupId)} className="flex px-[20px] py-[20px] flex-col h-[112px] w-fixwidth bg-white mb-[12px] rounded-[16px]">
+                        <div key={group.groupId} onClick={(e)=>handleClickGroup(group.groupId, e)} className="flex px-[20px] py-[20px] flex-col h-[112px] w-fixwidth bg-white mb-[12px] rounded-[16px]">
                             <div className="flex flex-row items-stretch justify-between">
                                 <div className="font-bold flex flex-row items-center">
                                     {group.groupName}
@@ -106,7 +124,7 @@ const Group = () => {
                             <div className="text-[12px] text-SystemGray3">
                                 {group.startDate} ~
                             </div>
-                            <div className="text-[12px] flex items-center flex-row mt-[8px] text-SystemGray3">
+                            <div className="text-[12px] justify-between flex items-center flex-row mt-[8px] text-SystemGray3">
                                 {/* <div className="flex flex-row mr-[8px] ml-[8px]">
                                 {
                                     group.memberProfileImageList!==null && group.memberProfileImageList.map((image:string, idx:number) => {
@@ -130,7 +148,15 @@ const Group = () => {
                                     })
                                 }
                                 </div> */}
-                                {group.groupNumber}명
+                                <div>{group.groupNumber}명</div>
+                                <div>
+                                    {
+                                    username === group.hostName?
+                                    <button id="delete">그룹 삭제</button>
+                                    :
+                                    <div></div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     )
