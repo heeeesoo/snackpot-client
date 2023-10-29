@@ -28,7 +28,7 @@ const Group = () => {
     const router = useRouter();
     const {username} = UserStore();
     const [userAgent, setUserAgent] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -103,9 +103,11 @@ const Group = () => {
 
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">
+            {hasKakaoTalk(userAgent) ? 
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <p>앱 다운로드하기</p>
             </Modal>
+            : <div></div>}
             {
                 groupMyList?.length==0 &&
                 <div className=" w-fixwidth h-[80vh] flex flex-col justify-center items-center">
