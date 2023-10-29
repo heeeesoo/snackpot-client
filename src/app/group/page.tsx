@@ -103,6 +103,7 @@ const Group = () => {
 
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">
+            {userAgent}
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <p>앱 다운로드하기</p>
             </Modal>
