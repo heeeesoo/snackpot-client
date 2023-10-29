@@ -84,15 +84,17 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
 
     return (
         <div className="h-screen">
-            <div className="text-2xl text-[32px] text-center flex items-center font-bold justify-center w-[155px] h-[56px] text-white mt-4 mr-4 absolute bg-black opacity-80 rounded-[16px] top-0 right-0">
-                <div className="w-[30px] justify-center items-center flex" onClick={() => router.back()}>
-                    <Image
+            <div className="text-2xl text-[32px] text-center flex items-center font-bold justify-center w-[50px] h-[56px] text-white mt-4 ml-4 absolute bg-black opacity-80 rounded-[16px] top-0 left-0">
+                <div className="w-[130px] justify-center items-center flex" onClick={() => router.back()}>
+                <Image
                     src={ChevronLeftWhite}
                     alt="ChevronLeftWhite"
                     height={30}
                     width={30}
                     />
                 </div>
+            </div>
+            <div className="text-2xl text-[32px] text-center flex items-center font-bold justify-center w-[155px] h-[56px] text-white mt-4 mr-4 absolute bg-black opacity-80 rounded-[16px] top-0 right-0">
                 <div className="w-[125px] flex items-center justify-center text-center">
                     {formattedMinutes} : {formattedSeconds}
                 </div>
