@@ -5,7 +5,7 @@ import BasicSecondayButton2 from '@/components/button/BasicSecondayButton2';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { profile } from '@/constant/icon';
+import { profile, RunningMan } from '@/constant/icon';
 import Skeleton from '@/components/common/Skeleton';
 import TokenStore from '@/store/TokenStore';
 
@@ -80,8 +80,8 @@ const My = () => {
         <div className='flex flex-col items-center'>
             <div className='w-[120px] h-[120px] relative mt-3'>
                 <Image
-                src={profile}
-                alt='profile'
+                src={RunningMan}
+                alt='RunningMan'
                 className="rounded-full border-2 border-white"
                 layout='fill'
                 objectFit="cover"
