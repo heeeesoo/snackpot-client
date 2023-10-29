@@ -10,6 +10,7 @@ import BasicSecondayButton from "@/components/button/BasicSecondayButton";
 import BasicSecondayButton2 from "@/components/button/BasicSecondayButton2";
 import UserStore from "@/store/UserStore";
 import { deleteDataClient } from "@/utils/deleteDataClient";
+import Modal from "@/components/common/Modal";
 
 interface GroupType {
     groupId: number;
@@ -27,11 +28,23 @@ const Group = () => {
     const router = useRouter();
     const {username} = UserStore();
     const [userAgent, setUserAgent] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+    
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         // 컴포넌트가 마운트될 때 User-Agent 정보를 가져옴
         setUserAgent(window.navigator.userAgent);
+        if(hasKakaoTalk(userAgent)){
+            openModal()
+        }
     }, []);
+
     useEffect(() => {
         const fetchMyGroupListData = async () => {
           try {
@@ -61,6 +74,11 @@ const Group = () => {
         router.push('/group/create');
     }
 
+    const hasKakaoTalk = (userAgentString : string) => {
+        // 문자열에 'KAKAOTALK'이 포함되어 있는지 확인
+        return userAgentString.includes('KAKAOTALK');
+    }
+
     const handleClickGroup = async (groupId : number, e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.target as HTMLInputElement;
         if (target.id === 'delete' || target.alt === 'delete'){
@@ -85,7 +103,9 @@ const Group = () => {
 
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">
-            {userAgent}
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+                <p>앱 다운로드하기</p>
+            </Modal>
             {
                 groupMyList?.length==0 &&
                 <div className=" w-fixwidth h-[80vh] flex flex-col justify-center items-center">
