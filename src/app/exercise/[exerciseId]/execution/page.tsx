@@ -84,7 +84,7 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
 
     return (
         <div className="h-screen">
-            <div className="text-2xl text-[32px] text-center flex items-center font-bold justify-center w-[140px] h-[56px] text-white mt-4 mr-4 absolute bg-black opacity-80 rounded-[16px] top-0 right-0">
+            <div className="text-2xl text-[32px] text-center flex items-center font-bold justify-center w-[155px] h-[56px] text-white mt-4 mr-4 absolute bg-black opacity-80 rounded-[16px] top-0 right-0">
                 <div className="w-[30px] justify-center items-center flex" onClick={() => router.back()}>
                     <Image
                     src={ChevronLeftWhite}
@@ -93,7 +93,7 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                     width={30}
                     />
                 </div>
-                <div className="w-[120px] flex items-center justify-center text-center">
+                <div className="w-[125px] flex items-center justify-center text-center">
                     {formattedMinutes} : {formattedSeconds}
                 </div>
             </div>
