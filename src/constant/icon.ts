@@ -17,6 +17,7 @@ export const Play = "/img/icons/common/Play.svg";
 
 export const RunningMan = "/img/icons/common/RunningMan.svg";
 export const ChevronLeft = "/img/icons/common/ChevronLeft.svg";
+export const ChevronLeftWhite = "/img/icons/common/ChevronLeftWhite.svg";
 export const ChevronRight = "/img/icons/common/ChevronRight.svg";
 
 export const Cross = "/img/icons/common/Cross.svg";
