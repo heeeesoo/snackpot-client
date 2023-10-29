@@ -19,7 +19,7 @@ const GroupChart = ({
     const newArray = dataGroup.map((item : GroupChartType) => ({
         userId: item.userId,
         name: item.name,
-        time: item.time / 60
+        time: Math.ceil(item.time / 60)
     }));
 
     newArray.sort((a : GroupChartType, b : GroupChartType) => b.time - a.time);

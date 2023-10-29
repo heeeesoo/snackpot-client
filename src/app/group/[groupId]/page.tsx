@@ -48,6 +48,11 @@ interface staticsType {
 }
 
 const GroupId = ({ params }: { params: { groupId: number } }) => {
+    const getCurrentDayOfWeek = () => {
+        const now = new Date();
+        return (now.getDay() + 6) % 7
+    }
+
     // fcm token
     const [fcmToken, setFcmToken] = useState<string>('')
     if (!firebase.apps.length) {
@@ -82,7 +87,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     const [loading3, setLoading3] = useState(true);
     const [checkToggle, setCheckToggle] = useState<boolean>(false);
     const [visibleMembers, setVisibleMembers] = useState<boolean>(false);
-    const [visibleStatistics, setVisibleStatistics] = useState<number>(0);
+    const [visibleStatistics, setVisibleStatistics] = useState<number>(getCurrentDayOfWeek());
     const {userid} = UserStore();
 
     const handleInvitation = (inviteCode:string) => {
@@ -131,6 +136,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
             setFcmToken(token);
         }
         getMessageToken();
+        getCurrentDayOfWeek();
     }, []);
 
     const handleReminderClick = async (toUserId : number) => {        
