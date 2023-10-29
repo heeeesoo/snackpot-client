@@ -55,7 +55,7 @@ const Create = () => {
     return (
         <div className="relative flex flex-col pt-[30px]">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center justify-between min-h-[80vh]">
-                <InputBox title="그룹의 이름을 입력해주세요" label="groupName" name="groupName" register={register} error={errors.groupName?.message} maxLength={8} placeholder="그룹명 (최대 8자)" noSpecialChar={true}/>
+                <InputBox title="그룹의 이름을 입력해주세요" label="groupName" name="groupName" register={register} error={errors.groupName?.message} maxLength={8} placeholder="그룹명 (최대 6자)" noSpecialChar={true}/>
                 <div className='w-fixwidth'>
                     <BasicButton text="그룹 생성하기"/>
                 </div>
