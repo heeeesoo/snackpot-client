@@ -104,6 +104,7 @@ const Group = () => {
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">
             {userAgent}
+            {hasKakaoTalk(userAgent) ? 'kakao' : 'diff'}
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <p>앱 다운로드하기</p>
             </Modal>
