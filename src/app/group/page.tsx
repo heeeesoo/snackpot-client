@@ -26,6 +26,12 @@ const Group = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const {username} = UserStore();
+    const [userAgent, setUserAgent] = useState('');
+
+    useEffect(() => {
+        // 컴포넌트가 마운트될 때 User-Agent 정보를 가져옴
+        setUserAgent(window.navigator.userAgent);
+    }, []);
     useEffect(() => {
         const fetchMyGroupListData = async () => {
           try {
@@ -79,6 +85,7 @@ const Group = () => {
 
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">
+            {userAgent}
             {
                 groupMyList?.length==0 &&
                 <div className=" w-fixwidth h-[80vh] flex flex-col justify-center items-center">
@@ -152,7 +159,7 @@ const Group = () => {
                                 <div>
                                     {
                                     username === group.hostName?
-                                    <button id="delete">그룹 삭제</button>
+                                    <button className="border-2 border-SystemGray4 w-[60px] rounded-md h-[20px] flex items-center justify-center text-center" id="delete">그룹 삭제</button>
                                     :
                                     <div></div>
                                     }
