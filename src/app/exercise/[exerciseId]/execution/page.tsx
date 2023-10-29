@@ -1,7 +1,7 @@
 'use client'
 import ExerciseStore from "@/store/ExerciseStore";
 import { useEffect, useState } from "react";
-import YouTube from 'react-youtube';
+import YouTube, { YouTubeProps } from 'react-youtube';
 import { useRouter } from "next/navigation";
 import ProgressBar from "@/components/exercise/ProgressBar";
 import TokenStore from "@/store/TokenStore";
@@ -20,6 +20,26 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
 
     
     const router = useRouter();
+
+    const onPlayerReady: YouTubeProps['onReady'] = (event) => {
+        event.target.pauseVideo();
+    }
+
+    const opts: YouTubeProps['opts'] = {
+        width: "100%",
+        height: "100%",
+        playerVars: {
+            autoplay: true,
+            // rel: 0,
+            // modestbranding: 1,
+            // controls: 0,
+            loop: 1,
+            playlist: videoId,
+            // mute: 1,
+            // start: 3,
+            // end: 8
+        },
+    };
 
     useEffect(() => {
         // 1초마다 remainingTime을 1초씩 감소시킵니다.
@@ -66,21 +86,7 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
             <YouTube
                 className="h-[100vh]"
                 videoId={videoId}
-                opts={{
-                    width: "100%",
-                    height: "100%",
-                    playerVars: {
-                        autoplay: true,
-                        // rel: 0,
-                        // modestbranding: 1,
-                        // controls: 0,
-                        loop: 1,
-                        playlist: videoId,
-                        // mute: 1,
-                        // start: 3,
-                        // end: 8
-                    },
-                }}
+                opts={opts}
                 onEnd={(e) => { e.target.stopVideo(0); }}
             />
             <div className="w-[100%] absolute bottom-0">

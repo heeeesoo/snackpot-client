@@ -80,6 +80,8 @@ const Header = () => {
                     <div className="w-[24px]" />
                 </div>
                 :
+                pathname === '/'
+                ?
                 <div className="h-[64px] bg-grayScreen flex flex-row justify-center items-center">
                     <div onClick={handleClickLogo}>
                         <Image 
@@ -90,6 +92,27 @@ const Header = () => {
                             priority
                         />
                     </div>
+                </div>
+                :
+                <div className="h-[64px] bg-grayScreen flex flex-row justify-between items-center">
+                    <div onClick={handleClickBack} className="ml-[10px]">
+                    <Image
+                        src={ChevronLeft}
+                        alt="ChevronLeft"
+                        width={24}
+                        height={24}
+                    />
+                    </div>
+                    <div onClick={handleClickLogo}>
+                        <Image 
+                            src={LogoSmall}
+                            alt="LogoSmall"
+                            width={108}
+                            height={24}
+                            priority
+                        />
+                    </div>
+                    <div className="w-[24px] mr-[10px]"/>
                 </div>
             }
         </div>
