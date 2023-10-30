@@ -118,9 +118,9 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                 title="hey"
                 noCookie={true} //default가 false라서 꼭 명시하기
             /> */}
-            <div className="w-[100%] absolute bottom-0">
+            {/* <div className="w-[100%] absolute bottom-0">
                 <ProgressBar time={time}/>
-            </div>
+            </div> */}
         </div>
     );
 };

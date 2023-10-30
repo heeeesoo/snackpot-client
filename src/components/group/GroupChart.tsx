@@ -30,8 +30,8 @@ const GroupChart = ({
       
         return (
           <g>
-            <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#FFFFFF" />
-            <text x={x + width / 2} y={y - radius} className='text-[14px]' fill="#CCCCDC" textAnchor="middle" dominantBaseline="middle">
+            <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#f2f3f5" />
+            <text x={x + width / 2} y={y - radius} className='text-[14px]' fill="#3A81F7" textAnchor="middle" dominantBaseline="middle">
               {Math.ceil(value)}분
             </text>
           </g>
@@ -49,7 +49,7 @@ const GroupChart = ({
                 {/* <Bar dataKey="time" fill="#CCCCDC" >
                     <LabelList dataKey="name" content={renderCustomizedLabel} />
                 <Bar /> */}
-                <Bar dataKey="time" fill="#CCCCDC" minPointSize={5}>
+                <Bar dataKey="time" fill="#3A81F7" minPointSize={5}>
             <LabelList dataKey="time" content={renderCustomizedLabel} />
           </Bar>
             </BarChart>

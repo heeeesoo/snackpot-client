@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { getDataClient } from "@/utils/getDataClient";
 import ExerciseCard from "@/components/exercise/ExerciseCard";
 import Image from "next/image";
-import { LikeGray, LikeBlue, Down } from "@/constant/icon";
+import { LikeGray, LikeBlue, Down, Down_White, LikeWhite } from "@/constant/icon";
 
 interface exerciseType {
     thumbnail: string;
@@ -99,9 +99,9 @@ const ExerciseListClient: NextPage = () => {
     return (
         <div className="flex flex-col items-center">
             <div className="flex w-fixwidth">
-                <div className={`${likeFilter ? 'bg-SystemSecondaryBrand' : 'bg-white'} flex rounded-[12px] items-center justify-center w-[44px] h-[44px]`} onClick={handleLikeFilter}>
+                <div className={`${likeFilter ? 'bg-SystemBrand' : 'bg-white'} flex rounded-[12px] items-center justify-center w-[44px] h-[44px]`} onClick={handleLikeFilter}>
                     <Image 
-                    src={`${likeFilter ? LikeBlue : LikeGray}`}
+                    src={`${likeFilter ? LikeWhite : LikeGray}`}
                     width={20}
                     height={20}
                     alt="LikeBlue"
@@ -112,13 +112,13 @@ const ExerciseListClient: NextPage = () => {
                 className="  text-SystemGray3 w-[100px] h-[44px] rounded-[12px] bg-white relative z-10"
                 onClick={onBodyPartToggle}
                 >
-                    <div className={`flex justify-center items-center h-[44px] rounded-[12px] ${bodyPartFilter!=='전체' && 'bg-SystemSecondaryBrand'}`}>
-                        <div className={`${bodyPartFilter!=='전체' && 'text-SystemBrand'}`}>
+                    <div className={`flex justify-center items-center h-[44px] rounded-[12px] ${bodyPartFilter!=='전체' && ' bg-SystemBrand'}`}>
+                        <div className={`${bodyPartFilter!=='전체' && 'text-white'}`}>
                             {bodyPartFilter==='전체' ? '운동 부위' : `${bodyPartFilter} 운동`}
                         </div>
                         <div className="px-[3px]"/>
                         <Image
-                        src={Down}
+                        src={`${bodyPartFilter==='전체' ? Down : Down_White}`}
                         alt="Down"
                         width={20}
                         height={20}
@@ -150,13 +150,13 @@ const ExerciseListClient: NextPage = () => {
                 className="  text-SystemGray3 w-[100px] h-[44px] rounded-[12px] bg-white relative z-10"
                 onClick={onTimeSpentToggle}
                 >
-                    <div className={`flex justify-center items-center h-[44px] rounded-[12px] ${timeSpentFilter!=='전체' && 'bg-SystemSecondaryBrand'}`}>
-                        <div className={`${timeSpentFilter!=='전체' && 'text-SystemBrand'}`}>
+                    <div className={`flex justify-center items-center h-[44px] rounded-[12px] ${timeSpentFilter!=='전체' && 'bg-SystemBrand'}`}>
+                        <div className={`${timeSpentFilter!=='전체' && 'text-white'}`}>
                             {timeSpentFilter==='전체' ? '시간' : `${timeSpentFilter}`}
                         </div>
                         <div className="px-[3px]"/>
                         <Image
-                        src={Down}
+                        src={`${timeSpentFilter==='전체' ? Down : Down_White}`}
                         alt="Down"
                         width={20}
                         height={20}
