@@ -34,7 +34,7 @@ export default function Home() {
         </Link>
         <div className="py-[8px]"></div>
         <Link href={'/signup'} className="w-fixwidth flex justify-center">
-          <BasicSecondayButton2 text="회원가입" />
+          <BasicButton text="회원가입" />
         </Link>
       </div>
     </div>

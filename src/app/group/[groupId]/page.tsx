@@ -48,6 +48,11 @@ interface staticsType {
 }
 
 const GroupId = ({ params }: { params: { groupId: number } }) => {
+    const getCurrentDayOfWeek = () => {
+        const now = new Date();
+        return (now.getDay() + 6) % 7
+    }
+
     // fcm token
     const [fcmToken, setFcmToken] = useState<string>('')
     if (!firebase.apps.length) {
@@ -82,11 +87,11 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
     const [loading3, setLoading3] = useState(true);
     const [checkToggle, setCheckToggle] = useState<boolean>(false);
     const [visibleMembers, setVisibleMembers] = useState<boolean>(false);
-    const [visibleStatistics, setVisibleStatistics] = useState<number>(0);
+    const [visibleStatistics, setVisibleStatistics] = useState<number>(getCurrentDayOfWeek());
     const {userid} = UserStore();
 
     const handleInvitation = (inviteCode:string) => {
-        copy(`https://snackpot-client.vercel.app/invitation/?groupCode=${inviteCode}`);
+        copy(`https://snackpot-client.vercel.app/invitation/?groupCode=${inviteCode} \n 이 링크를 통해 그룹에 가입해보세요!😆 `);
         alert('초대코드가 복사되었습니다. 초대하고 싶은 멤버에게 공유하세요!')
     }
 
@@ -131,6 +136,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
             setFcmToken(token);
         }
         getMessageToken();
+        getCurrentDayOfWeek();
     }, []);
 
     const handleReminderClick = async (toUserId : number) => {        
@@ -156,7 +162,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
             if (!response.ok){
                 console.log('error');
                 if(responseData.code == -1400){
-                    alert('상대방이 알림 허용을 하지 않았습니다!')
+                    alert('상대방이 알림을 허용하지 않았습니다!')
                 }else{
                     alert(responseData.result.message);
                 }
@@ -217,7 +223,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 <button onClick={()=>handleInvitation(`${groupCode}`)}  className="font-semibold text-[14px] text-SystemBrand">초대하기</button>
             </div>
             <div className="pb-[80px]" />
-            <div className="flex w-fixwidth justify-between font-bold text-[18px] pb-[8px]">
+            <div className="flex w-fixwidth justify-between text-[18px] pb-[8px]">
                 오늘 운동하지 않은 회원
                 <div className="text-SystemGray3 text-[14px]">
                     {absenteesList?.length}명
@@ -257,14 +263,14 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                         return(
                             <div key={idx} className={`bg-white flex flex-col justify-between mb-[12px] rounded-[16px] px-[20px] py-[20px] h-[150px]`} style={{ display: member.userId==userid ? 'block' : 'none' }}>
                                 <div className="flex justify-between flex-row items-stretch">
-                                    <div className="font-bold text-[16px]">{member.userName}</div>
+                                    <div className=" text-[16px]">{member.userName}</div>
                                     <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.successNum}</div> / 7</div>
                                 </div>
                                 <div className="flex justify-between items-stretch">
                                     {
                                         member.checkList.map((check:string, idx:number) => {
                                             return(
-                                                <div key={idx} className={`w-full ${idx === today.getDay()-1 ? 'border border-SystemGray6' : ''} h-[70px] rounded-[16px] justify-center flex flex-col items-center`}>
+                                                <div key={idx} className={`w-full ${idx === today.getDay()-1 ? 'border-2 border-SystemSecondaryBrand' : ''} h-[70px] rounded-[16px] justify-center flex flex-col items-center`}>
                                                     <div className="text-SystemGray4 mb-[8px] text-[12px]">
                                                         {daysOfWeek[idx]}
                                                     </div>
@@ -314,14 +320,14 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                         return(
                             <div key={idx} className={`bg-white flex flex-col justify-between mb-[12px] rounded-[16px] px-[20px] py-[20px] h-[202px]`} style={{ display: member.userId!=userid && visibleMembers ? 'block' : 'none' }}>
                                 <div className="flex justify-between flex-row items-stretch">
-                                    <div className="font-bold text-[16px]">{member.userName}</div>
+                                    <div className="text-[16px]">{member.userName}</div>
                                     <div className="flex text-SystemGray3 flex-row"><div className="text-SystemBrand mr-[4px]">{member.successNum}</div> / 7</div>
                                 </div>
                                 <div className="flex justify-between items-stretch">
                                     {
                                         member.checkList.map((check:string, idx:number) => {
                                             return(
-                                                <div key={idx} className={`w-full ${idx === today.getDay()-1 ? 'border border-SystemGray6' : ''} h-[70px] rounded-[16px] justify-center flex flex-col items-center`}>
+                                                <div key={idx} className={`w-full ${idx === today.getDay()-1 ? 'border-2 border-SystemSecondaryBrand' : ''} h-[70px] rounded-[16px] justify-center flex flex-col items-center`}>
                                                     <div className="text-SystemGray4 mb-[8px] text-[12px]">
                                                         {daysOfWeek[idx]}
                                                     </div>
@@ -373,7 +379,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 :
                 <div className="text-SystemGray3 text-[14px]" onClick={handleToggleClick}>더보기</div>
             }
-            <div className="w-fixwidth flex flex-col font-bold text-[18px] pt-[20px]">
+            <div className="w-fixwidth flex flex-col text-[18px] pt-[20px]">
                 운동 시간 비교
                 <div className="flex flex-row justify-around items-center bg-white mt-[12px] h-[40px] rounded-[20px]">
                 {
