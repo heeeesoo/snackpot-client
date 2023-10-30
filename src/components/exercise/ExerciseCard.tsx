@@ -165,7 +165,7 @@ const ExerciseCard = ({
                     {youtuberName}
                 </div>
                 <div className="text-SystemBrand flex flex-row text-[12px] overflow-x-auto flex-wrap">
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[80px] px-[12px] mr-[8px] mb-[5px]">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] flex items-center justify-center text-center h-[20px] w-[80px] px-[12px] mr-[8px] mb-[5px]">
                         {
                             time >= 60 ? 
                                 time % 60 ==0?
@@ -177,16 +177,16 @@ const ExerciseCard = ({
                     <div className="flex" >
                         {bodyPartTypes?.map((value:string, idx:number)=>{
                             return(
-                                <div className="bg-SystemSecondaryBrand text-center rounded-[12px] w-[50px] px-[12px] mr-[8px] mb-[5px]" key={idx}>
+                                <div className="bg-SystemSecondaryBrand rounded-[12px] flex items-center justify-center text-center h-[20px] w-[50px] px-[12px] mr-[8px] mb-[5px]" key={idx}>
                                     {bodyPartList[value]}
                                 </div>
                             )
                         })}
                     </div>
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[50px] px-[12px] mr-[8px] mb-[5px]">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] flex items-center justify-center text-center h-[20px] w-[50px] px-[12px] mr-[8px] mb-[5px]">
                         {levelList[level]}
                     </div>
-                    <div className="bg-SystemSecondaryBrand rounded-[12px] text-center w-[80px] px-[12px] mr-[8px] mb-[5px]">
+                    <div className="bg-SystemSecondaryBrand rounded-[12px] flex items-center justify-center text-center h-[20px] w-[80px] px-[12px] mr-[8px] mb-[5px]">
                         {calory}kcal
                     </div>
                 </div>

@@ -29,6 +29,8 @@ export const Time = "/img/icons/exerciseInfo/Time.svg";
 export const LikeGray = "/img/icons/exerciseInfo/LikeGray.svg";
 export const LikeBlue = "/img/icons/exerciseInfo/LikeBlue.svg";
 export const Down = "/img/icons/exerciseInfo/Down.svg";
+export const Down_White = "/img/icons/exerciseInfo/Down_White.svg";
+export const LikeWhite = "/img/icons/exerciseInfo/LikeWhite.svg";
 
 // finish
 export const ThumbsUp = "/img/icons/finish/ThumbsUp.png";
@@ -45,3 +47,4 @@ export const Create = "/img/icons/group/Create.svg";
 
 // example
 export const profile = "/img/example/profile.svg";
+export const profile2 = "/img/example/profile.png";

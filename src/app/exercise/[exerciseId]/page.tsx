@@ -101,11 +101,11 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                                     />
                             </div>
                             <div className="pl-[12px]"/>
-                            <span className="text-[14px] pb-[4px]">{data.youtuberName}</span>
+                            <span className="text-[16px] pb-[4px]">{data.youtuberName}</span>
                         </div>
                         <div className="pt-[10px]"/>
                         <div className="flex flex-col">
-                            <span className="text-[12px] text-SystemGray3">{data.youtuberDescription}</span>
+                            <span className="text-[14px] text-SystemGray3">{data.youtuberDescription}</span>
                         </div>
                     </div>
                     {/* <Image
@@ -160,7 +160,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                     <span className="font-bold pb-[8px]">
                         운동 효과
                     </span>
-                    <span className="text-SystemGray3">
+                    <span className="text-SystemGray3 text-[14px]">
                         {data.effect}
                     </span>
                 </div>
@@ -168,7 +168,7 @@ export default async function ExerciseId({ params }: { params: { exerciseId: num
                     <span className="font-bold pb-[8px]">
                         운동 부위
                     </span>
-                    <span className="text-SystemGray3 flex">
+                    <span className="text-SystemGray3 text-[14px] flex">
                         {data.bodyPartTypes.map((value, idx) => {
                             return(
                                 <div key={idx}>

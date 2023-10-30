@@ -75,7 +75,7 @@ export default function InputBox({
 
     const validateSpecial = noSpecialChar ? {
         validate: {
-            isValidInput: (value: any) => isValidInput(value) || '알파벳, 숫자, 한글만 입력 가능합니다.',
+            isValidInput: (value: any) => isValidInput(value) || '알파벳, 숫자, 한글만 입력 가능합니다. 빈칸을 빼주세요.',
         },
     } : undefined;
 
