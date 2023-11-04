@@ -135,7 +135,7 @@ const Group = () => {
             {
                 groupMyList?.map((group : GroupType) => {
                     return(
-                        <div key={group.groupId} onClick={(e)=>handleClickGroup(group.groupId, e)} className="flex px-[20px] py-[20px] flex-col h-[112px] w-fixwidth bg-white mb-[12px] rounded-[16px]">
+                        <div key={group.groupId} onClick={(e)=>handleClickGroup(group.groupId, e)} className="flex px-[20px] py-[20px] flex-col h-[120px] w-fixwidth bg-white mb-[12px] rounded-[16px]">
                             <div className="flex flex-row items-stretch justify-between">
                                 <div className="flex flex-row items-center text-[18px]">
                                     {group.groupName}
@@ -180,6 +180,7 @@ const Group = () => {
                                     })
                                 }
                                 </div> */}
+                                <div className="flex justify-between w-full items-center">
                                 <div className="text-[14px]">{group.groupNumber}명</div>
                                 <div>
                                     {
@@ -188,6 +189,7 @@ const Group = () => {
                                     :
                                     <div></div>
                                     }
+                                </div>
                                 </div>
                             </div>
                         </div>
