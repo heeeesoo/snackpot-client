@@ -40,6 +40,7 @@ const Invitation = () => {
                     if(responseData.code === -1200){
                         router.push('/group')
                     }
+                    
                 } else {
                     console.log('okinvite');
                     alert('그룹 가입이 완료되었습니다.');

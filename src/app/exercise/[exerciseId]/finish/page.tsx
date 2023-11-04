@@ -143,8 +143,8 @@ const ExerciseFinish = ({ params }: { params: { exerciseId: number } }) => {
                 리뷰를 작성해주세요
             </div>
             <textarea
-                className="w-fixwidth h-[180px] my-[20px] align-top"
-                placeholder="리뷰를 통해 직업 효과가 있는지 공유해요!"
+                className="w-fixwidth h-[180px] my-[20px] align-top text-left pt-2 px-2"
+                placeholder="리뷰를 통해 직접 효과가 있는지 공유해요!"
                 {...register("reviewContent")}
                 style={{ wordWrap: 'break-word' }}
             />
