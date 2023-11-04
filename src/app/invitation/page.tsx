@@ -30,9 +30,16 @@ const Invitation = () => {
                     body: JSON.stringify(formDataToSend),
                 });
                 const responseData = await response.json();
+
+                console.log('invite:', responseData);
+
                 if (!response.ok){
                     console.log('error');
                     alert(responseData.result.message);
+
+                    if(responseData.code === -1200){
+                        router.push('/group')
+                    }
                 } else {
                     console.log('okinvite');
                     alert('그룹 가입이 완료되었습니다.');
