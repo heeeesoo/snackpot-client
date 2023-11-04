@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Skeleton from "@/components/common/Skeleton";
 import GroupSkeleton from "@/components/group/GroupSkeleton";
+import BasicButton from "@/components/button/BasicButton";
 import BasicSecondayButton from "@/components/button/BasicSecondayButton";
 import BasicSecondayButton2 from "@/components/button/BasicSecondayButton2";
 import UserStore from "@/store/UserStore";
@@ -103,7 +104,7 @@ const Group = () => {
 
     return (
         <div className="w-screen max-w-[500px] flex flex-col items-center">
-            {!hasKakaoTalk(userAgent) ? 
+            {hasKakaoTalk(userAgent) ? 
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <p>앱 다운로드하기</p>
             </Modal>
@@ -128,7 +129,7 @@ const Group = () => {
                         지금 당장 그룹을 만들어 습관을 만들어요!
                     </div>
                     <div className="pt-[36px]"/>
-                    <BasicSecondayButton2 text="그룹 만들러가기" onClick={()=>router.push('/group/create')} />
+                    <BasicButton text="그룹 만들러가기" onClick={()=>router.push('/group/create')} />
                 </div>
             }
             {
