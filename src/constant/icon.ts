@@ -21,6 +21,7 @@ export const ChevronLeftWhite = "/img/icons/common/ChevronLeftWhite.svg";
 export const ChevronRight = "/img/icons/common/ChevronRight.svg";
 
 export const Cross = "/img/icons/common/Cross.svg";
+export const Edit = "/img/icons/common/Edit.svg";
 
 // exercise
 export const Calory = "/img/icons/exerciseInfo/Calory.svg";

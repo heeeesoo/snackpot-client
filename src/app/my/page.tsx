@@ -9,6 +9,8 @@ import Image from 'next/image';
 import { profile2, RunningMan } from '@/constant/icon';
 import Skeleton from '@/components/common/Skeleton';
 import TokenStore from '@/store/TokenStore';
+import { Edit } from '@/constant/icon';
+import ModalEdit from '@/components/common/ModalEdit';
 
 interface myListType {
     userName: string;
@@ -28,8 +30,9 @@ const My = () => {
     const {setToken} = TokenStore();
     const [mylist, setMyList] = useState<myListType>();
     const [nullTimeCount, setNullTimeCount] = useState<number>(0);
+    const [goalTimeCount, setGoalTimeCount] = useState<number>(0);
     const [loading, setLoading] = useState(true);
-    const [countLoading, setCountLoading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
     const dayOfWeek = ['월','화','수','목','금','토','일']
 
@@ -44,8 +47,15 @@ const My = () => {
     const logoutAccount = () => {
         logout();
         setToken('');
-
     }
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+    
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         if(!isLoggedIn){
@@ -68,6 +78,16 @@ const My = () => {
                     }
                 }
                 setNullTimeCount(7 - nullCount)
+
+                const weeklyGoalTimes = resultMyList.result.data.weeklyGoalTime || [];
+                const dailyGoalTime = resultMyList.result.data.dailyGoalTime * 60;
+
+                const goalCount = weeklyGoalTimes
+                .filter((goal : weeklyGoaltimeType) => goal.time !== null && dailyGoalTime <= goal.time)
+                .length;
+
+                setGoalTimeCount(goalCount);
+
             }catch (error){
                 console.log('error:', error);
             }
@@ -79,6 +99,12 @@ const My = () => {
 
     return (
         <div className='flex flex-col items-center'>
+            {
+                isModalOpen &&
+                <ModalEdit isOpen={isModalOpen} onClose={closeModal}>
+                    <p>앱 다운로드하기</p>
+                </ModalEdit>
+            }
             <div className='w-[120px] h-[120px] relative mt-3'>
                 <Image
                 src={profile2}
@@ -94,27 +120,39 @@ const My = () => {
             </div>
             <div className='pt-[40px]' />
             <div className='bg-white w-fixwidth rounded-[16px] flex justify-between items-center h-[60px] px-[20px]'>
-                <div className='text-[16px] text-SystemGray3'>
-                    하루 목표 운동 시간
+                <div className='flex'>
+                    <div className='text-[16px] text-SystemGray3'>
+                        하루 목표 운동 시간
+                    </div>
+                    <div className='px-[2px]'/>
+                    <Image
+                        src={Edit}
+                        alt="Edit"
+                        width={20}
+                        height={20}
+                        onClick={openModal}
+                    />
                 </div>
-                <div className=''>
+                <div className='flex'>
                     {mylist?.dailyGoalTime !== undefined ? secondsToMinutes(mylist.dailyGoalTime) : "N/A"}
                 </div>
             </div>
             <div className='pt-[20px]'/>
-            <div className='h-[128px] bg-white px-[20px] py-[20px] w-fixwidth rounded-[16px]'>
+            <div className='h-[160px] bg-white px-[20px] py-[20px] w-fixwidth rounded-[16px]'>
                 <div className='flex justify-between'>
-                    <div className=''>
-                        이번주 목표 달성 횟수
+                    <div className='text-SystemGray3'>
+                        이번주 운동 횟수
                     </div>
                     <div className=' text-SystemBrand'>
-                        {/* 60%   */}
-                        {countLoading && (
-                            <>
-                                {nullTimeCount}회
-                            </>
-                        )}
                         {nullTimeCount}회
+                    </div>
+                </div>
+                <div className='flex justify-between'>
+                    <div className='text-SystemGray3'>
+                        이번주 목표 시간 달성 횟수
+                    </div>
+                    <div className=' text-SystemBrand'>
+                        {goalTimeCount}회
                     </div>
                 </div>
             <div className='pt-[16px]'/>
@@ -131,14 +169,14 @@ const My = () => {
                                         <div>
                                             <div style={{ width: '28px', height: '28px' }}>
                                             <svg viewBox="0 0 200 200">
-                                                <circle cx="100" cy="100" r="80" fill="none" stroke="#EBF2FE" strokeWidth="50" />
+                                                <circle cx="100" cy="100" r="80" fill="none" stroke="#EBF2FE" strokeWidth="40" />
                                                 <circle
                                                 cx="100"
                                                 cy="100"
                                                 r="80"
                                                 fill="none"
                                                 stroke="#3A81F7"
-                                                strokeWidth="50"
+                                                strokeWidth="40"
                                                 // strokeDasharray={`${2 * Math.PI * 90 * Number(0.9)} ${2 * Math.PI * 90 * Number(0.9)}`}
                                                 strokeDasharray={`${2 * Math.PI * 90 * (Math.ceil((goaltime.time/(mylist.dailyGoalTime*60)*100))/100)} ${2 * Math.PI * 90 * (1-Math.ceil((goaltime.time/(mylist.dailyGoalTime*60)*100))/100)}`}
                                                 strokeDashoffset={2 * Math.PI * 90 * 0.25}
