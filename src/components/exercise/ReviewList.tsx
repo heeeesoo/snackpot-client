@@ -53,7 +53,7 @@ export default function ReviewList({
 
     const fetchReviewData = async () => {
         try{
-            let apiURL:string = `/reviews/exercises/${exerciseId}?size=10`;
+            let apiURL:string = `/reviews/exercises/${exerciseId}?size=100`;
             const resultReviewData = await getDataClient(apiURL);
             setLoading(false);
             resultReviewData && setReviewData(resultReviewData.result.data.reviews.content);
@@ -84,12 +84,14 @@ export default function ReviewList({
                         {
                             reviewData?.map((review : ReviewDataType, idx : number) => {
                                 return (
-                                    <button key={idx} className="text-left justify-between flex flex-col py-[20px] px-[20px] mr-[15px] w-[240px] bg-white rounded-[16px] h-[172px]">
+                                    <button key={idx} className="text-left justify-between flex flex-col py-[20px] px-[20px] mr-[15px] w-[280px] bg-white rounded-[16px] h-[172px]">
                                         <div className="text-[14px] text-SystemGray1 font-normal">
                                             {review.content}
                                         </div>
-                                        <div>
-                                            {review.userName}
+                                        <div className=" w-[240px] text-right flex justify-end">
+                                            <div className="text-[14px] bg-grayScreen text-SystemGray3 w-[70px] flex justify-center items-center text-center rounded-md h-[30px]">
+                                                {review.userName}님
+                                            </div>
                                         </div>
                                     </button>
                                 )

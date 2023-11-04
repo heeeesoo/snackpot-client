@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className='bg-white w-screen flex justify-center'>
+    <html className='bg-white w-screen flex justify-center'>
       <head>
           <link
               rel="manifest"

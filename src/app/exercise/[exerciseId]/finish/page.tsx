@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import TokenStore from "@/store/TokenStore";
+import { ChangeEvent } from "react";
 
 interface FormData {
     ratingType: string;
@@ -16,6 +17,7 @@ interface FormData {
 const ExerciseFinish = ({ params }: { params: { exerciseId: number } }) => {
     const { videoId, calory, time } = ExerciseStore();
     const router = useRouter();
+    const maxLength = 20; // 원하는 최대 글자 수
     const {
         register,
         handleSubmit,
@@ -23,7 +25,6 @@ const ExerciseFinish = ({ params }: { params: { exerciseId: number } }) => {
         watch
     } = useForm<FormData>(); 
     const watchRatingType = watch('ratingType');
-
 
     const onSubmit = async (data: FormData) => {
         try {
@@ -143,11 +144,20 @@ const ExerciseFinish = ({ params }: { params: { exerciseId: number } }) => {
                 리뷰를 작성해주세요
             </div>
             <textarea
-                className="w-fixwidth h-[180px] my-[20px] align-top"
-                placeholder="리뷰를 통해 직업 효과가 있는지 공유해요!"
-                {...register("reviewContent")}
-                style={{ wordWrap: 'break-word' }}
+                className="w-fixwidth h-[180px] my-[20px] align-top text-left pt-2 px-2"
+                placeholder="리뷰를 통해 직접 효과가 있는지 공유해요!"
+                {...register("reviewContent", { 
+                    maxLength: {
+                        value: maxLength,
+                        message: `최대 ${maxLength}자까지 입력 가능합니다`
+                    }
+                 })}
+                style={{ wordWrap: 'break-word' }
+            }
             />
+            {errors.reviewContent && (
+                <span className="text-red-500 mb-4 mt-[-20px]">{errors.reviewContent.message}</span>
+            )}
             <div className="w-fixwidth">
                 <BasicButton text="운동 완료"/>
             </div>
