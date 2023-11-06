@@ -11,6 +11,7 @@ import Skeleton from '@/components/common/Skeleton';
 import TokenStore from '@/store/TokenStore';
 import { Edit } from '@/constant/icon';
 import ModalEdit from '@/components/common/ModalEdit';
+import ModalDelete from '@/components/common/ModalDelete';
 
 interface myListType {
     userName: string;
@@ -33,6 +34,7 @@ const My = () => {
     const [goalTimeCount, setGoalTimeCount] = useState<number>(0);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
     const router = useRouter();
     const dayOfWeek = ['월','화','수','목','금','토','일']
 
@@ -49,6 +51,11 @@ const My = () => {
         setToken('');
     }
 
+    const deleteAccount = () => {
+        console.log('delete')
+        openModalDelete();
+    }
+
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -56,6 +63,16 @@ const My = () => {
     const closeModal = () => {
         setIsModalOpen(false);
     };
+
+    const openModalDelete = () => {
+        setIsModalDeleteOpen(true);
+    };
+    
+    const closeModalDelete = () => {
+        setIsModalDeleteOpen(false);
+    };
+
+
 
     useEffect(() => {
         if(!isLoggedIn){
@@ -102,8 +119,12 @@ const My = () => {
             {
                 isModalOpen &&
                 <ModalEdit isOpen={isModalOpen} onClose={closeModal}>
-                    <p>앱 다운로드하기</p>
                 </ModalEdit>
+            }
+            {
+                isModalDeleteOpen &&
+                <ModalDelete isOpen={isModalDeleteOpen} onClose={closeModalDelete}>
+                </ModalDelete>
             }
             <div className='w-[120px] h-[120px] relative mt-3'>
                 <Image
@@ -194,6 +215,10 @@ const My = () => {
             <div className='pt-[20px]'/>
             <div className='w-fixwidth'>
                 <BasicButton text='로그아웃' onClick={logoutAccount}/>
+            </div>
+            <div className='pt-[20px]'/>
+            <div className='w-fixwidth'>
+                <BasicButton text='계정탈퇴' onClick={deleteAccount}/>
             </div>
         </div>
     );
