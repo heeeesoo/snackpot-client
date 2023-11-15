@@ -66,14 +66,14 @@ const ExerciseListClient: NextPage = () => {
 
 
     useEffect(()=>{
-        fetchexerciseUserList(false,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], true);
+        fetchexerciseUserList(false,bodyPartFilter,150,'level',timeSpentList[timeSpentFilter], true);
     },[])
 
     useEffect(() => {
         console.log('!!!!!!!!:',likeFilter);
         if(likeFilter){
             console.log('YES')
-            fetchexerciseUserList(true,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], true);
+            fetchexerciseUserList(true,bodyPartFilter,150,'level',timeSpentList[timeSpentFilter], true);
         }
     },[likeFilter])
 
@@ -81,9 +81,9 @@ const ExerciseListClient: NextPage = () => {
         console.log(timeSpentList[timeSpentFilter])
         if(likeFilter){
             console.log('likeFilter:',likeFilter)
-            fetchexerciseUserList(true,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], false)
+            fetchexerciseUserList(true,bodyPartFilter,150,'level',timeSpentList[timeSpentFilter], false)
         }else{
-            fetchexerciseUserList(false,bodyPartFilter,80,'level',timeSpentList[timeSpentFilter], false)
+            fetchexerciseUserList(false,bodyPartFilter,150,'level',timeSpentList[timeSpentFilter], false)
         }
     },[bodyPartFilter, likeFilter, timeSpentFilter])
     
