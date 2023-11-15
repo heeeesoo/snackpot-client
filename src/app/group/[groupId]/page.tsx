@@ -143,7 +143,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         try {
             const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
             const formDataToSend = {
-                groupId: params.groupId,
+                groupId: Number(params.groupId),
                 toUserId: toUserId,
                 fcmToken: fcmToken
             };
