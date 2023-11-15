@@ -1,6 +1,6 @@
 'use client'
 import ExerciseStore from "@/store/ExerciseStore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { useRouter } from "next/navigation";
 import ProgressBar from "@/components/exercise/ProgressBar";
@@ -12,6 +12,7 @@ import Image from "next/image";
 const Execution = ({ params }: { params: { exerciseId: number } }) => {
     const { videoId, calory, time } = ExerciseStore();
     const [remainingTime, setRemainingTime] = useState(time);
+    const timerCheckNumber = useRef<number>(0)
 
     // remainingTime을 분과 초로 나눕니다.
     const minutes = Math.floor(remainingTime / 60);
@@ -26,33 +27,27 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
 
     const onPlayerReady: YouTubeProps['onReady'] = (event) => {
         event.target.pauseVideo();
+        console.log('ready')
     }
 
-    const opts: YouTubeProps['opts'] = {
-        width: "100%",
-        height: "100%",
-        loading: "lazy",
-        playerVars: {
-            // autoplay: true,
-            // rel: 0,
-            // modestbranding: 1,
-            // controls: 0,
-            loop: 1,
-            playlist: videoId,
-            // mute: 1,
-            // start: 3,
-            // end: 8
-        },
+    const onPlayerPlay: YouTubeProps['onPlay'] = (event) => {
+        console.log('Video is playing!');
+        timerCheckNumber.current += 1
+        // 여기에 동영상이 시작됐을 때 수행할 작업 추가
+        timerCheck(timerCheckNumber.current)
+
     };
 
-    useEffect(() => {
-        // 1초마다 remainingTime을 1초씩 감소시킵니다.
-        const intervalId = setInterval(() => {
-            setRemainingTime((prevTime) => prevTime - 1);
-        }, 1000);
+    const timerCheck = (num : number) => {
+        let intervalId: any;
+        if(num == 1){
+            intervalId = setInterval(() => {
+                setRemainingTime((prevTime) => prevTime - 1);
+            }, 1000);
+        }
 
         // remainingTime이 0보다 작거나 같으면 clearInterval로 interval을 중지합니다.
-        if (remainingTime <= 0) {
+        if (remainingTime <= 1) {
             clearInterval(intervalId);
 
             // 시간이 0 이하로 떨어졌을 때 POST 요청을 보냅니다.
@@ -80,7 +75,24 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
 
         // 컴포넌트가 언마운트되거나 다시 렌더링될 때 clearInterval로 interval을 정리합니다.
         return () => clearInterval(intervalId);
-    }, [params.exerciseId, remainingTime]);
+    }
+
+    const opts: YouTubeProps['opts'] = {
+        width: "100%",
+        height: "100%",
+        loading: "lazy",
+        playerVars: {
+            // autoplay: true,
+            // rel: 0,
+            // modestbranding: 1,
+            // controls: 0,
+            loop: 1,
+            playlist: videoId,
+            // mute: 1,
+            // start: 3,
+            // end: 8
+        },
+    };
 
     return (
         <div className="h-screen">
@@ -99,20 +111,21 @@ const Execution = ({ params }: { params: { exerciseId: number } }) => {
                     {formattedMinutes} : {formattedSeconds}
                 </div>
             </div>
-            {/* <YouTube
+            <YouTube
                 className="h-[100vh]"
                 videoId={videoId}
                 opts={opts}
                 onEnd={(e) => { e.target.stopVideo(0); }}
                 onReady={onPlayerReady}
-            /> */}
-            <iframe
-            className="h-[100vh] w-[100vw]"
-            id={videoId}
-            width="640"
-            height="360"
-            src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=http://example.com`}
-            ></iframe>
+                onPlay={onPlayerPlay}
+            />
+            {/* <iframe
+                className="h-[100vh] w-[100vw]"
+                id={videoId}
+                width="640"
+                height="360"
+                src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=http://example.com`}
+            ></iframe> */}
             {/* <LiteYouTubeEmbed 
                 id={videoId} //예시
                 title="hey"

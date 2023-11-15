@@ -4,7 +4,7 @@ import { ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import TokenStore from '@/store/TokenStore';
 import BasicButton from '@/components/button/BasicButton';
-import InputBox from '@/components/input/InputBox';
+import InputEditBox from '../input/inputEditBox';
 
 interface ModalEditType {
     isOpen: boolean;
@@ -67,7 +67,7 @@ function ModalEdit({ isOpen, onClose, children } : ModalEditType) {
                         <div className=' text-SystemGray3'>하루 목표 운동 시간을 수정해주세요</div>
                         <div className='py-4'/>
                         <div className='w-[70%]'>
-                            <InputBox title="" label="dailyGoalTime" name="dailyGoalTime" register={register} error={errors.dailyGoalTime?.message} maxValue={1440} maxLength={6} placeholder="0" integerOnly={true} unit='분'/> 
+                            <InputEditBox title="" label="dailyGoalTime" name="dailyGoalTime" register={register} error={errors.dailyGoalTime?.message} maxValue={1440} maxLength={6} placeholder="0" integerOnly={true} unit='분'/> 
                         </div>
                         <div className='py-4'/>
                         <div className='w-[70%]'>
