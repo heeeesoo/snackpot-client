@@ -68,12 +68,12 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
         return token;
     }
 
-    const getMessageToken = async() => {
-        const token = await getToken();
-        setFcmToken(token);
-        const msg = `gettoken : ${token}`
-        alert(msg)
-    }
+    // const getMessageToken = async() => {
+    //     const token = await getToken();
+    //     setFcmToken(token);
+    //     const msg = `gettoken : ${token}`
+    //     alert(msg)
+    // }
 
     const router = useRouter();
     const [absenteesList , setAbsenteesList] = useState<absenteesType[]>();
@@ -104,7 +104,7 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
 
     const submitFCMToken = async () => {
         try {
-            getMessageToken();
+            // getMessageToken();
             // const apiURL = process.env.NEXT_PUBLIC_SERVER_URL;
             // const formDataToSend = {
             //     fcmToken: fcmToken
@@ -164,7 +164,8 @@ const GroupId = ({ params }: { params: { groupId: number } }) => {
                 if(responseData.code == -1400){
                     alert('상대방이 알림을 허용하지 않았습니다!')
                 }else{
-                    alert(responseData.result.message);
+                    console.log(responseData.result.message)
+                    alert('알림이 활성화되지 않았습니다.');
                 }
             } else {
                 console.log('okreminder');
