@@ -81,32 +81,57 @@ export default function InputEditBox({
 
 
     return (
-        <div className="flex flex-col w-full text-[16px] text-SystemGray2">
+        <div className=' rounded-lg h-[50px] flex flex-col items-center justify-center'>
             <div className="flex items-center justify-between pb-[3px]">
                 <label htmlFor={name}>{title}</label>
                 <div className="text-SystemBrand text-[12px]">{subtitle}</div>
             </div>
-            <div className="flex justify-between w-full bg-white rounded-xl">
-                <input
-                    {...register(name, {
-                        required: `필수 입력입니다.`,
-                        maxLength: maxLengthValidation,
-                        min: minValidation,
-                        max: maxValidation,
-                        ...validateInteger,
-                        ...validateSpecial
-                    })}
-                    defaultValue={defaultValue}
-                    className="focus:outline-none rounded-xl h-[60px] pl-[20px] w-[300px] text-SystemGray1 placeholder-SystemGray4 outline-grayScreen"
-                    placeholder={placeholder}
-                    // type={inputType}
-                    min={min}
-                    max={max}
-                />
-                {unit && <span className="flex items-center pr-4 text-SystemGray3">{unit}</span>}
+            <div className='flex '>
+            <input
+                {...register(name, {
+                    required: `필수 입력입니다.`,
+                    maxLength: maxLengthValidation,
+                    min: minValidation,
+                    max: maxValidation,
+                    ...validateInteger,
+                    ...validateSpecial
+                })}
+                defaultValue={defaultValue}
+                placeholder={placeholder}
+                min={min}
+                max={max}
+                className='w-[85%] outline-none border-b-2 text-right'
+            />
+            {unit && <span className='w-[15%] text-SystemGray3' >{unit}</span>}
             </div>
             {error && <div className="text-red-500 text-[12px] mt-1">{error}</div>}
         </div>
+        // <div className="flex flex-col w-full text-[16px] text-SystemGray2 text-center rounded-lg">
+            // <div className="flex items-center justify-between pb-[3px]">
+            //     <label htmlFor={name}>{title}</label>
+            //     <div className="text-SystemBrand text-[12px]">{subtitle}</div>
+            // </div>
+        //     <div className="flex justify-between w-full rounded-xl">
+        //         <input
+        //             {...register(name, {
+        //                 required: `필수 입력입니다.`,
+        //                 maxLength: maxLengthValidation,
+        //                 min: minValidation,
+        //                 max: maxValidation,
+        //                 ...validateInteger,
+        //                 ...validateSpecial
+        //             })}
+        //             defaultValue={defaultValue}
+        //             className="focus:outline-none text-left bg-black rounded-xl h-[60px] pl-[20px]  text-SystemGray1 placeholder-SystemGray2 outline-grayScreen"
+        //             placeholder={placeholder}
+        //             // type={inputType}
+        //             min={min}
+        //             max={max}
+        //         />
+        //         {unit && <span className="flex items-center mr-4 text-SystemGray3">{unit}</span>}
+        //     </div>
+        //     {error && <div className="text-red-500 text-[12px] mt-1">{error}</div>}
+        // </div>
     );
 }
 
