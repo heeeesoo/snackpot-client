@@ -66,17 +66,17 @@ function ModalEdit({ isOpen, onClose, children } : ModalEditType) {
                     <form onSubmit={handleSubmit(onSubmit)}  className='flex flex-col text-center justify-center items-center'>
                         <div className=' text-SystemGray3'>하루 목표 운동 시간을 수정해주세요</div>
                         <div className='py-4'/>
-                        <div className='w-[70%]'>
-                            <InputEditBox title="" label="dailyGoalTime" name="dailyGoalTime" register={register} error={errors.dailyGoalTime?.message} maxValue={1440} maxLength={6} placeholder="0" integerOnly={true} unit='분'/> 
+                        <div className='w-[80%]'>
+                            <InputEditBox title="" label="dailyGoalTime" name="dailyGoalTime" register={register} error={errors.dailyGoalTime?.message} maxValue={1440} maxLength={6} placeholder="0" integerOnly={true} unit="분"/> 
                         </div>
                         <div className='py-4'/>
-                        <div className='w-[70%]'>
+                        <div className='w-[80%]'>
                             <BasicButton text="수정하기"/>
                         </div>
                     </form>
                 </div>
                 <div className='py-8'/>
-                <button className='rounded-lg h-[40px] bg-SystemBrand text-white w-[150px]' onClick={onClose}>다음에 수정할게요!</button>
+                <button className='rounded-lg h-[40px] bg-SystemBrand text-white w-[80%]' onClick={onClose}>다음에 수정할게요!</button>
             </div>
         </div>
     ) : null;
